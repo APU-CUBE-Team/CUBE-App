@@ -8,6 +8,15 @@ export type BottomTabParamList = {
   TabTwo: undefined;
 };
 
+export type DrawerParamList = {
+  TabOne: undefined;
+  ThreeOrbitView: undefined;
+};
+
+export type ThreeOrbitParamList = {
+  ThreeOrbitView: undefined;
+}
+
 export type TabOneParamList = {
   TabOneScreen: undefined;
 };
