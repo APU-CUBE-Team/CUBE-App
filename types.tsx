@@ -1,6 +1,9 @@
+import { Component } from "react";
+
 export type RootStackParamList = {
   Root: undefined;
   NotFound: undefined;
+  SignIn: Element;
 };
 
 export type BottomTabParamList = {
@@ -26,5 +29,6 @@ export type TabTwoParamList = {
 };
 
 export type SignInParamList = {
-  SignInScreen: undefined;
+  SignInScreen: Element;
+  Drawer: undefined;
 }

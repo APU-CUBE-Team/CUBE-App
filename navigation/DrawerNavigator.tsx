@@ -78,7 +78,7 @@ function TabOneNavigator({ navigation }) {
   );
 }
 
-function SignInNavigator({ navigation }) {
+export function SignInNavigator() {
   return (
     <SignInStack.Navigator>
       <SignInStack.Screen
@@ -86,7 +86,6 @@ function SignInNavigator({ navigation }) {
         component={SignInScreen}
         options={{
           headerTitle: 'Sign-In',
-          headerRight: () => <DrawerToggle onPress={() => { navigation.toggleDrawer() }} />
         }}
       />
     </SignInStack.Navigator>
