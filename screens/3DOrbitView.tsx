@@ -54,11 +54,6 @@ export default function App() {
     pointLight.position.set(0, 200, 200);
     scene.add(pointLight);
 
-    // const spotLight = new SpotLight(0xffffff, 0.5);
-    // spotLight.position.set(0, 500, 100);
-    // spotLight.lookAt(scene.position);
-    // scene.add(spotLight);
-
 
     /////////////////////////////
 

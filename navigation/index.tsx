@@ -5,12 +5,10 @@ import { ColorSchemeName } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 
 
-import NotFoundScreen from '../screens/NotFoundScreen';
 import { RootStackParamList } from '../types';
 import DrawerNavigator, {SignInNavigator} from './DrawerNavigator';
 import LinkingConfiguration from './LinkingConfiguration';
 import {isSignedIn, signIn} from '../hooks/Storage';
-import TabOneScreen from '../screens/TabOneScreen';
 import SignInScreen from '../screens/SignIn_Screen1';
 
 
@@ -123,20 +121,12 @@ function RootNavigator() {
               signedIn = true;
           })
   return (
-    // <Stack.Navigator screenOptions={{ headerShown: false }}>
-    //   {signedIn ? 
-    //     <Stack.Screen name="Root" component={TabOneScreen}/>
-    //     :
-    //     <Stack.Screen name="Root" component={DrawerNavigator}/>
-    //   }
-    //   <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
-    // </Stack.Navigator>
 
     <AuthContext.Provider value={authContext}>
       <Stack.Navigator 
         screenOptions={{
-          headerShown: false
-        }}>
+        headerShown: false
+      }}>
         {state.userToken == null ? (
           <Stack.Screen name="SignIn" component={SignIn} /> 
         ) : (

@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { Button, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
 
-import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
 import {signIn} from '../hooks/Storage';
 
