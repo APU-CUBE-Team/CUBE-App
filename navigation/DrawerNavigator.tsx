@@ -3,15 +3,23 @@ import { TouchableOpacity, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createStackNavigator } from '@react-navigation/stack';
-import { DrawerParamList, TabOneParamList, TabTwoParamList, ThreeOrbitParamList, SignInParamList } from '../types';
+import { DrawerParamList, LandingParamList, ThreeOrbitParamList } from '../types';
 import useColorScheme from '../hooks/useColorScheme';
 import Colors from '../constants/Colors';
 
 //How we will be importing our screens. I would prefer if we separate Screen imports from component imports so that it is easier to tell what 
 // is what.
-import TabOneScreen from '../screens/TabOneScreen';
 import ThreeOrbitView from '../screens/3DOrbitView';
-import SignInScreen from '../screens/SignIn_Screen1';
+import LandingScreen from '../screens/LandingScreen';
+import AlertConditionsScreen from '../screens/AlertConditions_Screen8';
+import BugReportScreen from '../screens/BugReport_Screen9';
+import CompTelScreen from '../screens/CompTel_Screen3';
+import CredRecoveryScreen from '../screens/CredRecov_Screen2';
+import ExpandedTelScreen from '../screens/ExpandedTel_Screen4';
+import WorkspaceScreen from '../screens/WorkspaceParam_Screen5';
+import MapScreen from '../screens/MapParam_Screen6';
+import NotificationsScreen from '../screens/Notifications_Screen7';
+import EditRoleScreen from '../screens/EditRole_Screen12';
 
 
 const Drawer = createDrawerNavigator<DrawerParamList>();
@@ -26,13 +34,13 @@ export default function DrawerNavigator() {
     // The best part of this is that we can still point the component of our screen to another navigator instead of a screen, as we do here.
     // The name part of our Drawer.Screen has to correspond to the values within our types.tsx for parameter reasons. Don't really get it yet.
     <Drawer.Navigator
-      initialRouteName="TabOne"
+      initialRouteName="Landing"
       drawerPosition={'right'}
       drawerType={'slide'}
     >
       <Drawer.Screen
-        name="TabOne"
-        component={TabOneNavigator}
+        name="Landing"
+        component={Landing}
       />
       <Drawer.Screen
         name="ThreeOrbitView"
@@ -60,43 +68,110 @@ function DrawerToggle(props: { onPress }) {
 // stack navigator to store all the screens that can be accessed from that button in the drawer menu, i.e. the various telemetry screens in one 
 // stack. The navigation.toggleDrawer() will be able to be accessed from any function within the drawer which should be all of them.
 
-const SignInStack = createStackNavigator<SignInParamList>();
-const TabOneStack = createStackNavigator<TabOneParamList>();
+const LandingStack = createStackNavigator<LandingParamList>();
 
-function TabOneNavigator({ navigation }) {
+function Landing({ navigation }) {
   return (
-    <TabOneStack.Navigator>
-      <TabOneStack.Screen
-        name="TabOneScreen"
-        component={TabOneScreen}
+    <LandingStack.Navigator>
+      <LandingStack.Screen
+        name="LandingScreen"
+        component={LandingScreen}
         options={{
-          headerTitle: 'Tab One Title',
+          headerTitle: 'Landing Page',
           headerRight: () => <DrawerToggle onPress={() => { navigation.toggleDrawer() }} />
         }}
       />
-    </TabOneStack.Navigator>
+      <LandingStack.Screen
+        name="ThreeOrbitView"
+        component={ThreeOrbitView}
+        options={{
+          headerTitle: 'ThreeOrbitView',
+          headerRight: () => <DrawerToggle onPress={() => { navigation.toggleDrawer() }} />
+        }}
+      />
+      <LandingStack.Screen
+        name="AlertsConditions"
+        component={AlertConditionsScreen}
+        options={{
+          headerTitle: 'AlertsConditions',
+          headerRight: () => <DrawerToggle onPress={() => { navigation.toggleDrawer() }} />
+        }}
+      />
+      <LandingStack.Screen
+        name="BugReportPage"
+        component={BugReportScreen}
+        options={{
+          headerTitle: 'BugReportPage',
+          headerRight: () => <DrawerToggle onPress={() => { navigation.toggleDrawer() }} />
+        }}
+      />
+      <LandingStack.Screen
+        name="CompTelPage"
+        component={CompTelScreen}
+        options={{
+          headerTitle: 'CompTelPage',
+          headerRight: () => <DrawerToggle onPress={() => { navigation.toggleDrawer() }} />
+        }}
+      />
+      <LandingStack.Screen
+        name="CredRecovPage"
+        component={CredRecoveryScreen}
+        options={{
+          headerTitle: 'CredRecovPage',
+          headerRight: () => <DrawerToggle onPress={() => { navigation.toggleDrawer() }} />
+        }}
+      />
+      <LandingStack.Screen
+        name="ExpandedTelPage"
+        component={ExpandedTelScreen}
+        options={{
+          headerTitle: 'ExpandedTelPage',
+          headerRight: () => <DrawerToggle onPress={() => { navigation.toggleDrawer() }} />
+        }}
+      />
+      <LandingStack.Screen
+        name="WorkspacePage"
+        component={WorkspaceScreen}
+        options={{
+          headerTitle: 'WorkspacePage',
+          headerRight: () => <DrawerToggle onPress={() => { navigation.toggleDrawer() }} />
+        }}
+      />
+      <LandingStack.Screen
+        name="MapPage"
+        component={MapScreen}
+        options={{
+          headerTitle: 'MapPage',
+          headerRight: () => <DrawerToggle onPress={() => { navigation.toggleDrawer() }} />
+        }}
+      />
+      <LandingStack.Screen
+        name="NotificationsPage"
+        component={NotificationsScreen}
+        options={{
+          headerTitle: 'NotificationsPage',
+          headerRight: () => <DrawerToggle onPress={() => { navigation.toggleDrawer() }} />
+        }}
+      />
+      <LandingStack.Screen
+        name="EditRolePage"
+        component={EditRoleScreen}
+        options={{
+          headerTitle: 'EditRolePage',
+          headerRight: () => <DrawerToggle onPress={() => { navigation.toggleDrawer() }} />
+        }}
+      />
+    </LandingStack.Navigator>
   );
 }
 
-export function SignInNavigator() {
-  return (
-    <SignInStack.Navigator>
-      <SignInStack.Screen
-        name="SignInScreen"
-        component={SignInScreen}
-        options={{
-          headerTitle: 'Sign-In',
-        }}
-      />
-    </SignInStack.Navigator>
-  );
-}
-const TabTwoStack = createStackNavigator<ThreeOrbitParamList>();
+
+const ThreeOrbitStack = createStackNavigator<ThreeOrbitParamList>();
 
 function ThreeOrbit({ navigation }) {
   return (
-    <TabTwoStack.Navigator>
-      <TabTwoStack.Screen
+    <ThreeOrbitStack.Navigator>
+      <ThreeOrbitStack.Screen
         name="ThreeOrbitView"
         component={ThreeOrbitView}
         options={{
@@ -104,6 +179,6 @@ function ThreeOrbit({ navigation }) {
           headerRight: () => <DrawerToggle onPress={() => { navigation.toggleDrawer() }} />
         }}
       />
-    </TabTwoStack.Navigator>
+    </ThreeOrbitStack.Navigator>
   );
 }

@@ -105,34 +105,35 @@ function TestMode() {
     []
   );
 
-return(<RootNavigator/>)
+  return(<RootNavigator/>)
 
-function SignIn() {
-  return(
-    <SignInScreen authentication={AuthContext}/>
-  )
+  function SignIn() {
+    return(
+      <SignInScreen authentication={AuthContext}/>
+    )
+  }
+
+  function RootNavigator() {
+    let signedIn = false;
+    isSignedIn()
+            .then(ret => {
+              if (ret != null)
+                signedIn = true;
+            })
+    return (
+
+      <AuthContext.Provider value={authContext}>
+        <Stack.Navigator 
+          screenOptions={{
+          headerShown: false
+        }}>
+          {state.userToken == null ? (
+            <Stack.Screen name="SignIn" component={SignIn} /> 
+          ) : (
+            <Stack.Screen name="Root" component={DrawerNavigator} />
+          )}
+        </Stack.Navigator>
+      </AuthContext.Provider>
+    );
+  }
 }
-
-function RootNavigator() {
-  let signedIn = false;
-  isSignedIn()
-          .then(ret => {
-            if (ret != null)
-              signedIn = true;
-          })
-  return (
-
-    <AuthContext.Provider value={authContext}>
-      <Stack.Navigator 
-        screenOptions={{
-        headerShown: false
-      }}>
-        {state.userToken == null ? (
-          <Stack.Screen name="SignIn" component={SignIn} /> 
-        ) : (
-          <Stack.Screen name="Root" component={DrawerNavigator} />
-        )}
-      </Stack.Navigator>
-    </AuthContext.Provider>
-  );
-        }}

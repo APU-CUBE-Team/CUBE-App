@@ -4,7 +4,7 @@ import { StyleSheet } from 'react-native';
 import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
 
-export default function SignInScreen() {
+export default function CredRecoveryScreen() {
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Credential Recovery</Text>

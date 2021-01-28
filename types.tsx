@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-import { Component } from "react";
-=======
-
->>>>>>> origin/addingScreens
 
 export type RootStackParamList = {
   Root: undefined;
@@ -16,7 +11,7 @@ export type BottomTabParamList = {
 };
 
 export type DrawerParamList = {
-  TabOne: undefined;
+  Landing: undefined;
   ThreeOrbitView: undefined;
 };
 
@@ -24,8 +19,19 @@ export type ThreeOrbitParamList = {
   ThreeOrbitView: undefined;
 }
 
-export type TabOneParamList = {
-  TabOneScreen: undefined;
+export type LandingParamList = {
+  LandingScreen: undefined;
+  ThreeOrbitView: undefined;
+  AlertsConditions: undefined;
+  BugReportPage: undefined;
+  CompTelPage: undefined;
+  CredRecovPage: undefined;
+  ExpandedTelPage: undefined;
+  WorkspacePage: undefined;
+  MapPage: undefined;
+  NotificationsPage: undefined;
+  AlertSetupPage: undefined;
+  EditRolePage: undefined;
 };
 
 export type TabTwoParamList = {

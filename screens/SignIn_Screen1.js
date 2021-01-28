@@ -2,7 +2,6 @@ import * as React from 'react';
 import { Button, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
 
 import { Text, View } from '../components/Themed';
-import {signIn} from '../hooks/Storage';
 
 export default function SignInScreen(props) {
   const [username, setUsername] = React.useState('');
