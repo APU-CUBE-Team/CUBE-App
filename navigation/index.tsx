@@ -6,7 +6,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 
 
 import { RootStackParamList } from '../types';
-import DrawerNavigator, {SignInNavigator} from './DrawerNavigator';
+import DrawerNavigator from './DrawerNavigator';
 import LinkingConfiguration from './LinkingConfiguration';
 import {isSignedIn, signIn} from '../hooks/Storage';
 import SignInScreen from '../screens/SignIn_Screen1';
