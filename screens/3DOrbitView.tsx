@@ -21,6 +21,8 @@ import {
   TorusGeometry
 } from 'three';
 
+const globeText = require('../assets/images/globe.png');
+
 export default function App() {
   const [camera, setCamera] = React.useState<Camera | null>(null);
   
@@ -64,7 +66,7 @@ export default function App() {
     scene.add(globe)
     scene.add(orbitTracker)
 
-    const globeTexture = new TextureLoader().load(require('../assets/images/globe.png'));
+    const globeTexture = new TextureLoader().load(globeText);
     const globeGeometry = new SphereGeometry(15, 100, 80);
 
     let globeMaterial = new MeshPhongMaterial({
