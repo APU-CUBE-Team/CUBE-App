@@ -3,7 +3,6 @@ import { Button, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
 
 import { Text, View } from '../components/Themed';
 import {signIn} from '../hooks/Storage';
-import {google}from 'googleapis';
 
 export default function SignInScreen(props) {
   const [username, setUsername] = React.useState('');
