@@ -45,7 +45,7 @@ export default function App() {
 
     const camera = new PerspectiveCamera(70, width / height, 0.01, 1000);
     camera.position.set(2, 5, 50);
-
+    
     setCamera(camera);
 
     const scene = new Scene();
@@ -121,7 +121,7 @@ export default function App() {
   };
 
   return (
-    <OrbitControlsView style={{ flex: 1 }} camera={camera}>
+    <OrbitControlsView style={{ flex: 1 }} camera={camera} enableZoom={false}>
       <GLView style={{ flex: 1 }} onContextCreate={onContextCreate} key="d" />
     </OrbitControlsView>
   );
