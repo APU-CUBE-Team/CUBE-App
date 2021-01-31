@@ -15,7 +15,6 @@ import { Text, View } from '../components/Themed';
 import Colors from '../constants/Colors';
 import Screen from '../constants/Layout';
 //import Icon from '../assets/images/cubeTEMP.png';
-import {main} from '../util/authenticating-users/appUserAuth';
 
 const screen = Dimensions.get('window');
 const styles = StyleSheet.create({
@@ -116,7 +115,7 @@ export default function SignInScreen(props) {
             <TextInput
                placeholder="Username"
                value={username}
-               onChangeText={setUsername}
+               onChangeText={username => setUsername(username)}
                style={styles.input}
                autoCapitalize="none"
                placeholderTextColor="#fff"
@@ -127,7 +126,7 @@ export default function SignInScreen(props) {
             <TextInput
                placeholder="Password"
                value={password}
-               onChangeText={setPassword}
+               onChangeText={password => setPassword(password)}
                secureTextEntry={true}
                style={styles.input}
                autoCapitalize="none"

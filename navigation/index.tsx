@@ -10,55 +10,8 @@ import DrawerNavigator from './DrawerNavigator';
 import LinkingConfiguration from './LinkingConfiguration';
 import {isSignedIn, signIn} from '../hooks/Storage';
 import SignInScreen from '../screens/SignIn_Screen1';
-import * as firebase from 'firebase'
-import 'firebase/firestore';
+import {emailSignIn, signOut } from '../util/authenticating-users/firebaseAuth';
 
-/**
- * This whole thing is Firebase Initialization and Authentication.
- * All of this wll be moved to a separate file soon.
- */
-const firebaseConfig = {
-  apiKey: "AIzaSyBMciA5V--El4jRZ42jPH5yFQwBhXiocPE",
-  authDomain: "cube-301820.firebaseapp.com",
-  projectId: "cube-301820",
-  storageBucket: "cube-301820.appspot.com",
-  messagingSenderId: "239117934874",
-  appId: "1:239117934874:web:31e1dfa3c031b47ea4cca3"
-};
-
-// checks if firebase has been initialized already. mainly just for refreshing purposes.
-!firebase.apps.length ? firebase.initializeApp(firebaseConfig) : firebase.app()
-
-// Listen for authentication state to change.
-const emailAuth =  firebase.auth().signInWithEmailAndPassword('nbowman15@apu.edu', 'R!ley_Dent0n')
-.then((res) => {
-  //Signed In
-  var user = res.user;
-  console.log('Sign-In Success');
-})
-.catch((error) => {
-  var errorCode = error.code;
-  var errorMessage = error.message;
-
-  console.log(errorMessage);
-});
-
-const emailSignOut = firebase.auth().signOut()
-.then((res) => {
-  
-  console.log('Sign-Out Success');
-  // Sign-out successful.
-}).catch((error) => {
-  // An error happened.
-  var errorCode = error.code;
-  var errorMessage = error.message;
-
-  console.log(errorMessage);
-});
-
-/**
- * End of Firebase Init and Auth
- */
 const AuthContext = React.createContext();
 
 // If you are not familiar with React Navigation, we recommend going through the
@@ -136,11 +89,20 @@ function TestMode() {
         // We will also need to handle errors if sign in failed
         // After getting token, we need to persist the token using `AsyncStorage`
         // In the example, we'll use a dummy token
-        emailAuth; // currently returns undefined
 
-        dispatch({ type: 'SIGN_IN', token: 'dummy-auth-token' });
+        if ((data.username != "" && data.password != "")
+        && (data.username != null && data.password != null)) {
+          emailSignIn(data.username, data.password);
+
+          dispatch({ type: 'SIGN_IN', token: 'dummy-auth-token' });
+        } else {
+          console.log("Nothing there");
+        }
+        
       },
-      signOut: () => dispatch({ type: 'SIGN_OUT' }),
+      signOut: () =>{
+        signOut(); 
+        dispatch({ type: 'SIGN_OUT' })},
       signUp: async data => {
         // In a production app, we need to send user data to server and get a token
         // We will also need to handle errors if sign up failed
