@@ -140,7 +140,7 @@ function TestMode() {
           {state.userToken == null ? (
             <Stack.Screen name="SignIn" component={SignIn} /> 
           ) : (
-            <Stack.Screen name="Root" component={DrawerNavigator} />
+            <Stack.Screen name="Root" component={DrawerNavigator}/>
           )}
         </Stack.Navigator>
       </AuthContext.Provider>

@@ -7,7 +7,8 @@ import {
    SafeAreaView,
    StatusBar,
    Dimensions,
-   Image
+   Image,
+   KeyboardAvoidingView
 } from 'react-native';
 
 import { Text, View } from '../components/Themed';
@@ -83,7 +84,7 @@ const styles = StyleSheet.create({
       height: 40,
       alignItems: 'center',
       justifyContent: 'center',
-      marginTop: 30,
+      marginTop: 5,
       marginBottom: 10,
       borderRadius: 10
    }
@@ -97,11 +98,13 @@ export default function SignInScreen(props) {
 
 
    return (
-      <View style={styles.container}>
+   <KeyboardAvoidingView style={styles.container} behavior={(Platform.OS === 'ios') ? 'padding' : null}>
+      <SafeAreaView style={styles.container}>
+         
 
          <StatusBar barStyle="light-content" />
 
-         <SafeAreaView style={styles.iconSafeArea}>
+         <View style={styles.iconSafeArea}>
             <Text style={styles.text3}>
                CUBE
             </Text>
@@ -109,9 +112,10 @@ export default function SignInScreen(props) {
                style={styles.icon}
                source={require('../assets/images/cubeTEMP.png')}
             />
-         </SafeAreaView>
+         </View>
+         
 
-         <SafeAreaView style={styles.inputSafeArea}>
+         <View style={styles.inputSafeArea}>
             <TextInput
                placeholder="Username"
                value={username}
@@ -133,6 +137,9 @@ export default function SignInScreen(props) {
                placeholderTextColor="#fff"
 
             />
+            
+            
+
             <TouchableOpacity
                style={styles.signInButton}
                onPress={() => signIn({ username, password })}>
@@ -145,9 +152,10 @@ export default function SignInScreen(props) {
             <TouchableOpacity onPress={() => alert("TODO")} >
                <Text style={styles.text2}>Forgot Password</Text>
             </TouchableOpacity>
-
-         </SafeAreaView>
-
-      </View>
+         </View>
+         
+        
+      </SafeAreaView> 
+   </KeyboardAvoidingView>
    );
 }
