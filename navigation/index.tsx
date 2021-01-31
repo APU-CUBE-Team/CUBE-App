@@ -10,7 +10,7 @@ import DrawerNavigator from './DrawerNavigator';
 import LinkingConfiguration from './LinkingConfiguration';
 import {isSignedIn, signIn} from '../hooks/Storage';
 import SignInScreen from '../screens/SignIn_Screen1';
-
+import {emailSignIn, signOut } from '../util/authenticating-users/firebaseAuth';
 
 const AuthContext = React.createContext();
 
@@ -90,9 +90,19 @@ function TestMode() {
         // After getting token, we need to persist the token using `AsyncStorage`
         // In the example, we'll use a dummy token
 
-        dispatch({ type: 'SIGN_IN', token: 'dummy-auth-token' });
+        if ((data.username != "" && data.password != "")
+        && (data.username != null && data.password != null)) {
+          emailSignIn(data.username, data.password);
+
+          dispatch({ type: 'SIGN_IN', token: 'dummy-auth-token' });
+        } else {
+          console.log("Nothing there");
+        }
+        
       },
-      signOut: () => dispatch({ type: 'SIGN_OUT' }),
+      signOut: () =>{
+        signOut(); 
+        dispatch({ type: 'SIGN_OUT' })},
       signUp: async data => {
         // In a production app, we need to send user data to server and get a token
         // We will also need to handle errors if sign up failed
@@ -130,7 +140,7 @@ function TestMode() {
           {state.userToken == null ? (
             <Stack.Screen name="SignIn" component={SignIn} /> 
           ) : (
-            <Stack.Screen name="Root" component={DrawerNavigator} />
+            <Stack.Screen name="Root" component={DrawerNavigator}/>
           )}
         </Stack.Navigator>
       </AuthContext.Provider>

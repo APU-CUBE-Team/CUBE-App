@@ -33,7 +33,7 @@
     "expo-three-orbit-controls": "^2.0.0",
     "expo-web-browser": "~8.6.0",
     "express": "^4.17.1",
-    "googleapis": "^59.0.0",
+    "firebase": "7.9.0",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-40.0.1.tar.gz",
@@ -55,7 +55,7 @@
     "typescript": "~4.0.0"
   },
   "engines": {
-    "node": "9.x"
+    "node": ">=9.x"
   },
   "private": true
 }
