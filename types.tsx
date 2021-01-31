@@ -5,14 +5,11 @@ export type RootStackParamList = {
   SignIn: Element;
 };
 
-export type BottomTabParamList = {
-  TabOne: undefined;
-  TabTwo: undefined;
-};
-
 export type DrawerParamList = {
   Landing: undefined;
-  ThreeOrbitView: undefined;
+  "3D Orbit View": undefined;
+  "Cartesian Map": {InitialPath: string};
+  "Telemetry": {InitialPath: string};
 };
 
 export type ThreeOrbitParamList = {
@@ -61,7 +58,11 @@ export type WorkspaceParamList = {
 }
 
 export type MapParamList = {
+  initialPath: undefined;
+  ExpandedTelPage: undefined;
   MapPage: undefined;
+  CompTelPage: undefined;
+  WorkspacePage: undefined;
 }
 
 export type NotificationsParamList = {

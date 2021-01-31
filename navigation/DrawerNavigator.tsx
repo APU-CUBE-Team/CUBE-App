@@ -3,7 +3,7 @@ import { TouchableOpacity, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createStackNavigator } from '@react-navigation/stack';
-import { DrawerParamList, LandingParamList, ThreeOrbitParamList } from '../types';
+import { DrawerParamList, LandingParamList, ThreeOrbitParamList, MapParamList } from '../types';
 import useColorScheme from '../hooks/useColorScheme';
 import Colors from '../constants/Colors';
 
@@ -17,7 +17,7 @@ import CompTelScreen from '../screens/CompTel_Screen3';
 import CredRecoveryScreen from '../screens/CredRecov_Screen2';
 import ExpandedTelScreen from '../screens/ExpandedTel_Screen4';
 import WorkspaceScreen from '../screens/WorkspaceParam_Screen5';
-import MapScreen from '../screens/MapParam_Screen6';
+import MapScreen from '../screens/Map_Screen6';
 import NotificationsScreen from '../screens/Notifications_Screen7';
 import EditRoleScreen from '../screens/EditRole_Screen12';
 
@@ -43,7 +43,21 @@ export default function DrawerNavigator() {
         component={Landing}
       />
       <Drawer.Screen
-        name="ThreeOrbitView"
+        name="Cartesian Map"
+        component={TelemetryMap}
+        initialParams={{
+          InitialPath: "MapPage"
+        }}
+      />
+      <Drawer.Screen
+        name="Telemetry"
+        component={TelemetryMap}
+        initialParams={{
+          InitialPath: "ExpandedTelPage"
+        }}
+      />
+      <Drawer.Screen
+        name="3D Orbit View"
         component={ThreeOrbit}
       />
 
@@ -67,6 +81,52 @@ function DrawerToggle(props: { onPress }) {
 //This next code block is how we will create screens that can be accessed via one of the drawer buttons. It involves the creation of a new
 // stack navigator to store all the screens that can be accessed from that button in the drawer menu, i.e. the various telemetry screens in one 
 // stack. The navigation.toggleDrawer() will be able to be accessed from any function within the drawer which should be all of them.
+
+
+const TelemetryMapStack = createStackNavigator<MapParamList>();
+
+function TelemetryMap({ navigation, route }) {
+  return (
+    <TelemetryMapStack.Navigator
+      initialRouteName={route.params?.InitialPath}
+    >
+      <TelemetryMapStack.Screen
+        name="MapPage"
+        component={MapScreen}
+        options={{
+          headerShown: false,
+          headerTitle: 'Location Tracking',
+          headerRight: () => <DrawerToggle onPress={() => { navigation.toggleDrawer() }} />
+        }}
+      />
+      <TelemetryMapStack.Screen
+        name="ExpandedTelPage"
+        component={ExpandedTelScreen}
+        options={{
+          headerTitle: 'CUBE Telemetry',
+          headerRight: () => <DrawerToggle onPress={() => { navigation.toggleDrawer() }} />
+        }}
+      />
+    </TelemetryMapStack.Navigator>
+  )
+}
+
+const ThreeOrbitStack = createStackNavigator<ThreeOrbitParamList>();
+
+function ThreeOrbit({ navigation }) {
+  return (
+    <ThreeOrbitStack.Navigator>
+      <ThreeOrbitStack.Screen
+        name="ThreeOrbitView"
+        component={ThreeOrbitView}
+        options={{
+          headerTitle: '3D Orbital View',
+          headerRight: () => <DrawerToggle onPress={() => { navigation.toggleDrawer() }} />
+        }}
+      />
+    </ThreeOrbitStack.Navigator>
+  );
+}
 
 const LandingStack = createStackNavigator<LandingParamList>();
 
@@ -162,23 +222,5 @@ function Landing({ navigation }) {
         }}
       />
     </LandingStack.Navigator>
-  );
-}
-
-
-const ThreeOrbitStack = createStackNavigator<ThreeOrbitParamList>();
-
-function ThreeOrbit({ navigation }) {
-  return (
-    <ThreeOrbitStack.Navigator>
-      <ThreeOrbitStack.Screen
-        name="ThreeOrbitView"
-        component={ThreeOrbitView}
-        options={{
-          headerTitle: '3D Orbital View',
-          headerRight: () => <DrawerToggle onPress={() => { navigation.toggleDrawer() }} />
-        }}
-      />
-    </ThreeOrbitStack.Navigator>
   );
 }

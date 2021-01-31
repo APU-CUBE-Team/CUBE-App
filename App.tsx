@@ -6,10 +6,12 @@ import useCachedResources from './hooks/useCachedResources';
 import useColorScheme from './hooks/useColorScheme';
 import Navigation from './navigation';
 
+
 export default function App() {
   const gifAsset = require('./assets/images/splash.gif')
   const isLoadingComplete = useCachedResources(); 
   const colorScheme = useColorScheme();
+
 
   if (!isLoadingComplete) {
     return null;

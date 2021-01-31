@@ -1,16 +1,26 @@
 import * as React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Image } from 'react-native';
+import * as ScreenOrientation from 'expo-screen-orientation';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
 
-import EditScreenInfo from '../components/EditScreenInfo';
+
 import { Text, View } from '../components/Themed';
 
+
 export default function MapScreen() {
+    const navigation = useNavigation();
+    
+    ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE_LEFT)
+
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Cartesian Map</Text>
-            <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
+            <Image 
+                source={require('../assets/images/globe.png')} style={styles.map}
+                resizeMode="contain"
+            />
         </View>
     );
+    
 }
 
 const styles = StyleSheet.create({
@@ -28,4 +38,7 @@ const styles = StyleSheet.create({
         height: 1,
         width: '80%',
     },
+    map: {
+        flex: 1
+    }
 });

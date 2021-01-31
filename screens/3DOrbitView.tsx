@@ -21,9 +21,13 @@ import {
   TorusGeometry
 } from 'three';
 
+import { resetOrientation } from '../hooks/resetOrientation';
+
 const globeText = require('../assets/images/globe.png');
 
-export default function App() {
+export default function Orbit() {
+  resetOrientation();
+
   const [camera, setCamera] = React.useState<Camera | null>(null);
   
 

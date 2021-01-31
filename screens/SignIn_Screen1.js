@@ -107,7 +107,7 @@ export default function SignInScreen(props) {
             </Text>
             <Image
                style={styles.icon}
-               source={require('../assets/images/cubeTEMP.png')}
+               source={require('../assets/images/trans-icon.png')}
             />
          </SafeAreaView>
 

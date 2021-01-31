@@ -3,46 +3,49 @@ import * as React from 'react';
 import { StyleSheet, TouchableOpacity } from 'react-native';
 import screen from '../constants/Layout';
 import { Text, View } from '../components/Themed';
+import { resetOrientation } from '../hooks/resetOrientation';
 
 export default function LandingScreen({ navigation }) {
+  resetOrientation();
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Navigation To Screens</Text>
       <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
       <View style={styles.row}>
         <TouchableOpacity style={styles.button} onPress={() => {navigation.navigate('ThreeOrbitView')}}>
-            <Text>ThreeOrbitView</Text>
+          <Text>ThreeOrbitView</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={() => {navigation.navigate('AlertsConditions')}}>
-            <Text>AlertsConditions</Text>
+          <Text>AlertsConditions</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={() => {navigation.navigate('BugReportPage')}}>
-            <Text>BugReportPage</Text>
+          <Text>BugReportPage</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={() => {navigation.navigate('CompTelPage')}}>
-            <Text>CompTelPage</Text>
+          <Text>CompTelPage</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.row}>
         <TouchableOpacity style={styles.button} onPress={() => {navigation.navigate('CredRecovPage')}}>
-            <Text>CredRecovPage</Text>
+          <Text>CredRecovPage</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={() => {navigation.navigate('ExpandedTelPage')}}>
-            <Text>ExpandedTelPage</Text>
+          <Text>ExpandedTelPage</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={() => {navigation.navigate('WorkspacePage')}}>
-            <Text>WorkspacePage</Text>
+          <Text>WorkspacePage</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={() => {navigation.navigate('MapPage')}}>
-            <Text>MapPage</Text>
+          <Text>MapPage</Text>
         </TouchableOpacity>
-        </View>
-        <View style={styles.row}>
+      </View>
+      <View style={styles.row}>
         <TouchableOpacity style={styles.button} onPress={() => {navigation.navigate('NotificationsPage')}}>
-            <Text>NotificationsPage</Text>
+          <Text>NotificationsPage</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={() => {navigation.navigate('EditRolePage')}}>
-            <Text>EditRolePage</Text>
+          <Text>EditRolePage</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -51,7 +54,7 @@ export default function LandingScreen({ navigation }) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+  flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
   },
