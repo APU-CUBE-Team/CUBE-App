@@ -98,64 +98,60 @@ export default function SignInScreen(props) {
 
 
    return (
-   <KeyboardAvoidingView style={styles.container} behavior={(Platform.OS === 'ios') ? 'padding' : null}>
-      <SafeAreaView style={styles.container}>
-         
+      <KeyboardAvoidingView style={styles.container} behavior={(Platform.OS === 'ios') ? 'padding' : null}>
+         <SafeAreaView style={styles.container}>
 
-         <StatusBar barStyle="light-content" />
 
-         <View style={styles.iconSafeArea}>
-            <Text style={styles.text3}>
-               CUBE
+            <StatusBar barStyle="light-content" />
+
+            <View style={styles.iconSafeArea}>
+               <Text style={styles.text3}>
+                  CUBE
             </Text>
-            <Image
-               style={styles.icon}
-               source={require('../assets/images/trans-icon.png')}
-            />
-         </View>
-         
-
-         <View style={styles.inputSafeArea}>
-            <TextInput
-               placeholder="Username"
-               value={username}
-               onChangeText={username => setUsername(username)}
-               style={styles.input}
-               autoCapitalize="none"
-               placeholderTextColor="#fff"
+               <Image
+                  style={styles.icon}
+                  source={require('../assets/images/trans-icon.png')}
+               />
+            </View>
 
 
+            <View style={styles.inputSafeArea}>
+               <TextInput
+                  placeholder="Username"
+                  value={username}
+                  onChangeText={username => setUsername(username)}
+                  style={styles.input}
+                  autoCapitalize="none"
+                  placeholderTextColor="#fff"
+               />
+               <TextInput
+                  placeholder="Password"
+                  value={password}
+                  onChangeText={password => setPassword(password)}
+                  secureTextEntry={true}
+                  style={styles.input}
+                  autoCapitalize="none"
+                  placeholderTextColor="#fff"
+               />
 
-            />
-            <TextInput
-               placeholder="Password"
-               value={password}
-               onChangeText={password => setPassword(password)}
-               secureTextEntry={true}
-               style={styles.input}
-               autoCapitalize="none"
-               placeholderTextColor="#fff"
 
-            />
-            
-            
 
-            <TouchableOpacity
-               style={styles.signInButton}
-               onPress={() => signIn({ username, password })}>
-               <Text style={styles.text}>Sign In</Text>
-            </TouchableOpacity>
+               <TouchableOpacity
+                  style={styles.signInButton}
+                  onPress={() => signIn({ username, password })}>
+                  <Text style={styles.text}>Sign In</Text>
+               </TouchableOpacity>
 
-            <TouchableOpacity onPress={() => alert("TODO")} >
-               <Text style={styles.text2}>Sign Up</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => alert("TODO")} >
-               <Text style={styles.text2}>Forgot Password</Text>
-            </TouchableOpacity>
-         </View>
-         
-        
-      </SafeAreaView> 
-   </KeyboardAvoidingView>
+               <TouchableOpacity onPress={() => alert("TODO")} >
+                  <Text style={styles.text2}>Sign Up</Text>
+               </TouchableOpacity>
+               <TouchableOpacity onPress={() => alert("TODO")} >
+                  <Text style={styles.text2}>Forgot Password</Text>
+               </TouchableOpacity>
+            </View>
+
+
+         </SafeAreaView>
+      </KeyboardAvoidingView>
    );
 }
