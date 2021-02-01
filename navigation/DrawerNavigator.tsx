@@ -24,10 +24,10 @@ import EditRoleScreen from '../screens/EditRole_Screen12';
 
 const Drawer = createDrawerNavigator<DrawerParamList>();
 
-export default function DrawerNavigator() {
+export default function DrawerNavigator({ route }) {
   //We will use this hook eventually. It enables us to more easily establish a consistent colorscheme throughout the app
   const colorScheme = useColorScheme();
-
+  console.log("Route", route)
   return (
     //This is how navigation works in v5. The Drawer.Navigator is what initializes our Drawers navigation. It creates and handles
     // the 'navigation' object similar to how it worked in v4. The Drawer.Screen is basically a screen object within our Drawer navigator.
@@ -41,6 +41,9 @@ export default function DrawerNavigator() {
       <Drawer.Screen
         name="Landing"
         component={Landing}
+        initialParams={{
+          SignOut: route.params.SignOut
+        }}
       />
       <Drawer.Screen
         name="Cartesian Map"
@@ -130,7 +133,8 @@ function ThreeOrbit({ navigation }) {
 
 const LandingStack = createStackNavigator<LandingParamList>();
 
-function Landing({ navigation }) {
+function Landing({ navigation, route }) {
+  console.log("Landing Route", route)
   return (
     <LandingStack.Navigator>
       <LandingStack.Screen
@@ -139,6 +143,9 @@ function Landing({ navigation }) {
         options={{
           headerTitle: 'Landing Page',
           headerRight: () => <DrawerToggle onPress={() => { navigation.toggleDrawer() }} />
+        }}
+        initialParams={{
+          SignOut: route.params?.SignOut
         }}
       />
       <LandingStack.Screen

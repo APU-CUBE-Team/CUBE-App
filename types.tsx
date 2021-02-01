@@ -1,12 +1,13 @@
+import { Context } from "react";
 
 export type RootStackParamList = {
-  Root: undefined;
+  Root: {SignOut: any};
   NotFound: undefined;
   SignIn: Element;
 };
 
 export type DrawerParamList = {
-  Landing: undefined;
+  Landing: {SignOut: any};
   "3D Orbit View": undefined;
   "Cartesian Map": {InitialPath: string};
   "Telemetry": {InitialPath: string};
@@ -17,7 +18,7 @@ export type ThreeOrbitParamList = {
 }
 
 export type LandingParamList = {
-  LandingScreen: undefined;
+  LandingScreen: {SignOut: any};
   ThreeOrbitView: undefined;
   AlertsConditions: undefined;
   BugReportPage: undefined;

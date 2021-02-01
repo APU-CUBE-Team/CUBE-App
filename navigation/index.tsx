@@ -101,6 +101,7 @@ function TestMode() {
         
       },
       signOut: () =>{
+        console.log('Auth Call')
         signOut(); 
         dispatch({ type: 'SIGN_OUT' })},
       signUp: async data => {
@@ -140,7 +141,7 @@ function TestMode() {
           {state.userToken == null ? (
             <Stack.Screen name="SignIn" component={SignIn} /> 
           ) : (
-            <Stack.Screen name="Root" component={DrawerNavigator}/>
+            <Stack.Screen name="Root" component={DrawerNavigator} initialParams={{SignOut: AuthContext}}/>
           )}
         </Stack.Navigator>
       </AuthContext.Provider>

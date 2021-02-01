@@ -5,8 +5,10 @@ import screen from '../constants/Layout';
 import { Text, View } from '../components/Themed';
 import { resetOrientation } from '../hooks/resetOrientation';
 
-export default function LandingScreen({ navigation }) {
+export default function LandingScreen({ navigation, route }) {
   resetOrientation();
+
+  const { signOut } = React.useContext(route.params?.SignOut);
 
   return (
     <View style={styles.container}>
@@ -46,6 +48,9 @@ export default function LandingScreen({ navigation }) {
         </TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={() => {navigation.navigate('EditRolePage')}}>
           <Text>EditRolePage</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={[styles.button, {backgroundColor: '#0000ff'}]} onPress={() => {signOut()}}>
+          <Text>Sign Out</Text>
         </TouchableOpacity>
       </View>
     </View>
