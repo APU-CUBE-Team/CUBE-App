@@ -91,16 +91,16 @@ const styles = StyleSheet.create({
 });
 
 export default function SignInScreen(props) {
-   const [username, setUsername] = React.useState('');
-   const [password, setPassword] = React.useState('');
+   const [username, setUsername] = React.useState('mmagnuson16@apu.edu');
+   const [password, setPassword] = React.useState('editor');
 
    const { signIn } = React.useContext(props.authentication);
 
    // checks for empty string, or if there is nothing in general. either signs in,
    // or you get bonked.
    function signInAuth (username, password) {
-      if ((username != "" && password != "")&&(username != null && password != null)) {
-         signIn(username, password);
+      if ((username != "" && password != "")&&(username && password)) {
+         signIn({username, password});
       } else {
          alert("what are you doing.");
       }

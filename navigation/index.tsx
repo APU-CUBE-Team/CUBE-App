@@ -8,9 +8,9 @@ import AsyncStorage from '@react-native-community/async-storage';
 import { RootStackParamList } from '../types';
 import DrawerNavigator from './DrawerNavigator';
 import LinkingConfiguration from './LinkingConfiguration';
-import {isSignedIn, signIn} from '../hooks/Storage';
+import {getToken, signIn} from '../hooks/Storage';
 import SignInScreen from '../screens/SignIn_Screen1';
-import {emailSignIn, signOut } from '../util/authenticating-users/firebaseAuth';
+import {emailSignIn, signOut, findNewToken } from '../util/authenticating-users/firebaseAuth';
 
 const AuthContext = React.createContext();
 
@@ -86,9 +86,14 @@ function TestMode() {
     () => ({
       signIn: async data => {
         emailSignIn(data.username, data.password).then((ret) => {
-          var token = ret.stsTokenManager.accessToken;
-          console.log(ret)
           console.log('Sign-In Success');
+          var user = ret.user
+          findNewToken().then((tokenPromise) => {
+            console.log(tokenPromise)
+
+          })
+          
+          
           dispatch({ type: 'SIGN_IN', token: 'dummy-auth-token' })
         })
         .catch((error) => {
@@ -123,7 +128,7 @@ function TestMode() {
 
   function RootNavigator() {
     let signedIn = false;
-    isSignedIn()
+    getToken()
       .then(ret => {
         if (ret != null)
           signedIn = true;

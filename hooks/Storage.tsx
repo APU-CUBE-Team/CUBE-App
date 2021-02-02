@@ -1,8 +1,5 @@
 import AsyncStorage from '@react-native-community/async-storage';
 
-////
-//// All of this is filler for now so we can set up our ternary operator lmao
-////
 export const signIn = async (value: String) => {
     try {
         const jsonValue = JSON.stringify(value)
