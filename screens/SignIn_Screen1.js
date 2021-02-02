@@ -96,6 +96,15 @@ export default function SignInScreen(props) {
 
    const { signIn } = React.useContext(props.authentication);
 
+   // checks for empty string, or if there is nothing in general. either signs in,
+   // or you get bonked.
+   function signInAuth (username, password) {
+      if ((username != "" && password != "")&&(username != null && password != null)) {
+         signIn(username, password);
+      } else {
+         alert("what are you doing.");
+      }
+   }
 
    return (
    <KeyboardAvoidingView style={styles.container} behavior={(Platform.OS === 'ios') ? 'padding' : null}>
@@ -142,7 +151,7 @@ export default function SignInScreen(props) {
 
             <TouchableOpacity
                style={styles.signInButton}
-               onPress={() => signIn({ username, password })}>
+               onPress={() => signInAuth(username, password)}>
                <Text style={styles.text}>Sign In</Text>
             </TouchableOpacity>
 
