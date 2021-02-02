@@ -3,12 +3,12 @@ import { createStackNavigator } from '@react-navigation/stack';
 import React, {useContext} from 'react';
 import { ColorSchemeName } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
-
+import * as firebase from 'firebase'
 
 import { RootStackParamList } from '../types';
 import DrawerNavigator from './DrawerNavigator';
 import LinkingConfiguration from './LinkingConfiguration';
-import {getToken, signIn} from '../hooks/Storage';
+import {getToken, storeToken} from '../hooks/Storage';
 import SignInScreen from '../screens/SignIn_Screen1';
 import {emailSignIn, signOut, findNewToken } from '../util/authenticating-users/firebaseAuth';
 
@@ -67,7 +67,7 @@ function TestMode() {
       let userToken;
 
       try {
-        userToken = await AsyncStorage.getItem('userToken');
+        userToken = await AsyncStorage.getItem('@Token');
       } catch (e) {
         // Restoring token failed
       }
@@ -88,13 +88,18 @@ function TestMode() {
         emailSignIn(data.username, data.password).then((ret) => {
           console.log('Sign-In Success');
           var user = ret.user
-          findNewToken().then((tokenPromise) => {
-            console.log(tokenPromise)
-
-          })
+          firebase.auth().onAuthStateChanged(user => {
+            if (user) {
+              user.getIdToken().then(idToken => {
+                console.log(idToken);
+                storeToken(idToken)
+                dispatch({ type: 'SIGN_IN', token: idToken })
+              });
+            }
+          });
+         
           
           
-          dispatch({ type: 'SIGN_IN', token: 'dummy-auth-token' })
         })
         .catch((error) => {
           var errorCode = error.code;

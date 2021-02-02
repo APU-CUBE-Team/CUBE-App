@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-community/async-storage';
 
-export const signIn = async (value: String) => {
+export const storeToken = async (value: String) => {
     try {
         const jsonValue = JSON.stringify(value)
         await AsyncStorage.setItem('@Token', jsonValue)

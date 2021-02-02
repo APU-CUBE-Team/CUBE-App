@@ -37,9 +37,12 @@ export function signOut() {firebase.auth().signOut()
 }
 
 export async function findNewToken() {
-  firebase.auth().onAuthStateChanged(function(user) {
+  firebase.auth().onAuthStateChanged(user => {
     if (user) {
-      return user.getIdToken()
+      user.getIdToken().then(idToken => {
+        console.log(idToken);
+        return idToken
+      });
     }
   });
 }
