@@ -91,8 +91,8 @@ const styles = StyleSheet.create({
 });
 
 export default function SignInScreen(props) {
-   const [username, setUsername] = React.useState('mmagnuson16@apu.edu');
-   const [password, setPassword] = React.useState('editor');
+   const [username, setUsername] = React.useState('');
+   const [password, setPassword] = React.useState('');
 
    const { signIn } = React.useContext(props.authentication);
 

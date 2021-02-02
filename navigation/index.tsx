@@ -4,11 +4,12 @@ import React, {useContext} from 'react';
 import { ColorSchemeName } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import * as firebase from 'firebase'
+import * as SplashScreen from 'expo-splash-screen';
 
 import { RootStackParamList } from '../types';
 import DrawerNavigator from './DrawerNavigator';
 import LinkingConfiguration from './LinkingConfiguration';
-import {getToken, storeToken} from '../hooks/Storage';
+import {getToken, storeToken, deleteToken} from '../hooks/Storage';
 import SignInScreen from '../screens/SignIn_Screen1';
 import {emailSignIn, signOut, findNewToken } from '../util/authenticating-users/firebaseAuth';
 
@@ -61,6 +62,7 @@ function TestMode() {
     }
   );
 
+  
   React.useEffect(() => {
     // Fetch the token from storage then navigate to our appropriate place
     const bootstrapAsync = async () => {
@@ -70,8 +72,8 @@ function TestMode() {
         userToken = await AsyncStorage.getItem('@Token');
       } catch (e) {
         // Restoring token failed
-      }
-
+      } 
+      
       // After restoring token, we may need to validate it in production apps
 
       // This will switch to the App screen or Auth screen and this loading
@@ -114,8 +116,11 @@ function TestMode() {
       },
       signOut: () =>{
         console.log('Auth Call')
-        signOut(); 
-        dispatch({ type: 'SIGN_OUT' })},
+        deleteToken().then(() => {
+          signOut(); 
+          dispatch({ type: 'SIGN_OUT' })
+        })
+      },
       signUp: async data => {
         dispatch({ type: 'SIGN_IN', token: 'dummy-auth-token' });
       },
@@ -132,12 +137,7 @@ function TestMode() {
   }
 
   function RootNavigator() {
-    let signedIn = false;
-    getToken()
-      .then(ret => {
-        if (ret != null)
-          signedIn = true;
-      })
+    
     return (
 
       <AuthContext.Provider value={authContext}>
