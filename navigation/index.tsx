@@ -85,31 +85,28 @@ function TestMode() {
   const authContext = React.useMemo(
     () => ({
       signIn: async data => {
-        // In a production app, we need to send some data (usually username, password) to server and get a token
-        // We will also need to handle errors if sign in failed
-        // After getting token, we need to persist the token using `AsyncStorage`
-        // In the example, we'll use a dummy token
-
-        if ((data.username != "" && data.password != "")
-        && (data.username != null && data.password != null)) {
-          emailSignIn(data.username, data.password);
-
-          dispatch({ type: 'SIGN_IN', token: 'dummy-auth-token' });
-        } else {
-          console.log("Nothing there");
-        }
+        emailSignIn(data.username, data.password).then((ret) => {
+          var token = ret.stsTokenManager.accessToken;
+          console.log(ret)
+          console.log('Sign-In Success');
+          dispatch({ type: 'SIGN_IN', token: 'dummy-auth-token' })
+        })
+        .catch((error) => {
+          var errorCode = error.code;
+          var errorMessage = error.message;
         
+          console.log(errorMessage, errorCode);
+          if (errorCode === 'auth/invalid-email')
+            alert('Your Email is Invalid.')
+          if (errorCode === 'auth/wrong-password')
+            alert('Password is Incorrect')
+        });
       },
       signOut: () =>{
         console.log('Auth Call')
         signOut(); 
         dispatch({ type: 'SIGN_OUT' })},
       signUp: async data => {
-        // In a production app, we need to send user data to server and get a token
-        // We will also need to handle errors if sign up failed
-        // After getting token, we need to persist the token using `AsyncStorage`
-        // In the example, we'll use a dummy token
-
         dispatch({ type: 'SIGN_IN', token: 'dummy-auth-token' });
       },
     }),
@@ -127,10 +124,10 @@ function TestMode() {
   function RootNavigator() {
     let signedIn = false;
     isSignedIn()
-            .then(ret => {
-              if (ret != null)
-                signedIn = true;
-            })
+      .then(ret => {
+        if (ret != null)
+          signedIn = true;
+      })
     return (
 
       <AuthContext.Provider value={authContext}>

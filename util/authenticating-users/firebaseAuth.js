@@ -19,19 +19,9 @@ export const firebaseConfig = {
   
   // Listen for authentication state to change.
   export function emailSignIn(username, password) { 
-    firebase.auth().signInWithEmailAndPassword(username, password)
-    .then((res) => {
-    //Signed In
-    var user = res.user;
-    console.log('Sign-In Success');
-  })
-  .catch((error) => {
-    var errorCode = error.code;
-    var errorMessage = error.message;
-  
-    console.log(errorMessage);
-  });
-}
+    return firebase.auth().signInWithEmailAndPassword(username, password)
+  }
+
   export function signOut() {firebase.auth().signOut()
   .then((res) => {
     
