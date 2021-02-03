@@ -7,15 +7,20 @@ import {
     SafeAreaView,
     StatusBar,
     Dimensions,
-    Image
+    Image,
+    KeyboardAvoidingView
 } from 'react-native';
 
 //import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
 
+import { TextField } from '../components/Form';
+
+
 import Colors from '../constants/Colors';
 import Screen from '../constants/Layout';
 
+const screen = Dimensions.get('window');
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -48,12 +53,6 @@ const styles = StyleSheet.create({
         textAlign: "center",
         padding: 5
     },
-    text3: {
-        color: Colors.c.white,
-        paddingTop: 20,
-        fontSize: 70,
-        textAlign: "center",
-    },
     input: {
         backgroundColor: Colors.c.darkGray,
         fontSize: 20,
@@ -61,7 +60,7 @@ const styles = StyleSheet.create({
         margin: 5,
         width: screen.width - 30,
         borderRadius: 10,
-        color: Colors.c.white
+        color: Colors.c.lightGray
 
     },
     reportButton: {
@@ -77,29 +76,46 @@ const styles = StyleSheet.create({
 
 });
 
-export default function BugReportScreen() {
+export default function BugReportScreen(props) {
 
     const [report, setReport] = React.useState('');
 
     return (
-        <View style={styles.container}>
+        <KeyboardAvoidingView style={styles.container} behavior={(Platform.OS === 'ios') ? 'padding' : null}>
+            <SafeAreaView style={styles.container}>
 
-            <StatusBar barStyle="light-content" />
+                <StatusBar barStyle="light-content" />
 
 
-
-            <SafeAreaView style={styles.inputSafeArea}>
-                <TextInput
+                {/* <TextField>
+                    label="Description"
                     placeholder="Tell us what happened..."
+                    value={report}
+                    onChangeText={report => setReport(report)}
+                    multiline="true"
+                </TextField> */}
+
+                <TextInput
+                    style={styles.input}
+                    autoCapitalize="none"
+                    placeholderTextColor={Colors.c.lightGray}
+                    label="Description"
+                    placeholder="Tell us what happened..."
+                    value={report}
+                    onChangeText={report => setReport(report)}
+                    multiline={true}
                 />
                 <TouchableOpacity
                     style={styles.reportButton}
                     onPress={() => alert("TODO")}>
+
                     <Text style={styles.text}>Submit report</Text>
                 </TouchableOpacity>
 
-            </SafeAreaView>
-        </View >
+            </SafeAreaView >
+        </KeyboardAvoidingView>
+
+
     );
 }
 

@@ -107,7 +107,7 @@ export default function SignInScreen(props) {
             <View style={styles.iconSafeArea}>
                <Text style={styles.text3}>
                   CUBE
-            </Text>
+               </Text>
                <Image
                   style={styles.icon}
                   source={require('../assets/images/trans-icon.png')}
@@ -117,12 +117,12 @@ export default function SignInScreen(props) {
 
             <View style={styles.inputSafeArea}>
                <TextInput
-                  placeholder="Username"
+                  placeholder="Email"
                   value={username}
                   onChangeText={username => setUsername(username)}
                   style={styles.input}
                   autoCapitalize="none"
-                  placeholderTextColor="#fff"
+                  placeholderTextColor={Colors.c.white}
                />
                <TextInput
                   placeholder="Password"
@@ -131,7 +131,7 @@ export default function SignInScreen(props) {
                   secureTextEntry={true}
                   style={styles.input}
                   autoCapitalize="none"
-                  placeholderTextColor="#fff"
+                  placeholderTextColor={Colors.c.white}
                />
 
 
