@@ -25,15 +25,6 @@ import {
 } from 'three';
 
 import { resetOrientation } from '../hooks/resetOrientation';
-// import globeImage from '../assets/images/globe.png'
-// const globeImageUri = Image.resolveAssetSource(globeImage).uri
-// const globeUri = copyAssetToCacheAsync(require('../assets/images/globe.png'), 'globe');
-// const globeText = {globeUri}
-// let globeImageUri = Image.resolveAssetSource(globeText).uri
-// alert(globeImageUri)
-// if (globeImageUri.includes('asset://'))
-//   globeImageUri = globeImageUri.replace('asset://', 'file://')
-// const globeText = require('https://cdn.discordapp.com/attachments/806317258594320395/806317442858483722/globe.png')
 
 export default function Orbit() {
   resetOrientation();
@@ -80,25 +71,14 @@ export default function Orbit() {
     scene.add(globe)
     scene.add(orbitTracker)
 
-    //const globeText = {globeUri, width: 1800}
-
     const asset = Asset.fromModule(require('../assets/images/globe.png'));
 
     await asset.downloadAsync();  
-    //alert(asset)
-    alert(asset.localUri)
+
     asset.localUri = asset.localUri?.replace(":/", "://")
-    //const globeUri = await copyAssetToCacheAsync(asset.localUri, 'globe');
-    //alert(globeUri)
+
     const globeTexture = new TextureLoader().load(asset);
 
-    
-    // const globeTexture = new TextureLoader().load(globeText);
-    // console.log('globe text', globeText)
-    // console.log('globeuri', globeUri)
-    //const globeTexture = await loadAsync(require('../assets/images/globe.png'));
-    // console.log("GlobeText Require", globeImageUri)
-    //globeTexture.image.data.localUri = globeTexture.image.data.uri;
     const globeGeometry = new SphereGeometry(15, 100, 80);
 
     let globeMaterial = new MeshPhongMaterial({
@@ -157,19 +137,4 @@ export default function Orbit() {
       <GLView style={{ flex: 1 }} onContextCreate={onContextCreate} key="d" />
     </OrbitControlsView>
   );
-}
-
-async function copyAssetToCacheAsync(assetModule, localFilename) {
-  const localUri = `${FileSystem.cacheDirectory}asset_${localFilename}`;
-  const fileInfo = await FileSystem.getInfoAsync(localUri, { size: false });
-  if (!fileInfo.exists) {
-    const asset = Asset.fromModule(assetModule);
-    await asset.downloadAsync();
-    console.log(`copyAssetToCacheAsync ${asset.localUri} -> ${localUri}`);
-    await FileSystem.copyAsync({
-      from: asset.localUri,
-      to: localUri,
-    });
-  }
-  return localUri;
 }
