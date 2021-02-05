@@ -28,10 +28,7 @@
     "expo-gl": "~9.2.0",
     "expo-google-app-auth": "^8.1.4",
     "expo-linking": "~2.0.0",
-<<<<<<< HEAD
     "expo-permissions": "~10.0.0",
-=======
->>>>>>> SignInFiesta
     "expo-screen-orientation": "~2.1.0",
     "expo-splash-screen": "~0.8.0",
     "expo-status-bar": "~1.0.3",
