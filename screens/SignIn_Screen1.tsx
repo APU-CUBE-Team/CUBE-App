@@ -98,76 +98,16 @@ export default function SignInScreen(props) {
 
    // checks for empty string, or if there is nothing in general. either signs in,
    // or you get bonked.
-   function signInAuth (username, password) {
-      if ((username != "" && password != "")&&(username && password)) {
-         signIn({username, password});
+   // Justin (2/6): defined variable types for username and password for good housekeeping
+   function signInAuth(username: string, password: string) {
+      if ((username != "" && password != "") && (username && password)) {
+         signIn({ username, password });
       } else {
          alert("what are you doing.");
       }
    }
 
    return (
-<<<<<<< HEAD
-   <KeyboardAvoidingView style={styles.container} behavior={(Platform.OS === 'ios') ? 'padding' : null}>
-      <SafeAreaView style={styles.container}>
-         
-
-         <StatusBar barStyle="light-content" />
-
-         <View style={styles.iconSafeArea}>
-            <Text style={styles.text3}>
-               CUBE
-            </Text>
-            <Image
-               style={styles.icon}
-               source={require('../assets/images/trans-icon.png')}
-            />
-         </View>
-         
-
-         <View style={styles.inputSafeArea}>
-            <TextInput
-               placeholder="Username"
-               value={username}
-               onChangeText={username => setUsername(username)}
-               style={styles.input}
-               autoCapitalize="none"
-               placeholderTextColor="#fff"
-
-
-
-            />
-            <TextInput
-               placeholder="Password"
-               value={password}
-               onChangeText={password => setPassword(password)}
-               secureTextEntry={true}
-               style={styles.input}
-               autoCapitalize="none"
-               placeholderTextColor="#fff"
-
-            />
-            
-            
-
-            <TouchableOpacity
-               style={styles.signInButton}
-               onPress={() => signInAuth(username, password)}>
-               <Text style={styles.text}>Sign In</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity onPress={() => alert("TODO")} >
-               <Text style={styles.text2}>Sign Up</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => alert("TODO")} >
-               <Text style={styles.text2}>Forgot Password</Text>
-            </TouchableOpacity>
-         </View>
-         
-        
-      </SafeAreaView> 
-   </KeyboardAvoidingView>
-=======
       <KeyboardAvoidingView style={styles.container} behavior={(Platform.OS === 'ios') ? 'padding' : null}>
          <SafeAreaView style={styles.container}>
 
@@ -177,7 +117,7 @@ export default function SignInScreen(props) {
             <View style={styles.iconSafeArea}>
                <Text style={styles.text3}>
                   CUBE
-               </Text>
+            </Text>
                <Image
                   style={styles.icon}
                   source={require('../assets/images/trans-icon.png')}
@@ -223,6 +163,5 @@ export default function SignInScreen(props) {
 
          </SafeAreaView>
       </KeyboardAvoidingView>
->>>>>>> origin/bugReportScreen
    );
 }
