@@ -98,7 +98,7 @@ export default function SignInScreen(props) {
 
    // checks for empty string, or if there is nothing in general. either signs in,
    // or you get bonked.
-   function signInAuth (username, password) {
+   function signInAuth ({username, password}) {
       if ((username != "" && password != "")&&(username && password)) {
          signIn({username, password});
       } else {
@@ -147,7 +147,7 @@ export default function SignInScreen(props) {
 
                <TouchableOpacity
                   style={styles.signInButton}
-                  onPress={() => signIn({ username, password })}>
+                  onPress={() => signInAuth({ username, password })}>
                   <Text style={styles.text}>Sign In</Text>
                </TouchableOpacity>
 

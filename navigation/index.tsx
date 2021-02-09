@@ -110,6 +110,8 @@ function TestMode() {
           console.log(errorMessage, errorCode);
           if (errorCode === 'auth/invalid-email')
             alert('Your Email is Invalid.')
+          if (errorCode === 'auth/user-not-found')
+            alert('Your Email is incorrect.')
           if (errorCode === 'auth/wrong-password')
             alert('Password is Incorrect')
         });
