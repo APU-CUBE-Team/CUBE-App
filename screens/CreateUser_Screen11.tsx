@@ -126,7 +126,7 @@ export default function CreateUserScreen(props) {
 
                 <View style={styles.iconSafeArea}>
                     <Text style={styles.text3}>
-                        Create Account
+                        Add a new member to your team
                     </Text>
                 </View>
 
@@ -168,12 +168,9 @@ export default function CreateUserScreen(props) {
                     <TouchableOpacity
                         style={styles.signInButton}
                         onPress={() => checkPW(password, confirmPassword)}>
-                        <Text style={styles.text}>Create User</Text>
+                        <Text style={styles.text}>Add User</Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity onPress={() => alert("TODO")} >
-                        <Text style={styles.text2}>Have an account? Sign In</Text>
-                    </TouchableOpacity>
                 </View>
 
 
