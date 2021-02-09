@@ -31,6 +31,7 @@ export type LandingParamList = {
   AlertSetupPage: undefined;
   EditRolePage: undefined;
   CreateUserPage: undefined;
+  TeamRolesPage: undefined;
 };
 
 export type TabTwoParamList = {
@@ -94,4 +95,8 @@ export type CreateUserParamList = {
 
 export type EditRoleParamList = {
   EditRolePage: undefined;
+}
+
+export type TeamRoleParamList = {
+  TeamRolePage: undefined;
 }

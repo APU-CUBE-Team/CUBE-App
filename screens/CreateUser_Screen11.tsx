@@ -124,12 +124,6 @@ export default function CreateUserScreen(props) {
 
                 <StatusBar barStyle="light-content" />
 
-                <View style={styles.iconSafeArea}>
-                    <Text style={styles.text3}>
-                        Add a new member to your team
-                    </Text>
-                </View>
-
 
                 <View style={styles.inputSafeArea}>
                     <TextInput
@@ -163,6 +157,8 @@ export default function CreateUserScreen(props) {
                     />
 
                 </View>
+
+                {/* PUT A PICKER FOR DIFFERENT ROLES HERE */}
 
                 <View style={styles.buttonSafeArea}>
                     <TouchableOpacity
