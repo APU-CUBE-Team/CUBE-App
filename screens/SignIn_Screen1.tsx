@@ -1,3 +1,4 @@
+import { transform } from '@babel/core';
 import * as React from 'react';
 import {
    Button,
@@ -36,8 +37,9 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
    },
    title: {
-      fontSize: 20,
-      fontWeight: 'bold',
+      width: 1008 / 4,
+      height: 314 / 4,
+      tintColor: '#fff',
    },
    separator: {
       marginVertical: 30,
@@ -45,7 +47,7 @@ const styles = StyleSheet.create({
       width: '80%',
    },
    text: {
-      color: Colors.c.white,
+      color: Colors.c.white2,
       fontSize: 20,
       textAlign: "center"
    },
@@ -98,9 +100,10 @@ export default function SignInScreen(props) {
 
    // checks for empty string, or if there is nothing in general. either signs in,
    // or you get bonked.
-   function signInAuth ({username, password}) {
-      if ((username != "" && password != "")&&(username && password)) {
-         signIn({username, password});
+   // Justin (2/6): defined variable types for username and password for good housekeeping
+   function signInAuth(username: string, password: string) {
+      if ((username != "" && password != "") && (username && password)) {
+         signIn({ username, password });
       } else {
          alert("what are you doing.");
       }
@@ -114,9 +117,11 @@ export default function SignInScreen(props) {
             <StatusBar barStyle="light-content" />
 
             <View style={styles.iconSafeArea}>
-               <Text style={styles.text3}>
-                  CUBE
-               </Text>
+               <Image
+                  style={styles.title}
+                  source={require('../assets/images/trans-title.png')}
+
+               />
                <Image
                   style={styles.icon}
                   source={require('../assets/images/trans-icon.png')}
@@ -142,8 +147,6 @@ export default function SignInScreen(props) {
                   autoCapitalize="none"
                   placeholderTextColor={Colors.c.white}
                />
-
-
 
                <TouchableOpacity
                   style={styles.signInButton}
