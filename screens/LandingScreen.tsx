@@ -15,41 +15,44 @@ export default function LandingScreen({ navigation, route }) {
       <Text style={styles.title}>Navigation To Screens</Text>
       <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
       <View style={styles.row}>
-        <TouchableOpacity style={styles.button} onPress={() => {navigation.navigate('ThreeOrbitView')}}>
+        <TouchableOpacity style={styles.button} onPress={() => { navigation.navigate('ThreeOrbitView') }}>
           <Text>ThreeOrbitView</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={() => {navigation.navigate('AlertsConditions')}}>
+        <TouchableOpacity style={styles.button} onPress={() => { navigation.navigate('AlertsConditions') }}>
           <Text>AlertsConditions</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={() => {navigation.navigate('BugReportPage')}}>
+        <TouchableOpacity style={styles.button} onPress={() => { navigation.navigate('BugReportPage') }}>
           <Text>BugReportPage</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={() => {navigation.navigate('CompTelPage')}}>
+        <TouchableOpacity style={styles.button} onPress={() => { navigation.navigate('CompTelPage') }}>
           <Text>CompTelPage</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.row}>
-        <TouchableOpacity style={styles.button} onPress={() => {navigation.navigate('CredRecovPage')}}>
+        <TouchableOpacity style={styles.button} onPress={() => { navigation.navigate('CredRecovPage') }}>
           <Text>CredRecovPage</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={() => {navigation.navigate('ExpandedTelPage')}}>
+        <TouchableOpacity style={styles.button} onPress={() => { navigation.navigate('ExpandedTelPage') }}>
           <Text>ExpandedTelPage</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={() => {navigation.navigate('WorkspacePage')}}>
+        <TouchableOpacity style={styles.button} onPress={() => { navigation.navigate('WorkspacePage') }}>
           <Text>WorkspacePage</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={() => {navigation.navigate('MapPage')}}>
+        <TouchableOpacity style={styles.button} onPress={() => { navigation.navigate('MapPage') }}>
           <Text>MapPage</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.row}>
-        <TouchableOpacity style={styles.button} onPress={() => {navigation.navigate('NotificationsPage')}}>
+        <TouchableOpacity style={styles.button} onPress={() => { navigation.navigate('NotificationsPage') }}>
           <Text>NotificationsPage</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={() => {navigation.navigate('EditRolePage')}}>
+        <TouchableOpacity style={styles.adminButton} onPress={() => { navigation.navigate('EditRolePage') }}>
           <Text>EditRolePage</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={[styles.button, {backgroundColor: '#0000ff'}]} onPress={() => {signOut()}}>
+        <TouchableOpacity style={styles.adminButton} onPress={() => { navigation.navigate('CreateUser') }}>
+          <Text>CreateUser</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={[styles.button, { backgroundColor: '#0000ff' }]} onPress={() => { signOut() }}>
           <Text>Sign Out</Text>
         </TouchableOpacity>
       </View>
@@ -59,7 +62,7 @@ export default function LandingScreen({ navigation, route }) {
 
 const styles = StyleSheet.create({
   container: {
-  flex: 1,
+    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -84,6 +87,14 @@ const styles = StyleSheet.create({
     margin: 15,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#00ff00'
+    backgroundColor: 'red'
+  },
+  adminButton: {
+    width: screen.window.width / 6,
+    height: screen.window.width / 6,
+    margin: 15,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'purple'
   }
 });
