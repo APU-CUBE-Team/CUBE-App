@@ -20,7 +20,7 @@ import WorkspaceScreen from '../screens/WorkspaceParam_Screen5';
 import MapScreen from '../screens/Map_Screen6';
 import NotificationsScreen from '../screens/Notifications_Screen7';
 import EditRoleScreen from '../screens/EditRole_Screen12';
-
+import CreateUserScreen from '../screens/CreateUser_Screen11';
 
 const Drawer = createDrawerNavigator<DrawerParamList>();
 
@@ -226,6 +226,17 @@ function Landing({ navigation, route }) {
           headerRight: () => <DrawerToggle onPress={() => { navigation.toggleDrawer() }} />
         }}
       />
+      {/* --------------------------------------- TEMP (SHOULD NAV FROM SIGN IN) -------------------------------------------------- */}
+      <LandingStack.Screen
+        name="CreateUser"
+        component={CreateUserScreen}
+        options={{
+          headerTitle: 'Create User (TEMP)',
+          headerRight: () => <DrawerToggle onPress={() => { navigation.toggleDrawer() }} />
+        }}
+      />
+      {/* --------------------------------------- TEMP (SHOULD NAV FROM SIGN IN) -------------------------------------------------- */}
+
     </LandingStack.Navigator>
   );
 }
