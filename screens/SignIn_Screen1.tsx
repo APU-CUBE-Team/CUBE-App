@@ -149,8 +149,6 @@ export default function SignInScreen(props) {
                   placeholderTextColor={Colors.c.white}
                />
 
-
-
                <TouchableOpacity
                   style={styles.signInButton}
                   onPress={() => signIn({ username, password })}>
