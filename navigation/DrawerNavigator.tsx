@@ -21,6 +21,8 @@ import MapScreen from '../screens/Map_Screen6';
 import NotificationsScreen from '../screens/Notifications_Screen7';
 import EditRoleScreen from '../screens/EditRole_Screen12';
 import CreateUserScreen from '../screens/CreateUser_Screen11';
+import TeamRolesScreen from '../screens/UserPerm_Screen10';
+
 
 const Drawer = createDrawerNavigator<DrawerParamList>();
 
@@ -230,7 +232,15 @@ function Landing({ navigation, route }) {
         name="CreateUserPage"
         component={CreateUserScreen}
         options={{
-          headerTitle: 'Create User (TEMP)',
+          headerTitle: 'Create User',
+          headerRight: () => <DrawerToggle onPress={() => { navigation.toggleDrawer() }} />
+        }}
+      />
+      <LandingStack.Screen
+        name="TeamRolesPage"
+        component={TeamRolesScreen}
+        options={{
+          headerTitle: 'Team Roles',
           headerRight: () => <DrawerToggle onPress={() => { navigation.toggleDrawer() }} />
         }}
       />
