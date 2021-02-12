@@ -101,7 +101,7 @@ export default function SignInScreen(props) {
    // checks for empty string, or if there is nothing in general. either signs in,
    // or you get bonked.
    // Justin (2/6): defined variable types for username and password for good housekeeping
-   function signInAuth(username: string, password: string) {
+   function signInAuth({username, password}) {
       if ((username != "" && password != "") && (username && password)) {
          signIn({ username, password });
       } else {
