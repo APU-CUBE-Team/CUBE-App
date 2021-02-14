@@ -4,10 +4,10 @@ import { View, Text } from 'react-native'
 import moment from 'moment';
 
 const axesSvg = { fontSize: 10, fill: 'grey' };
-const xAxesSvg = {...axesSvg, rotation: 45};
 const verticalContentInset = { top: 10, bottom: 10 }
 const xAxisHeight = axesSvg.fontSize * 1.5 +4
 
+// Has to be JS so that this line will work, it needs to be a component.
 export default class DataGraph extends React.PureComponent {
     state = {
         vals: this.props.data.vals,
@@ -34,6 +34,8 @@ export default class DataGraph extends React.PureComponent {
                     >
                         <Grid/>
                     </LineChart>
+                    {/* Double XAxis component so that we can fit the full date data, as otherwise they overlay easily
+                    and cause other drawing data */}
                     <XAxis
                         style={{ marginHorizontal: -10, height: axesSvg.fontSize}}
                         numberOfTicks={5}
