@@ -16,6 +16,7 @@ import { Text, View } from '../components/Themed';
 
 import Colors from '../constants/Colors';
 import Screen from '../constants/Layout';
+import { SignUp } from '../util/create-user/createUser';
 
 const screen = Dimensions.get('window');
 
@@ -96,10 +97,10 @@ const styles = StyleSheet.create({
     }
 });
 
-export default function CreateUserScreen(props) {
+export default function CreateUserScreen() {
 
 
-    //const { signIn } = React.useContext(props.authentication);
+    //const { signUp } = React.useContext(props.authentication);
     // What's this? ^^
     const [email, setEmail] = React.useState('');
     const [password, setPassword] = React.useState('');
@@ -109,9 +110,13 @@ export default function CreateUserScreen(props) {
     // taking in parameters password and confirm password
     function checkPW(pw: string, cpw: string) {
         {
+            pw = 'test';
+            cpw = 'test';
             pw == cpw ? (
                 //PUT ACTUAL FRONT END FUNCTIONALITY HERE
-                alert("GREAT SUCCESS GO KAZAKHSTAN")
+                alert("GREAT SUCCESS GO KAZAKHSTAN"),
+                SignUp(email, password)
+                //signUp({ email, password })
                 //RETURNS TRUE FOR MATCH -> SEND TO GOOGLE FIRECLOUD
             ) : (
                     alert("Please double check that your passwrd")
@@ -154,7 +159,7 @@ export default function CreateUserScreen(props) {
                     <TextInput
                         placeholder="Confirm Password"
                         value={confirmPassword}
-                        onChangeText={confirmPdassword => setConfirmPassword(confirmPassword)}
+                        onChangeText={confirmPassword => setConfirmPassword(confirmPassword)}
                         secureTextEntry={true}
                         style={styles.input}
                         autoCapitalize="none"

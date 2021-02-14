@@ -49,8 +49,8 @@ export default function LandingScreen({ navigation, route }) {
         <TouchableOpacity style={styles.adminButton} onPress={() => { navigation.navigate('EditRolePage') }}>
           <Text>EditRolePage</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.adminButton} onPress={() => { navigation.navigate('CreateUser') }}>
-          <Text>CreateUser</Text>
+        <TouchableOpacity style={styles.adminButton} onPress={() => { navigation.navigate('CreateUserPage', ) }}>
+          <Text>CreateUserPage</Text>
         </TouchableOpacity>
         <TouchableOpacity style={[styles.button, { backgroundColor: '#0000ff' }]} onPress={() => { signOut() }}>
           <Text>Sign Out</Text>
