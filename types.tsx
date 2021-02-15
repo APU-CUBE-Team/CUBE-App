@@ -39,12 +39,7 @@ export type TabTwoParamList = {
 };
 
 export type SignInParamList = {
-  SignInScreen: Element;
-  Drawer: undefined;
-}
-
-
-export type CredRecovParamList = {
+  SignInScreen: {props: any};
   CredRecovPage: undefined;
 }
 
