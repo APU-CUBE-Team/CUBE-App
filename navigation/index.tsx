@@ -6,11 +6,12 @@ import AsyncStorage from '@react-native-community/async-storage';
 import * as firebase from 'firebase'
 import * as SplashScreen from 'expo-splash-screen';
 
-import { RootStackParamList } from '../types';
+import { RootStackParamList, SignInParamList } from '../types';
 import DrawerNavigator from './DrawerNavigator';
 import LinkingConfiguration from './LinkingConfiguration';
 import {getToken, storeToken, deleteToken} from '../hooks/Storage';
 import SignInScreen from '../screens/SignIn_Screen1';
+import CredRecoveryScreen from '../screens/CredRecov_Screen2';
 import {emailSignIn, signOut, findNewToken } from '../util/authenticating-users/firebaseAuth';
 
 const AuthContext = React.createContext();
@@ -30,6 +31,8 @@ export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeNa
 // A root stack navigator is often used for displaying modals on top of all other content
 // Read more here: https://reactnavigation.org/docs/modal
 const Stack = createStackNavigator<RootStackParamList>();
+const Login = createStackNavigator<SignInParamList>();
+
 
 function TestMode() {
   const [state, dispatch] = React.useReducer(
@@ -131,7 +134,13 @@ function TestMode() {
 
   function SignIn() {
     return(
-      <SignInScreen authentication={AuthContext}/>
+      <Login.Navigator
+        screenOptions={{
+        headerShown: false
+      }}>
+        <Login.Screen name="SignInScreen" component={SignInScreen} initialParams={{props: AuthContext}}/>
+        <Login.Screen name="CredRecovPage" component={CredRecoveryScreen}/>
+      </Login.Navigator>
     )
   }
 
