@@ -10,6 +10,8 @@ import {
     Image,
     KeyboardAvoidingView
 } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
+import { resetOrientation } from '../hooks/resetOrientation';
 
 //import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
@@ -77,6 +79,11 @@ const styles = StyleSheet.create({
 });
 
 export default function BugReportScreen(props) {
+    useFocusEffect(
+        React.useCallback(() => {
+            resetOrientation();
+        }, [])
+      )
 
     const [report, setReport] = React.useState('');
 

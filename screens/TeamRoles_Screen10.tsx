@@ -12,6 +12,8 @@ import {
     Alert,
     Platform
 } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
+import { resetOrientation } from '../hooks/resetOrientation';
 
 import Colors from '../constants/Colors';
 
@@ -69,7 +71,12 @@ const styles = StyleSheet.create({
     },
 });
 
-export default function TeamRolesScreen(props) {
+export default function TeamRolesScreen() {
+    useFocusEffect(
+        React.useCallback(() => {
+            resetOrientation();
+        }, [])
+      )
 
     return (
         <KeyboardAvoidingView style={styles.container} behavior={(Platform.OS === 'ios') ? 'padding' : null}>

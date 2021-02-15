@@ -23,11 +23,16 @@ import {
   MeshBasicMaterial,
   TorusGeometry,
 } from 'three';
-
+import { useFocusEffect } from '@react-navigation/native';
 import { resetOrientation } from '../hooks/resetOrientation';
 
 export default function Orbit() {
-  resetOrientation();
+  useFocusEffect(
+    React.useCallback(() => {
+        resetOrientation();
+    }, [])
+  )
+
 
   const [camera, setCamera] = React.useState<Camera | null>(null);
   

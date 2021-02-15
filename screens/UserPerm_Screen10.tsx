@@ -11,6 +11,8 @@ import {
     KeyboardAvoidingView,
     Alert
 } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
+import { resetOrientation } from '../hooks/resetOrientation';
 
 import { Text, View } from '../components/Themed';
 
@@ -96,8 +98,13 @@ const styles = StyleSheet.create({
     }
 });
 
-export default function CreateUserScreen(props) {
-
+export default function CreateUserScreen() {
+    useFocusEffect(
+        React.useCallback(() => {
+            resetOrientation();
+        }, [])
+      )
+    
 
 
     const [email, setEmail] = React.useState('');
