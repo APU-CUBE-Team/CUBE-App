@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
 });
 
 
-export default function CreateUserScreen(props) {
+export default function CreateUserScreen() {
 
     const [firstName, setFirstName] = React.useState('');
     const [lastName, setLastName] = React.useState('');
