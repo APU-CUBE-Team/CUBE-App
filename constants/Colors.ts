@@ -24,7 +24,7 @@ export default {
 
 
     gray: '#434345',
-    gray2: '#666757',
+    gray2: '#666969',
 
     darkGray: '#2D2D2D',
 
