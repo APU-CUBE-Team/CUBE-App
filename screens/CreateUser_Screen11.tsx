@@ -9,13 +9,19 @@ import {
     Dimensions,
     Image,
     KeyboardAvoidingView,
-    Alert
+    Alert,
+    Platform
 } from 'react-native';
+
+import { Picker } from '@react-native-picker/picker';
+
 
 import { Text, View } from '../components/Themed';
 
 import Colors from '../constants/Colors';
 import Screen from '../constants/Layout';
+import { color } from 'react-native-reanimated';
+import { Color, Light } from 'three';
 
 const screen = Dimensions.get('window');
 
@@ -26,15 +32,11 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         backgroundColor: Colors.c.black
     },
-    iconSafeArea: {
-        flex: 2,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
     inputSafeArea: {
         flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
+        marginTop: 30
+        //alignItems: 'center',
+        //justifyContent: 'center',
     },
     buttonSafeArea: {
         flex: 1,
@@ -56,16 +58,11 @@ const styles = StyleSheet.create({
         textAlign: "center"
     },
     text2: {
-        color: Colors.c.blue,
-        fontSize: 12,
-        textAlign: "center",
-        padding: 5
-    },
-    text3: {
         color: Colors.c.white,
-        paddingTop: 20,
-        fontSize: 70,
-        textAlign: "center",
+        fontSize: 15,
+        textAlign: "left",
+        marginLeft: 15,
+        marginTop: 7,
     },
     input: {
         backgroundColor: Colors.c.darkGray,
@@ -77,33 +74,58 @@ const styles = StyleSheet.create({
         color: Colors.c.white
 
     },
-    icon: {
-        width: 300,
-        height: 300,
-        marginLeft: 20,
-        marginTop: 10,
-        tintColor: '#fff'
-    },
     signInButton: {
         backgroundColor: Colors.c.blue,
         width: screen.width - 30,
-        height: 40,
+        height: 60,
         alignItems: 'center',
         justifyContent: 'center',
         marginTop: 5,
         marginBottom: 10,
-        borderRadius: 10
-    }
+        borderRadius: 10,
+        margin: 5,
+    },
+    picker: {
+        width: screen.width - 30,
+        backgroundColor: Colors.c.darkGray,
+        borderBottomColor: 'transparent',
+        borderRadius: 10,
+        margin: 5,
+        marginBottom: 10,
+        ...Platform.select({
+            android: {
+                color: '#fff',
+                backgroundColor: Colors.c.darkGray,
+                marginLeft: 10,
+            },
+        }),
+    },
+    pickerItem: {
+        color: Colors.c.white,
+        fontSize: 20,
+        height: 150,
+
+    },
+    pickerContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+
 });
+
+export interface roleTypes {
+    role: string | number
+}
 
 export default function CreateUserScreen(props) {
 
-
-    //const { signIn } = React.useContext(props.authentication);
-    // What's this? ^^
+    const [firstName, setFirstName] = React.useState('');
+    const [lastName, setLastName] = React.useState('');
     const [email, setEmail] = React.useState('');
     const [password, setPassword] = React.useState('');
     const [confirmPassword, setConfirmPassword] = React.useState('');
+    const [role, setRole] = React.useState("1");
+
 
     // TODO
     // taking in parameters password and confirm password
@@ -118,7 +140,9 @@ export default function CreateUserScreen(props) {
                 )
         }
     }
+
     return (
+
         <KeyboardAvoidingView style={styles.container} behavior={(Platform.OS === 'ios') ? 'padding' : null}>
             <SafeAreaView style={styles.container}>
 
@@ -126,51 +150,85 @@ export default function CreateUserScreen(props) {
 
 
                 <View style={styles.inputSafeArea}>
+
+                    <Text style={styles.text2}>First Name</Text>
+                    <TextInput
+                        placeholder="John"
+                        placeholderTextColor={Colors.c.gray2}
+                        value={firstName}
+                        onChangeText={firstName => setFirstName(firstName)}
+                        style={styles.input}
+                        autoCapitalize="none"
+
+                    />
+
+                    <Text style={styles.text2}>Last Name</Text>
+                    <TextInput
+                        placeholder="Doe"
+                        value={lastName}
+                        onChangeText={lastName => setLastName(lastName)}
+                        style={styles.input}
+                        autoCapitalize="none"
+                        placeholderTextColor={Colors.c.gray2}
+                    />
+
+                    <Text style={styles.text2}>Email Address</Text>
                     <TextInput
                         placeholder="Email Address"
                         value={email}
                         onChangeText={email => setEmail(email)}
                         style={styles.input}
                         autoCapitalize="none"
-                        placeholderTextColor="#fff"
-
+                        placeholderTextColor={Colors.c.gray2}
                     />
+
+                    <Text style={styles.text2}>Password</Text>
                     <TextInput
-                        placeholder="Password"
+                        placeholder="******"
                         value={password}
                         onChangeText={password => setPassword(password)}
                         secureTextEntry={true}
                         style={styles.input}
                         autoCapitalize="none"
-                        placeholderTextColor="#fff"
-
+                        placeholderTextColor={Colors.c.gray2}
                     />
+
+                    <Text style={styles.text2}>Comfirm Password</Text>
                     <TextInput
-                        placeholder="Confirm Password"
+                        placeholder="*******"
                         value={confirmPassword}
                         onChangeText={confirmPdassword => setConfirmPassword(confirmPassword)}
                         secureTextEntry={true}
                         style={styles.input}
                         autoCapitalize="none"
-                        placeholderTextColor="#fff"
-
+                        placeholderTextColor={Colors.c.gray2}
                     />
 
-                </View>
-
-                {/* PUT A PICKER FOR DIFFERENT ROLES HERE */}
-
-                <View style={styles.buttonSafeArea}>
+                    <Text style={styles.text2}>Permissions</Text>
+                    {/* TODO: WE'RE GONNA NEED TO CONNECT THIS TO BACK END */}
+                    <View style={styles.pickerContainer}>
+                        <Picker
+                            selectedValue={role}
+                            style={styles.picker}
+                            itemStyle={styles.pickerItem}
+                            onValueChange={(itemValue, itemIndex) => setRole(itemValue)}
+                        >
+                            <Picker.Item label="Team Lead Assistant (Replace)" value="1" />
+                            <Picker.Item label="Team Member (Replace)" value="2" />
+                            <Picker.Item label="Assistant (Replace)" value="3" />
+                            <Picker.Item label="Assistant to the Regional Manager (Replace)" value="4" />
+                        </Picker>
+                    </View>
                     <TouchableOpacity
                         style={styles.signInButton}
                         onPress={() => checkPW(password, confirmPassword)}>
                         <Text style={styles.text}>Add User</Text>
                     </TouchableOpacity>
-
                 </View>
 
 
-            </SafeAreaView>
-        </KeyboardAvoidingView>
+
+            </SafeAreaView >
+        </KeyboardAvoidingView >
     );
 }
