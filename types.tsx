@@ -11,6 +11,9 @@ export type DrawerParamList = {
   "3D Orbit View": undefined;
   "Cartesian Map": { InitialPath: string };
   "Telemetry": { InitialPath: string };
+  "Bug Report": undefined;
+  "User Permissions": undefined;
+  "Notification History": undefined;
 };
 
 export type ThreeOrbitParamList = {
@@ -65,13 +68,7 @@ export type MapParamList = {
 
 export type NotificationsParamList = {
   NotificationsPage: undefined;
-}
-
-export type AlertConditionsParamList = {
   AlertConditionsPage: undefined;
-}
-
-export type AlertSetupParamList = {
   AlertSetupPage: undefined;
 }
 
@@ -79,19 +76,9 @@ export type BugReportParamList = {
   BugReportPage: undefined;
 }
 
-
 export type UserPermParamList = {
   UserPermPage: undefined;
-}
-
-export type CreateUserParamList = {
   CreateUserPage: undefined;
-}
-
-export type EditRoleParamList = {
   EditRolePage: undefined;
-}
-
-export type TeamRoleParamList = {
   TeamRolePage: undefined;
 }
