@@ -11,6 +11,8 @@ import {
   Image,
   KeyboardAvoidingView,
 } from "react-native";
+import { useFocusEffect } from '@react-navigation/native';
+import { resetOrientation } from '../hooks/resetOrientation';
 
 import { Text, View } from "../components/Themed";
 
@@ -96,6 +98,12 @@ export default function SignInScreen({ route, navigation }) {
   const [password, setPassword] = React.useState("");
 
   const { signIn } = React.useContext(route.params.props);
+
+  useFocusEffect(
+    React.useCallback(() => {
+        resetOrientation();
+    }, [])
+  )
 
   // checks for empty string, or if there is nothing in general. either signs in,
   // or you get bonked.

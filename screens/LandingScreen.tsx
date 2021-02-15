@@ -1,12 +1,17 @@
 // THESE ARE EXAMPLES
 import * as React from 'react';
 import { StyleSheet, TouchableOpacity } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
+import { resetOrientation } from '../hooks/resetOrientation';
 import screen from '../constants/Layout';
 import { Text, View } from '../components/Themed';
-import { resetOrientation } from '../hooks/resetOrientation';
 
 export default function LandingScreen({ navigation, route }) {
-  resetOrientation();
+  useFocusEffect(
+    React.useCallback(() => {
+        resetOrientation();
+    }, [])
+  )
 
   const { signOut } = React.useContext(route.params?.SignOut);
 
