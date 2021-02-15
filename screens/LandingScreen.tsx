@@ -49,8 +49,8 @@ export default function LandingScreen({ navigation, route }) {
         <TouchableOpacity style={styles.adminButton} onPress={() => { navigation.navigate('EditRolePage') }}>
           <Text style={styles.text}>Edit Roles</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.adminButton} onPress={() => { navigation.navigate('CreateUserPage') }}>
-          <Text style={styles.text}>Create User</Text>
+        <TouchableOpacity style={styles.adminButton} onPress={() => { navigation.navigate('CreateUserPage', ) }}>
+          <Text>CreateUserPage</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.adminButton} onPress={() => { navigation.navigate('TeamRolesPage') }}>
           <Text style={styles.text}>Team Roles</Text>

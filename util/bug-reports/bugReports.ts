@@ -21,7 +21,13 @@ export function reportBug(message: string) {
     .collection("bugReports")
     .add({
       [userEmail]: {
-        bugReports: message,
+        bugReports: {
+          message,
+          currTime,
+          userEmail
+        },
+          
+
       },
     });
 

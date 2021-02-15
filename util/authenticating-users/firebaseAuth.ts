@@ -17,8 +17,11 @@ export const firebaseConfig = {
   // checks if firebase has been initialized already. mainly just for refreshing purposes.
   !firebase.apps.length ? firebase.initializeApp(firebaseConfig) : firebase.app()
   
+  export const db = firebase.firestore();
+  export const auth = firebase.auth();
+
   // Listen for authentication state to change.
-export function emailSignIn(username, password) { 
+export function emailSignIn(username: any, password: any) { 
   return firebase.auth().signInWithEmailAndPassword(username, password)
 }
 
