@@ -91,11 +91,11 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function SignInScreen({ route }) {
+export default function SignInScreen(props) {
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
 
-  const { signIn } = React.useContext(route.params.props.authentication);
+  const { signIn } = React.useContext(props.authentication);
 
   // checks for empty string, or if there is nothing in general. either signs in,
   // or you get bonked.
