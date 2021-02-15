@@ -91,11 +91,11 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function SignInScreen(props: any) {
+export default function SignInScreen({ route, navigation }) {
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
 
-  const { signIn } = React.useContext(props.authentication);
+  const { signIn } = React.useContext(route.params.props);
 
   // checks for empty string, or if there is nothing in general. either signs in,
   // or you get bonked.
@@ -153,7 +153,7 @@ export default function SignInScreen(props: any) {
             <Text style={styles.text}>Sign In</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={() => alert("TODO")}>
+          <TouchableOpacity onPress={() => navigation.navigate('CredRecovPage')}>
             <Text style={styles.text2}>Forgot Password</Text>
           </TouchableOpacity>
         </View>
