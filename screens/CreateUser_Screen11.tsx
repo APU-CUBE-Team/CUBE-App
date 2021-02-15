@@ -35,8 +35,6 @@ const styles = StyleSheet.create({
     inputSafeArea: {
         flex: 1,
         marginTop: 30
-        //alignItems: 'center',
-        //justifyContent: 'center',
     },
     buttonSafeArea: {
         flex: 1,
@@ -113,9 +111,6 @@ const styles = StyleSheet.create({
 
 });
 
-export interface roleTypes {
-    role: string | number
-}
 
 export default function CreateUserScreen(props) {
 
