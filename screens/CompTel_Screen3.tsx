@@ -4,7 +4,6 @@ import { useFocusEffect } from '@react-navigation/native';
 import { resetOrientation } from '../hooks/resetOrientation';
 
 import { Text, View } from '../components/Themed';
-import { resetOrientation } from '../hooks/resetOrientation';
 
 export default function CompTelScreen() {
     useFocusEffect(
