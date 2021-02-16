@@ -17,22 +17,15 @@ export const firebaseConfig = {
   // checks if firebase has been initialized already. mainly just for refreshing purposes.
   !firebase.apps.length ? firebase.initializeApp(firebaseConfig) : firebase.app()
   
+  export const db = firebase.firestore();
+  export const auth = firebase.auth();
+
   // Listen for authentication state to change.
-  export function emailSignIn(username, password) { 
-    firebase.auth().signInWithEmailAndPassword(username, password)
-    .then((res) => {
-    //Signed In
-    var user = res.user;
-    console.log('Sign-In Success');
-  })
-  .catch((error) => {
-    var errorCode = error.code;
-    var errorMessage = error.message;
-  
-    console.log(errorMessage);
-  });
+export function emailSignIn(username: any, password: any) { 
+  return firebase.auth().signInWithEmailAndPassword(username, password)
 }
-  export function signOut() {firebase.auth().signOut()
+
+export function signOut() {firebase.auth().signOut()
   .then((res) => {
     
     console.log('Sign-Out Success');
@@ -41,11 +34,18 @@ export const firebaseConfig = {
     // An error happened.
     var errorCode = error.code;
     var errorMessage = error.message;
-  
+
     console.log(errorMessage);
   });
 }
-  
-  /**
-   * End of Firebase Init and Auth
-   */
+
+export async function findNewToken() {
+  firebase.auth().onAuthStateChanged(user => {
+    if (user) {
+      user.getIdToken().then(idToken => {
+        console.log(idToken);
+        return idToken
+      });
+    }
+  });
+}

@@ -1,10 +1,18 @@
 import * as React from 'react';
 import { StyleSheet } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
+import { resetOrientation } from '../hooks/resetOrientation';
 
 import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
 
 export default function NotificationsScreen() {
+    useFocusEffect(
+        React.useCallback(() => {
+            resetOrientation();
+        }, [])
+      )
+
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Notifications</Text>

@@ -1,16 +1,19 @@
 import { Context } from "react";
 
 export type RootStackParamList = {
-  Root: {SignOut: any};
+  Root: { SignOut: any };
   NotFound: undefined;
   SignIn: Element;
 };
 
 export type DrawerParamList = {
-  Landing: {SignOut: any};
+  Landing: { SignOut: any };
   "3D Orbit View": undefined;
-  "Cartesian Map": {InitialPath: string};
-  "Telemetry": {InitialPath: string};
+  "Cartesian Map": { InitialPath: string };
+  "Telemetry": { InitialPath: string };
+  "Bug Report": undefined;
+  "User Permissions": undefined;
+  "Notification History": undefined;
 };
 
 export type ThreeOrbitParamList = {
@@ -18,7 +21,7 @@ export type ThreeOrbitParamList = {
 }
 
 export type LandingParamList = {
-  LandingScreen: {SignOut: any};
+  LandingScreen: { SignOut: any };
   ThreeOrbitView: undefined;
   AlertsConditions: undefined;
   BugReportPage: undefined;
@@ -30,6 +33,8 @@ export type LandingParamList = {
   NotificationsPage: undefined;
   AlertSetupPage: undefined;
   EditRolePage: undefined;
+  CreateUserPage: undefined;
+  TeamRolesPage: undefined;
 };
 
 export type TabTwoParamList = {
@@ -37,12 +42,7 @@ export type TabTwoParamList = {
 };
 
 export type SignInParamList = {
-  SignInScreen: Element;
-  Drawer: undefined;
-}
-
-
-export type CredRecovParamList = {
+  SignInScreen: {props: any};
   CredRecovPage: undefined;
 }
 
@@ -68,13 +68,7 @@ export type MapParamList = {
 
 export type NotificationsParamList = {
   NotificationsPage: undefined;
-}
-
-export type AlertConditionsParamList = {
   AlertConditionsPage: undefined;
-}
-
-export type AlertSetupParamList = {
   AlertSetupPage: undefined;
 }
 
@@ -82,15 +76,9 @@ export type BugReportParamList = {
   BugReportPage: undefined;
 }
 
-
 export type UserPermParamList = {
   UserPermPage: undefined;
-}
-
-export type CreateUserParamList = {
   CreateUserPage: undefined;
-}
-
-export type EditRoleParamList = {
   EditRolePage: undefined;
+  TeamRolePage: undefined;
 }

@@ -1,11 +1,16 @@
 import * as React from 'react';
 import { StyleSheet } from 'react-native';
-
-import { Text, View } from '../components/Themed';
+import { useFocusEffect } from '@react-navigation/native';
 import { resetOrientation } from '../hooks/resetOrientation';
 
+import { Text, View } from '../components/Themed';
+
 export default function CompTelScreen() {
-    resetOrientation();
+    useFocusEffect(
+        React.useCallback(() => {
+            resetOrientation();
+        }, [])
+      )
 
     return (
         <View style={styles.container}>
