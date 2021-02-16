@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { TouchableOpacity, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { createDrawerNavigator } from '@react-navigation/drawer';
+import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList, DrawerItem } from '@react-navigation/drawer';
 import { createStackNavigator } from '@react-navigation/stack';
-import { DrawerParamList, LandingParamList, ThreeOrbitParamList, MapParamList } from '../types';
+import { DrawerParamList, LandingParamList, ThreeOrbitParamList, MapParamList, NotificationsParamList, UserPermParamList } from '../types';
 import useColorScheme from '../hooks/useColorScheme';
 import Colors from '../constants/Colors';
 
@@ -20,36 +20,41 @@ import WorkspaceScreen from '../screens/WorkspaceParam_Screen5';
 import MapScreen from '../screens/Map_Screen6';
 import NotificationsScreen from '../screens/Notifications_Screen7';
 import EditRoleScreen from '../screens/EditRole_Screen12';
+import CreateUserScreen from '../screens/CreateUser_Screen11';
+import TeamRolesScreen from '../screens/TeamRoles_Screen10';
+import UserPerm from '../screens/UserPerm_Screen10';
+
 
 
 const Drawer = createDrawerNavigator<DrawerParamList>();
 
 export default function DrawerNavigator({ route }) {
   //We will use this hook eventually. It enables us to more easily establish a consistent colorscheme throughout the app
+  const { signOut } = React.useContext(route.params?.SignOut);
   const colorScheme = useColorScheme();
-  console.log("Route", route)
   return (
     //This is how navigation works in v5. The Drawer.Navigator is what initializes our Drawers navigation. It creates and handles
     // the 'navigation' object similar to how it worked in v4. The Drawer.Screen is basically a screen object within our Drawer navigator.
     // The best part of this is that we can still point the component of our screen to another navigator instead of a screen, as we do here.
     // The name part of our Drawer.Screen has to correspond to the values within our types.tsx for parameter reasons. Don't really get it yet.
     <Drawer.Navigator
-      initialRouteName="Landing"
+      initialRouteName="Telemetry"
       drawerPosition={'right'}
       drawerType={'slide'}
+      drawerContent={props => {
+        return (
+          <DrawerContentScrollView {...props}>
+            <DrawerItemList {...props} />
+            <DrawerItem label="Logout" onPress={() => signOut()} />
+          </DrawerContentScrollView>
+        )
+      }}
     >
       <Drawer.Screen
         name="Landing"
         component={Landing}
         initialParams={{
-          SignOut: route.params.SignOut
-        }}
-      />
-      <Drawer.Screen
-        name="Cartesian Map"
-        component={TelemetryMap}
-        initialParams={{
-          InitialPath: "MapPage"
+          SignOut: signOut
         }}
       />
       <Drawer.Screen
@@ -60,10 +65,28 @@ export default function DrawerNavigator({ route }) {
         }}
       />
       <Drawer.Screen
+        name="Cartesian Map"
+        component={TelemetryMap}
+        initialParams={{
+          InitialPath: "MapPage"
+        }}
+      />
+      <Drawer.Screen
         name="3D Orbit View"
         component={ThreeOrbit}
       />
-
+      <Drawer.Screen
+        name="Notification History"
+        component={Notifications}
+      />
+      <Drawer.Screen
+        name="Bug Report"
+        component={BugReportScreen}
+      />
+      <Drawer.Screen
+        name="User Permissions"
+        component={UserPermissions}
+      />
     </Drawer.Navigator>
   );
 }
@@ -110,6 +133,22 @@ function TelemetryMap({ navigation, route }) {
           headerRight: () => <DrawerToggle onPress={() => { navigation.toggleDrawer() }} />
         }}
       />
+      <TelemetryMapStack.Screen
+        name="CompTelPage"
+        component={CompTelScreen}
+        options={{
+          headerTitle: 'CUBE Telemetry',
+          headerRight: () => <DrawerToggle onPress={() => { navigation.toggleDrawer() }} />
+        }}
+      />
+      <TelemetryMapStack.Screen
+        name="WorkspacePage"
+        component={WorkspaceScreen}
+        options={{
+          headerTitle: 'Workspace Settings',
+          headerRight: () => <DrawerToggle onPress={() => { navigation.toggleDrawer() }} />
+        }}
+      />
     </TelemetryMapStack.Navigator>
   )
 }
@@ -131,10 +170,91 @@ function ThreeOrbit({ navigation }) {
   );
 }
 
+const NotificationStack = createStackNavigator<NotificationsParamList>();
+
+function Notifications({ navigation }) {
+  return (
+    <NotificationStack.Navigator>
+      <NotificationStack.Screen 
+        name="NotificationsPage"
+        component={NotificationsScreen}
+        options={{
+          headerTitle: 'Alert History',
+          headerRight: () => <DrawerToggle onPress={() => { navigation.toggleDrawer() }} />,
+          headerLeft: () => <TouchableOpacity style={{marginLeft: 5}} onPress={() => {
+            navigation.navigate("AlertConditionsPage")
+          }}><Ionicons size={30} style={{ marginBottom: -3, color: '#fff' }} name="pencil-outline" /></TouchableOpacity>
+        }}
+      />
+      <NotificationStack.Screen 
+        name="AlertConditionsPage"
+        component={AlertConditionsScreen}
+        options={{
+          headerTitle: 'Alert Conditions',
+          headerRight: () => <DrawerToggle onPress={() => { navigation.toggleDrawer() }} />
+        }}
+      />
+      {/* <NotificationStack.Screen // So this doesn't exist as a screen rn I think because it's a popup?
+        name="AlertSetupPage"
+        component={NotFoundScreen}
+        options={{
+          headerTitle: 'Alert Triggers',
+          headerRight: () => <DrawerToggle onPress={() => { navigation.toggleDrawer() }} />
+        }}
+      /> */}
+    </NotificationStack.Navigator>
+  )
+}
+
+const TeamStack = createStackNavigator<UserPermParamList>();
+
+function UserPermissions({ navigation }) {
+  return (
+    <TeamStack.Navigator>
+      <TeamStack.Screen 
+        name="TeamRolePage"
+        component={TeamRolesScreen}
+        options={{
+          headerTitle: 'Team Roles',
+          headerRight: () => <DrawerToggle onPress={() => { navigation.toggleDrawer() }} />,
+          headerLeft: () => <TouchableOpacity style={{marginLeft: 5}} onPress={() => {
+            navigation.navigate("CreateUserPage")
+          }}><Ionicons size={30} style={{ marginBottom: -3, color: '#fff' }} name="person-add-outline" /></TouchableOpacity>
+        }}
+      />
+      <TeamStack.Screen 
+        name="CreateUserPage"
+        component={CreateUserScreen}
+        options={{
+          headerTitle: 'Create a User',
+          headerRight: () => <DrawerToggle onPress={() => { navigation.toggleDrawer() }} />
+        }}
+      />
+      <TeamStack.Screen 
+        name="EditRolePage"
+        component={EditRoleScreen}
+        options={{
+          headerTitle: 'Edit Role',
+          headerRight: () => <DrawerToggle onPress={() => { navigation.toggleDrawer() }} />
+        }}
+      />
+      <TeamStack.Screen 
+        name="UserPermPage"
+        component={UserPerm}
+        options={{
+          headerTitle: 'User Permissions',
+          headerRight: () => <DrawerToggle onPress={() => { navigation.toggleDrawer() }} />
+        }}
+      />
+    </TeamStack.Navigator>
+  )
+}
+
 const LandingStack = createStackNavigator<LandingParamList>();
 
 function Landing({ navigation, route }) {
-  console.log("Landing Route", route)
+  const { signOut } = React.useContext(route.params?.SignOut);
+
   return (
     <LandingStack.Navigator>
       <LandingStack.Screen
@@ -145,7 +265,7 @@ function Landing({ navigation, route }) {
           headerRight: () => <DrawerToggle onPress={() => { navigation.toggleDrawer() }} />
         }}
         initialParams={{
-          SignOut: route.params?.SignOut
+          SignOut: signOut
         }}
       />
       <LandingStack.Screen
@@ -228,6 +348,23 @@ function Landing({ navigation, route }) {
           headerRight: () => <DrawerToggle onPress={() => { navigation.toggleDrawer() }} />
         }}
       />
+      <LandingStack.Screen
+        name="CreateUserPage"
+        component={CreateUserScreen}
+        options={{
+          headerTitle: 'Create User',
+          headerRight: () => <DrawerToggle onPress={() => { navigation.toggleDrawer() }} />
+        }}
+      />
+      <LandingStack.Screen
+        name="TeamRolesPage"
+        component={TeamRolesScreen}
+        options={{
+          headerTitle: 'Team Roles',
+          headerRight: () => <DrawerToggle onPress={() => { navigation.toggleDrawer() }} />
+        }}
+      />
+
     </LandingStack.Navigator>
   );
 }

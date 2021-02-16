@@ -3,14 +3,16 @@ import { createStackNavigator } from '@react-navigation/stack';
 import React, {useContext} from 'react';
 import { ColorSchemeName } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
+import * as firebase from 'firebase'
+import * as SplashScreen from 'expo-splash-screen';
 
-
-import { RootStackParamList } from '../types';
+import { RootStackParamList, SignInParamList } from '../types';
 import DrawerNavigator from './DrawerNavigator';
 import LinkingConfiguration from './LinkingConfiguration';
-import {isSignedIn, signIn} from '../hooks/Storage';
+import {getToken, storeToken, deleteToken} from '../hooks/Storage';
 import SignInScreen from '../screens/SignIn_Screen1';
-import {emailSignIn, signOut } from '../util/authenticating-users/firebaseAuth';
+import CredRecoveryScreen from '../screens/CredRecov_Screen2';
+import {emailSignIn, signOut, findNewToken } from '../util/authenticating-users/firebaseAuth';
 
 const AuthContext = React.createContext();
 
@@ -29,6 +31,8 @@ export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeNa
 // A root stack navigator is often used for displaying modals on top of all other content
 // Read more here: https://reactnavigation.org/docs/modal
 const Stack = createStackNavigator<RootStackParamList>();
+const Login = createStackNavigator<SignInParamList>();
+
 
 function TestMode() {
   const [state, dispatch] = React.useReducer(
@@ -61,17 +65,18 @@ function TestMode() {
     }
   );
 
+  
   React.useEffect(() => {
     // Fetch the token from storage then navigate to our appropriate place
     const bootstrapAsync = async () => {
       let userToken;
 
       try {
-        userToken = await AsyncStorage.getItem('userToken');
+        userToken = await AsyncStorage.getItem('@Token');
       } catch (e) {
         // Restoring token failed
-      }
-
+      } 
+      
       // After restoring token, we may need to validate it in production apps
 
       // This will switch to the App screen or Auth screen and this loading
@@ -85,32 +90,41 @@ function TestMode() {
   const authContext = React.useMemo(
     () => ({
       signIn: async data => {
-        // In a production app, we need to send some data (usually username, password) to server and get a token
-        // We will also need to handle errors if sign in failed
-        // After getting token, we need to persist the token using `AsyncStorage`
-        // In the example, we'll use a dummy token
-
-        if ((data.username != "" && data.password != "")
-        && (data.username != null && data.password != null)) {
-          emailSignIn(data.username, data.password);
-
-          dispatch({ type: 'SIGN_IN', token: 'dummy-auth-token' });
-        } else {
-          console.log("Nothing there");
-        }
+        emailSignIn(data.username, data.password).then((ret) => {
+          console.log('Sign-In Success');
+          var user = ret.user
+          firebase.auth().onAuthStateChanged(user => {
+            if (user) {
+              user.getIdToken().then(idToken => {
+                console.log(idToken);
+                storeToken(idToken)
+                dispatch({ type: 'SIGN_IN', token: idToken })
+              });
+            }
+          });
+         
+          
+          
+        })
+        .catch((error) => {
+          var errorCode = error.code;
+          var errorMessage = error.message;
         
+          console.log(errorMessage, errorCode);
+          if (errorCode === 'auth/invalid-email')
+            alert('Your Email is Invalid.')
+          if (errorCode === 'auth/user-not-found')
+            alert('Your Email is incorrect.')
+          if (errorCode === 'auth/wrong-password')
+            alert('Password is Incorrect')
+        });
       },
       signOut: () =>{
         console.log('Auth Call')
-        signOut(); 
-        dispatch({ type: 'SIGN_OUT' })},
-      signUp: async data => {
-        // In a production app, we need to send user data to server and get a token
-        // We will also need to handle errors if sign up failed
-        // After getting token, we need to persist the token using `AsyncStorage`
-        // In the example, we'll use a dummy token
-
-        dispatch({ type: 'SIGN_IN', token: 'dummy-auth-token' });
+        deleteToken().then(() => {
+          signOut(); 
+          dispatch({ type: 'SIGN_OUT' })
+        })
       },
     }),
     []
@@ -120,17 +134,18 @@ function TestMode() {
 
   function SignIn() {
     return(
-      <SignInScreen authentication={AuthContext}/>
+      <Login.Navigator
+        screenOptions={{
+        headerShown: false
+      }}>
+        <Login.Screen name="SignInScreen" component={SignInScreen} initialParams={{props: AuthContext}}/>
+        <Login.Screen name="CredRecovPage" component={CredRecoveryScreen}/>
+      </Login.Navigator>
     )
   }
 
   function RootNavigator() {
-    let signedIn = false;
-    isSignedIn()
-            .then(ret => {
-              if (ret != null)
-                signedIn = true;
-            })
+    
     return (
 
       <AuthContext.Provider value={authContext}>

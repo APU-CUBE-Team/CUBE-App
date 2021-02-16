@@ -1,7 +1,10 @@
 import { ExpoWebGLRenderingContext, GLView } from 'expo-gl';
-import { Renderer, TextureLoader } from 'expo-three';
+import { Renderer, TextureLoader, loadAsync } from 'expo-three';
 import OrbitControlsView from 'expo-three-orbit-controls';
 import * as React from 'react';
+import { Image } from 'react-native';
+import { Asset } from 'expo-asset';
+import * as FileSystem from 'expo-file-system';
 import {
   AmbientLight,
   BoxBufferGeometry,
@@ -18,15 +21,18 @@ import {
   SphereGeometry,
   MeshPhongMaterial,
   MeshBasicMaterial,
-  TorusGeometry
+  TorusGeometry,
 } from 'three';
-
+import { useFocusEffect } from '@react-navigation/native';
 import { resetOrientation } from '../hooks/resetOrientation';
 
-const globeText = require('../assets/images/globe.png');
-
 export default function Orbit() {
-  resetOrientation();
+  useFocusEffect(
+    React.useCallback(() => {
+        resetOrientation();
+    }, [])
+  )
+
 
   const [camera, setCamera] = React.useState<Camera | null>(null);
   
@@ -70,7 +76,14 @@ export default function Orbit() {
     scene.add(globe)
     scene.add(orbitTracker)
 
-    const globeTexture = new TextureLoader().load(globeText);
+    const asset = Asset.fromModule(require('../assets/images/globe.png'));
+
+    await asset.downloadAsync();  
+
+    asset.localUri = asset.localUri?.replace(":/", "://")
+
+    const globeTexture = new TextureLoader().load(asset);
+
     const globeGeometry = new SphereGeometry(15, 100, 80);
 
     let globeMaterial = new MeshPhongMaterial({
@@ -130,4 +143,3 @@ export default function Orbit() {
     </OrbitControlsView>
   );
 }
-

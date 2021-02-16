@@ -2,7 +2,7 @@
   "expo": {
     "name": "CUBE",
     "slug": "CUBE",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "userInterfaceStyle": "automatic",
@@ -19,16 +19,22 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "buildNuber": "0.1.0",
+      "buildNuber": "0.2.0",
       "bundleIdentifier": "com.cube.manager"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#000000"
+        "backgroundColor": "#FFFFFF"
       },
-      "package": "com.cube.manager",
-      "versionCode": 1
+      "versionCode": 12,
+      "permissions": [
+        "CAMERA",
+        "RECORD_AUDIO",
+        "READ_PHONE_STATE",
+        "READ_CONTACTS"
+      ],
+      "package": "com.cube.manager"
     },
     "web": {
       "favicon": "./assets/images/favicon.png"

@@ -5,13 +5,12 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import useCachedResources from './hooks/useCachedResources';
 import useColorScheme from './hooks/useColorScheme';
 import Navigation from './navigation';
-
+import * as SplashScreen from 'expo-splash-screen';
 
 export default function App() {
-  const gifAsset = require('./assets/images/splash.gif')
+  // const gifAsset = require('./assets/images/splash.gif')
   const isLoadingComplete = useCachedResources(); 
   const colorScheme = useColorScheme();
-
 
   if (!isLoadingComplete) {
     return null;
