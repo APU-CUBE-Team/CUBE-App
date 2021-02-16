@@ -38,7 +38,7 @@ export default function DrawerNavigator({ route }) {
     // The best part of this is that we can still point the component of our screen to another navigator instead of a screen, as we do here.
     // The name part of our Drawer.Screen has to correspond to the values within our types.tsx for parameter reasons. Don't really get it yet.
     <Drawer.Navigator
-      initialRouteName="Landing"
+      initialRouteName="Telemetry"
       drawerPosition={'right'}
       drawerType={'slide'}
       drawerContent={props => {
@@ -54,7 +54,7 @@ export default function DrawerNavigator({ route }) {
         name="Landing"
         component={Landing}
         initialParams={{
-          SignOut: route.params.SignOut
+          SignOut: signOut
         }}
       />
       <Drawer.Screen
@@ -253,6 +253,8 @@ function UserPermissions({ navigation }) {
 const LandingStack = createStackNavigator<LandingParamList>();
 
 function Landing({ navigation, route }) {
+  const { signOut } = React.useContext(route.params?.SignOut);
+
   return (
     <LandingStack.Navigator>
       <LandingStack.Screen
@@ -263,7 +265,7 @@ function Landing({ navigation, route }) {
           headerRight: () => <DrawerToggle onPress={() => { navigation.toggleDrawer() }} />
         }}
         initialParams={{
-          SignOut: route.params?.SignOut
+          SignOut: signOut
         }}
       />
       <LandingStack.Screen
