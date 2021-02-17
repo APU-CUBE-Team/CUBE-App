@@ -211,7 +211,7 @@ export default function CreateUserScreen() {
               style={styles.signInButton}
               onPress={() => {
                 checkPW(password, confirmPassword);
-                SignUp("dgrissom@apu.edu", "dg3456");
+                SignUp(firstName, lastName, email, password, role);
               }}
             >
               <Text style={styles.text}>Add User</Text>
