@@ -2,6 +2,7 @@
   "expo": {
     "name": "CUBE",
     "slug": "CUBE",
+    "scheme": "cube",
     "version": "0.2.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -19,7 +20,6 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "buildNuber": "0.2.0",
       "bundleIdentifier": "com.cube.manager"
     },
     "android": {
