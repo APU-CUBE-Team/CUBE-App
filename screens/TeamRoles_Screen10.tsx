@@ -48,15 +48,22 @@ const styles = StyleSheet.create({
     },
     text: {
         color: Colors.c.white,
-        fontSize: 20,
-        textAlign: "center"
+        fontSize: 30,
+        textAlign: "center",
+        marginTop: 10,
+
     },
     text2: {
         color: Colors.c.white,
-        fontSize: 15,
+        fontSize: 20,
         textAlign: "left",
         marginLeft: 15,
-        marginTop: 7,
+        marginTop: 10,
+    },
+    text3: {
+        color: Colors.c.white,
+        fontSize: 20,
+        textAlign: "center"
     },
     saveButton: {
         backgroundColor: Colors.c.blue,
@@ -64,7 +71,7 @@ const styles = StyleSheet.create({
         height: 60,
         alignItems: 'center',
         justifyContent: 'center',
-        marginTop: 5,
+        marginTop: 20,
         marginBottom: 10,
         borderRadius: 10,
         margin: 5,
@@ -76,7 +83,7 @@ export default function TeamRolesScreen() {
         React.useCallback(() => {
             resetOrientation();
         }, [])
-      )
+    )
 
     return (
         <KeyboardAvoidingView style={styles.container} behavior={(Platform.OS === 'ios') ? 'padding' : null}>
@@ -87,27 +94,29 @@ export default function TeamRolesScreen() {
 
                 <View style={styles.inputSafeArea}>
 
-                    <Text style={styles.text2}>Justin Watson (Replace)</Text>
+                    <Text style={styles.text}>Admin</Text>
+                    <Text style={styles.text2}>Justin Watson</Text>
 
 
-                    <Text style={styles.text2}>Josh Roland (Replace)</Text>
+                    <Text style={styles.text2}>Josh Roland</Text>
+
+                    <Text style={styles.text}>Assistant Leads</Text>
+
+                    <Text style={styles.text2}>Cole Gunter</Text>
 
 
-                    <Text style={styles.text2}>Cole Gunter (Replace)</Text>
+                    <Text style={styles.text2}>Mark Magnuson</Text>
+                    <Text style={styles.text}>Guest</Text>
 
 
-                    <Text style={styles.text2}>Mark Magnuson (Replace)</Text>
-
-
-                    <Text style={styles.text2}>Nate Bowman (Replace)</Text>
-
+                    <Text style={styles.text2}>Nate Bowman</Text>
 
 
 
                     <TouchableOpacity
                         style={styles.saveButton}
-                        onPress={() => alert("Great success")}>
-                        <Text style={styles.text}>Save Changes</Text>
+                        onPress={() => alert("Changes Saved")}>
+                        <Text style={styles.text3}>Save Changes</Text>
                     </TouchableOpacity>
                 </View>
 

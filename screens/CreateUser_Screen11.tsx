@@ -13,6 +13,8 @@ import {
 } from "react-native";
 import { useFocusEffect } from '@react-navigation/native';
 import { resetOrientation } from '../hooks/resetOrientation';
+import { Picker } from '@react-native-picker/picker';
+
 
 import { Text, View } from "../components/Themed";
 
@@ -87,13 +89,6 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         margin: 5,
         marginBottom: 10,
-        // ...Platform.select({
-        //     android: {
-        //         color: '#fff',
-        //         backgroundColor: Colors.c.darkGray,
-        //         marginLeft: 10,
-        //     },
-        // }),
     },
     pickerItem: {
         color: Colors.c.white,
@@ -108,13 +103,12 @@ const styles = StyleSheet.create({
 
 });
 
-
 export default function CreateUserScreen() {
     useFocusEffect(
         React.useCallback(() => {
             resetOrientation();
         }, [])
-      )
+    )
 
     const [firstName, setFirstName] = React.useState('');
     const [lastName, setLastName] = React.useState('');
@@ -130,66 +124,102 @@ export default function CreateUserScreen() {
         {
             pw == cpw ? (
                 //PUT ACTUAL FRONT END FUNCTIONALITY HERE
-                alert("GREAT SUCCESS GO KAZAKHSTAN")
+                alert("Passwords match")
                 //RETURNS TRUE FOR MATCH -> SEND TO GOOGLE FIRECLOUD
             ) : (
-                    alert("Please double check that your passwrd")
+                    alert("Please double check that your passwrds match")
                 )
         }
     }
 
     return (
-        <KeyboardAvoidingView
-            style={styles.container}
-            behavior={Platform.OS === "ios" ? "padding" : null}
-        >
+
+        <KeyboardAvoidingView style={styles.container} behavior={(Platform.OS === 'ios') ? 'padding' : null}>
             <SafeAreaView style={styles.container}>
+
                 <StatusBar barStyle="light-content" />
 
-                <View style={styles.iconSafeArea}>
-                    <Text style={styles.text3}>Add a new member to your team</Text>
-                </View>
 
                 <View style={styles.inputSafeArea}>
+
+                    <Text style={styles.text2}>First Name</Text>
+                    <TextInput
+                        placeholder="John"
+                        placeholderTextColor={Colors.c.gray2}
+                        value={firstName}
+                        onChangeText={firstName => setFirstName(firstName)}
+                        style={styles.input}
+                        autoCapitalize="none"
+
+                    />
+
+                    <Text style={styles.text2}>Last Name</Text>
+                    <TextInput
+                        placeholder="Doe"
+                        value={lastName}
+                        onChangeText={lastName => setLastName(lastName)}
+                        style={styles.input}
+                        autoCapitalize="none"
+                        placeholderTextColor={Colors.c.gray2}
+                    />
+
+                    <Text style={styles.text2}>Email Address</Text>
                     <TextInput
                         placeholder="Email Address"
                         value={email}
-                        onChangeText={(email) => setEmail(email)}
+                        onChangeText={email => setEmail(email)}
                         style={styles.input}
                         autoCapitalize="none"
-                        placeholderTextColor="#fff"
+                        placeholderTextColor={Colors.c.gray2}
                     />
-                    <TextInput
-                        placeholder="Password"
-                        value={password}
-                        onChangeText={(password) => setPassword(password)}
-                        secureTextEntry={true}
-                        style={styles.input}
-                        autoCapitalize="none"
-                        placeholderTextColor="#fff"
-                    />
-                    <TextInput
-                        placeholder="Confirm Password"
-                        value={confirmPassword}
-                        onChangeText={(confirmPassword) =>
-                            setConfirmPassword(confirmPassword)
-                        }
-                        secureTextEntry={true}
-                        style={styles.input}
-                        autoCapitalize="none"
-                        placeholderTextColor="#fff"
-                    />
-                </View>
 
-                <View style={styles.buttonSafeArea}>
+                    <Text style={styles.text2}>Password</Text>
+                    <TextInput
+                        placeholder="******"
+                        value={password}
+                        onChangeText={password => setPassword(password)}
+                        secureTextEntry={true}
+                        style={styles.input}
+                        autoCapitalize="none"
+                        placeholderTextColor={Colors.c.gray2}
+                    />
+
+                    <Text style={styles.text2}>Comfirm Password</Text>
+                    <TextInput
+                        placeholder="******"
+                        value={confirmPassword}
+                        onChangeText={confirmPassword => setConfirmPassword(confirmPassword)}
+                        secureTextEntry={true}
+                        style={styles.input}
+                        autoCapitalize="none"
+                        placeholderTextColor={Colors.c.gray2}
+                    />
+
+                    <Text style={styles.text2}>Permissions</Text>
+                    {/* TODO: WE'RE GONNA NEED TO CONNECT THIS TO BACK END */}
+                    <View style={styles.pickerContainer}>
+                        <Picker
+                            selectedValue={role}
+                            style={styles.picker}
+                            itemStyle={styles.pickerItem}
+                            onValueChange={(itemValue, itemIndex) => setRole(itemValue)}
+                        >
+                            <Picker.Item label="Team Lead Assistant (Replace)" value="1" />
+                            <Picker.Item label="Team Member (Replace)" value="2" />
+                            <Picker.Item label="Assistant (Replace)" value="3" />
+                            <Picker.Item label="Assistant to the Regional Manager (Replace)" value="4" />
+                        </Picker>
+                    </View>
                     <TouchableOpacity
                         style={styles.signInButton}
-                        onPress={() => checkPW(password, confirmPassword)}
-                    >
+                        onPress={() => checkPW(password, confirmPassword)}>
                         <Text style={styles.text}>Add User</Text>
                     </TouchableOpacity>
                 </View>
-            </SafeAreaView>
-        </KeyboardAvoidingView>
+
+
+
+            </SafeAreaView >
+        </KeyboardAvoidingView >
     );
 }
