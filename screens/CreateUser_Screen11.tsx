@@ -121,7 +121,7 @@ export default function CreateUserScreen() {
     console.log(password === confirmPassword)
     if (password === confirmPassword) {
         console.log("Success")
-        SignUp(email, confirmPassword, firstName, lastName);
+        SignUp(firstName, lastName, email, password, role);
         alert("New User Created")
     } else {
         alert("Please double check that your passwords match");
