@@ -116,14 +116,17 @@ export default function CreateUserScreen() {
 
   // TODO
   // taking in parameters password and confirm password
-  function checkPW(pw: string, cpw: string) {
-    {
-      pw == cpw
-        ? //PUT ACTUAL FRONT END FUNCTIONALITY HERE
-          alert("New User Created")
-        : //RETURNS TRUE FOR MATCH -> SEND TO GOOGLE FIRECLOUD
-          alert("Please double check that your passwrds match");
+  function checkPW() {
+    console.log("Passed")
+    console.log(password === confirmPassword)
+    if (password === confirmPassword) {
+        console.log("Success")
+        SignUp(email, confirmPassword, firstName, lastName);
+        alert("New User Created")
+    } else {
+        alert("Please double check that your passwords match");
     }
+    
   }
 
   return (
@@ -176,7 +179,7 @@ export default function CreateUserScreen() {
               placeholderTextColor={Colors.c.gray2}
             />
 
-            <Text style={styles.text2}>Comfirm Password</Text>
+            <Text style={styles.text2}>Confirm Password</Text>
             <TextInput
               placeholder="******"
               value={confirmPassword}
@@ -209,10 +212,7 @@ export default function CreateUserScreen() {
             </View>
             <TouchableOpacity
               style={styles.signInButton}
-              onPress={() => {
-                checkPW(password, confirmPassword);
-                SignUp("dgrissom@apu.edu", "dg3456");
-              }}
+              onPress={() => checkPW()}
             >
               <Text style={styles.text}>Add User</Text>
             </TouchableOpacity>

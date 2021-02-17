@@ -6,7 +6,7 @@ import {db, auth} from '../authenticating-users/firebaseAuth';
 // NOTE: organization will be whatever the admin's organization is.
 const usersDBDoc = db.collection('TestOrganization').doc("team").collection("teamMembers");
 
-export function SignUp(email: any, password: any) {
+export function SignUp(email: string, password: string, fname: string, lname: string ) {
       
   console.log('right here')
       
@@ -19,8 +19,8 @@ export function SignUp(email: any, password: any) {
               role: 'Team Member (Replace)',
               orgID: 'TestOrganization',
               email: registeredUser.user?.email,
-              lastName: 'Grissom',
-              firstName: 'Dan',
+              lastName: lname,
+              firstName: fname,
               
               
 
