@@ -16,9 +16,13 @@ export function SignUp(email: any, password: any) {
         .set(
           {
               uid: registeredUser.user?.uid,
+              role: 'Team Member (Replace)',
+              orgID: 'TestOrganization',
               email: registeredUser.user?.email,
-              role: 'user',
-              orgID: 'TestOrganization'
+              lastName: 'Grissom',
+              firstName: 'Dan',
+              
+              
 
         })
         //DEBUG
