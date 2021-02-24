@@ -20,6 +20,8 @@ import { Text, View } from "../components/Themed";
 
 import Colors from "../constants/Colors";
 import Screen from "../constants/Layout";
+import { MyTheme } from "../navigation/index";
+
 import { SignUp } from "../util/create-user/createUser";
 
 const screen = Dimensions.get("window");
