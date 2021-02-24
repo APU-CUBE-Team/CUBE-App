@@ -1,5 +1,6 @@
 import React from 'react'
 import { LineChart, Grid, YAxis, XAxis, ScaleType } from 'react-native-svg-charts'
+import * as shape from 'd3-shape'
 import { View, Text } from 'react-native'
 import moment from 'moment';
 
@@ -31,6 +32,7 @@ export default class DataGraph extends React.PureComponent {
                         contentInset={verticalContentInset}
                         svg={{ stroke: 'rgb(134, 65, 244)' }}
                         animate={true}
+                        curve={shape.curveMonotoneX}
                     >
                         <Grid/>
                     </LineChart>
