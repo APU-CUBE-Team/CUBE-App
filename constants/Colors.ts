@@ -1,3 +1,5 @@
+import { MyTheme } from '../navigation/index';
+
 //Justin: made this a .js file so I could colorize. Hope that's alright
 const tintColorLight = '#2f95dc';
 const tintColorDark = '#fff';
