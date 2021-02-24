@@ -7,28 +7,21 @@ import { resetOrientation } from '../hooks/resetOrientation';
 import Screen from '../constants/Layout'
 import { useFocusEffect } from '@react-navigation/native';
 import CompTelScreen from './CompTel_Screen3';
+import ExpTelScreen from './ExpandedTel_Screen4';
 
-export default function ExpandedTelScreen({ dataSet }) {
+
+export default function ExpandedTelScreen({ route }) {
     const [path, setPath] = React.useState("ExpandedTelPage");
     // Hook that functions like componentDidMount. Ever screen will need this to ensure correct rotation
     useFocusEffect(
         React.useCallback(() => {
             resetOrientation();
             AsyncStorage.getItem('@Telemetry').then((ret: any) => {
-                console.log("Got preference from storage",ret)
-                console.log(ret === "\"CompTelPage\"")
-                if (ret === "\"CompTelPage\"")
-                    setPath(ret)
+                setPath(ret)
             })
 
         }, [])
     )
-    React.useEffect(() => {
-        console.log('Detected change')
-        console.log(path)
-        console.log(typeof(path))
-        console.log(path === 'CompTelPage')
-    }, [path])
 
     const [render, setRender] = React.useState(0);  // Not entirely sure if this is necessary at this point, but I'm too scared to remove
     const [current, setCurrent] = React.useState("data1");  // Stores what graph to display on the top of screen
@@ -72,73 +65,8 @@ export default function ExpandedTelScreen({ dataSet }) {
             {path === "\"CompTelPage\"" ? (
                 <CompTelScreen/> 
             ) : (
-            <View style={styles.container}>
-                <View style={styles.GraphArea}>
-                    {current === "data1" &&
-                        <Graph 
-                            data={data1}
-                            width={Screen.window.width - 40}
-                            height={250}
-                        />
-                    } 
-                    {current === "data2" &&
-                        <Graph 
-                            data={data2}
-                            width={Screen.window.width - 40}
-                            height={250}
-                        /> 
-                    }
-                    {current === "data3" && 
-                        <Graph 
-                            data={data3}
-                            width={Screen.window.width - 40}
-                            height={250}
-                        />
-                    }
-                </View>
-                <View style={{height: Screen.window.height / 3}}/>
-                <ScrollView style={{flex:1}}>
-                    <View style={styles.Group} >
-                        <Text style={styles.groupTitle}>Computer Telemetry</Text>
-                        <TouchableOpacity>
-                            <Text style={styles.dataText} onPress={() => { setCurrent("data1") }}>
-                                Test Data 1 (RT): {`${Math.round(data1.vals[data1.vals.length -1] * 100) / 100}`}
-                            </Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity>
-                            <Text style={styles.dataText} onPress={() => { setCurrent("data2") }}>
-                                Test Data 2 (RT): {`${Math.round(data2.vals[data2.vals.length -1] * 100) / 100}`}
-                            </Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity>
-                            <Text style={styles.dataText} onPress={() => { setCurrent("data3") }}>
-                                Test Data 3 (RT): {`${Math.round(data3.vals[data3.vals.length -1] * 100) / 100}`}
-                            </Text>
-                        </TouchableOpacity>
-                    </View>
-                    <TouchableOpacity style={styles.Group} onPress={() => {}}>
-                        <Text></Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.Group} onPress={() => {}}>
-                        <Text></Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.Group} onPress={() => {}}>
-                        <Text></Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.Group} onPress={() => {}}>
-                        <Text></Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.Group} onPress={() => {}}>
-                        <Text></Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.Group} onPress={() => {}}>
-                        <Text></Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.Group} onPress={() => {}}>
-                        <Text></Text>
-                    </TouchableOpacity>
-                </ScrollView>
-            </View>)}
+                <ExpTelScreen dataSet={[data1, data2, data3]}/>
+            )}
         </View>
     );
 

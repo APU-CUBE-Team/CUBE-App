@@ -5,17 +5,13 @@ import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList, DrawerI
 import { createStackNavigator } from '@react-navigation/stack';
 import { DrawerParamList, LandingParamList, ThreeOrbitParamList, MapParamList, NotificationsParamList, UserPermParamList } from '../types';
 import useColorScheme from '../hooks/useColorScheme';
-import Colors from '../constants/Colors';
-
+import { storeTelemetryPreference } from '../hooks/Storage';
 //How we will be importing our screens. I would prefer if we separate Screen imports from component imports so that it is easier to tell what 
 // is what.
 import ThreeOrbitView from '../screens/3DOrbitView';
-import LandingScreen from '../screens/LandingScreen';
 import AlertConditionsScreen from '../screens/AlertConditions_Screen8';
 import BugReportScreen from '../screens/BugReport_Screen9';
-import CompTelScreen from '../screens/CompTel_Screen3';
-import CredRecoveryScreen from '../screens/CredRecov_Screen2';
-import ExpandedTelScreen from '../screens/ExpandedTel_Screen4';
+import TelemetryScreen from '../screens/TelemetryScreen';
 import WorkspaceScreen from '../screens/WorkspaceParam_Screen5';
 import MapScreen from '../screens/Map_Screen6';
 import NotificationsScreen from '../screens/Notifications_Screen7';
@@ -24,14 +20,13 @@ import CreateUserScreen from '../screens/CreateUser_Screen11';
 import TeamRolesScreen from '../screens/TeamRoles_Screen10';
 import UserPerm from '../screens/UserPerm_Screen10';
 
-
-
 const Drawer = createDrawerNavigator<DrawerParamList>();
 
 export default function DrawerNavigator({ route }) {
   //We will use this hook eventually. It enables us to more easily establish a consistent colorscheme throughout the app
   const { signOut } = React.useContext(route.params?.SignOut);
   const colorScheme = useColorScheme();
+
   return (
     //This is how navigation works in v5. The Drawer.Navigator is what initializes our Drawers navigation. It creates and handles
     // the 'navigation' object similar to how it worked in v4. The Drawer.Screen is basically a screen object within our Drawer navigator.
@@ -51,17 +46,10 @@ export default function DrawerNavigator({ route }) {
       }}
     >
       <Drawer.Screen
-        name="Landing"
-        component={Landing}
-        initialParams={{
-          SignOut: signOut
-        }}
-      />
-      <Drawer.Screen
         name="Telemetry"
         component={TelemetryMap}
         initialParams={{
-          InitialPath: "ExpandedTelPage"
+          InitialPath: "Telemetry"
         }}
       />
       <Drawer.Screen
@@ -112,32 +100,31 @@ function DrawerToggle(props: { onPress }) {
 const TelemetryMapStack = createStackNavigator<MapParamList>();
 
 function TelemetryMap({ navigation, route }) {
+  let path = route.params?.InitialPath;
   return (
     <TelemetryMapStack.Navigator
-      initialRouteName={route.params?.InitialPath}
+      initialRouteName={path}
     >
+      <TelemetryMapStack.Screen
+        name="Telemetry"
+        component={TelemetryScreen}
+        options={{
+          headerTitle: 'CUBE Telemetry',
+          headerRight: () => <DrawerToggle onPress={() => { navigation.toggleDrawer() }} />,
+          headerLeft: () => <TouchableOpacity style={{marginLeft: 5}} onPress={() => {
+            navigation.navigate("WorkspacePage")
+          }}><Ionicons size={30} style={{ marginBottom: -3, color: '#fff' }} name="cog-outline" /></TouchableOpacity>,
+        }}
+        initialParams={{
+          path: path
+        }}
+      />
       <TelemetryMapStack.Screen
         name="MapPage"
         component={MapScreen}
         options={{
           headerShown: false,
           headerTitle: 'Location Tracking',
-          headerRight: () => <DrawerToggle onPress={() => { navigation.toggleDrawer() }} />
-        }}
-      />
-      <TelemetryMapStack.Screen
-        name="ExpandedTelPage"
-        component={ExpandedTelScreen}
-        options={{
-          headerTitle: 'CUBE Telemetry',
-          headerRight: () => <DrawerToggle onPress={() => { navigation.toggleDrawer() }} />
-        }}
-      />
-      <TelemetryMapStack.Screen
-        name="CompTelPage"
-        component={CompTelScreen}
-        options={{
-          headerTitle: 'CUBE Telemetry',
           headerRight: () => <DrawerToggle onPress={() => { navigation.toggleDrawer() }} />
         }}
       />
@@ -248,123 +235,4 @@ function UserPermissions({ navigation }) {
       />
     </TeamStack.Navigator>
   )
-}
-
-const LandingStack = createStackNavigator<LandingParamList>();
-
-function Landing({ navigation, route }) {
-  const { signOut } = React.useContext(route.params?.SignOut);
-
-  return (
-    <LandingStack.Navigator>
-      <LandingStack.Screen
-        name="LandingScreen"
-        component={LandingScreen}
-        options={{
-          headerTitle: 'Landing Page',
-          headerRight: () => <DrawerToggle onPress={() => { navigation.toggleDrawer() }} />
-        }}
-        initialParams={{
-          SignOut: signOut
-        }}
-      />
-      <LandingStack.Screen
-        name="ThreeOrbitView"
-        component={ThreeOrbitView}
-        options={{
-          headerTitle: 'ThreeOrbitView',
-          headerRight: () => <DrawerToggle onPress={() => { navigation.toggleDrawer() }} />
-        }}
-      />
-      <LandingStack.Screen
-        name="AlertsConditions"
-        component={AlertConditionsScreen}
-        options={{
-          headerTitle: 'AlertsConditions',
-          headerRight: () => <DrawerToggle onPress={() => { navigation.toggleDrawer() }} />
-        }}
-      />
-      <LandingStack.Screen
-        name="BugReportPage"
-        component={BugReportScreen}
-        options={{
-          headerTitle: 'BugReportPage',
-          headerRight: () => <DrawerToggle onPress={() => { navigation.toggleDrawer() }} />
-        }}
-      />
-      <LandingStack.Screen
-        name="CompTelPage"
-        component={CompTelScreen}
-        options={{
-          headerTitle: 'CompTelPage',
-          headerRight: () => <DrawerToggle onPress={() => { navigation.toggleDrawer() }} />
-        }}
-      />
-      <LandingStack.Screen
-        name="CredRecovPage"
-        component={CredRecoveryScreen}
-        options={{
-          headerTitle: 'CredRecovPage',
-          headerRight: () => <DrawerToggle onPress={() => { navigation.toggleDrawer() }} />
-        }}
-      />
-      <LandingStack.Screen
-        name="ExpandedTelPage"
-        component={ExpandedTelScreen}
-        options={{
-          headerTitle: 'ExpandedTelPage',
-          headerRight: () => <DrawerToggle onPress={() => { navigation.toggleDrawer() }} />
-        }}
-      />
-      <LandingStack.Screen
-        name="WorkspacePage"
-        component={WorkspaceScreen}
-        options={{
-          headerTitle: 'WorkspacePage',
-          headerRight: () => <DrawerToggle onPress={() => { navigation.toggleDrawer() }} />
-        }}
-      />
-      <LandingStack.Screen
-        name="MapPage"
-        component={MapScreen}
-        options={{
-          headerTitle: 'MapPage',
-          headerRight: () => <DrawerToggle onPress={() => { navigation.toggleDrawer() }} />
-        }}
-      />
-      <LandingStack.Screen
-        name="NotificationsPage"
-        component={NotificationsScreen}
-        options={{
-          headerTitle: 'NotificationsPage',
-          headerRight: () => <DrawerToggle onPress={() => { navigation.toggleDrawer() }} />
-        }}
-      />
-      <LandingStack.Screen
-        name="EditRolePage"
-        component={EditRoleScreen}
-        options={{
-          headerTitle: 'EditRolePage',
-          headerRight: () => <DrawerToggle onPress={() => { navigation.toggleDrawer() }} />
-        }}
-      />
-      <LandingStack.Screen
-        name="CreateUserPage"
-        component={CreateUserScreen}
-        options={{
-          headerTitle: 'Create User',
-          headerRight: () => <DrawerToggle onPress={() => { navigation.toggleDrawer() }} />
-        }}
-      />
-      <LandingStack.Screen
-        name="TeamRolesPage"
-        component={TeamRolesScreen}
-        options={{
-          headerTitle: 'Team Roles',
-          headerRight: () => <DrawerToggle onPress={() => { navigation.toggleDrawer() }} />
-        }}
-      />
-
-    </LandingStack.Navigator>
-  );
 }
