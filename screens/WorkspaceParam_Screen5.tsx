@@ -1,10 +1,9 @@
 import * as React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { resetOrientation } from '../hooks/resetOrientation';
 
-import EditScreenInfo from '../components/EditScreenInfo';
-import { Text, View } from '../components/Themed';
+import { storeTelemetryPreference } from '../hooks/Storage';
 
 export default function WorkspaceScreen() {
     useFocusEffect(
@@ -17,7 +16,13 @@ export default function WorkspaceScreen() {
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Workspace</Text>
-            <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
+            <View style={styles.separator} />
+            <TouchableOpacity style={{backgroundColor: '#0f0', height: 50, width: 50}} onPress={() => {
+                storeTelemetryPreference('ExpTelPage')
+            }}/>
+            <TouchableOpacity style={{backgroundColor: '#0f0', height: 50, width: 50}} onPress={() => {
+                storeTelemetryPreference('CompTelPage')
+            }}/>
         </View>
     );
 }

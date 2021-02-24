@@ -9,7 +9,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import { RootStackParamList, SignInParamList } from '../types';
 import DrawerNavigator from './DrawerNavigator';
 import LinkingConfiguration from './LinkingConfiguration';
-import {getToken, storeToken, deleteToken} from '../hooks/Storage';
+import {getToken, storeToken, deleteToken, storeTelemetryPreference} from '../hooks/Storage';
 import SignInScreen from '../screens/SignIn_Screen1';
 import CredRecoveryScreen from '../screens/CredRecov_Screen2';
 import {emailSignIn, signOut, findNewToken } from '../util/authenticating-users/firebaseAuth';
@@ -32,7 +32,7 @@ export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeNa
 // Read more here: https://reactnavigation.org/docs/modal
 const Stack = createStackNavigator<RootStackParamList>();
 const Login = createStackNavigator<SignInParamList>();
-
+let Landing: any;
 
 function TestMode() {
   const [state, dispatch] = React.useReducer(
@@ -73,6 +73,10 @@ function TestMode() {
 
       try {
         userToken = await AsyncStorage.getItem('@Token');
+        Landing = await AsyncStorage.getItem('@Telemetry')
+        if (Landing === null) {
+          Landing = "ExpandedTelPage"
+          storeTelemetryPreference(Landing)}
       } catch (e) {
         // Restoring token failed
       } 

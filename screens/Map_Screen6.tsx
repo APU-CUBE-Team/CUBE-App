@@ -39,6 +39,7 @@ const styles = StyleSheet.create({
         width: '80%',
     },
     map: {
-        flex: 1
+        flex: 1,
+        
     }
 });

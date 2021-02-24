@@ -10,7 +10,7 @@ import * as SplashScreen from 'expo-splash-screen';
 export default function App() {
   // const gifAsset = require('./assets/images/splash.gif')
   const isLoadingComplete = useCachedResources(); 
-  const colorScheme = useColorScheme();
+  const colorScheme = "dark";
 
   if (!isLoadingComplete) {
     return null;
@@ -21,7 +21,7 @@ export default function App() {
   } else {
     return (
       <SafeAreaProvider>
-        <Navigation colorScheme={colorScheme}/>
+        <Navigation colorScheme={colorScheme} />
         <StatusBar />
       </SafeAreaProvider>
     );

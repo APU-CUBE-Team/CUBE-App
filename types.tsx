@@ -1,7 +1,7 @@
 import { Context } from "react";
 
 export type RootStackParamList = {
-  Root: { SignOut: any };
+  Root: { SignOut: any, pref: any };
   NotFound: undefined;
   SignIn: Element;
 };
@@ -20,27 +20,6 @@ export type ThreeOrbitParamList = {
   ThreeOrbitView: undefined;
 }
 
-export type LandingParamList = {
-  LandingScreen: { SignOut: any };
-  ThreeOrbitView: undefined;
-  AlertsConditions: undefined;
-  BugReportPage: undefined;
-  CompTelPage: undefined;
-  CredRecovPage: undefined;
-  ExpandedTelPage: undefined;
-  WorkspacePage: undefined;
-  MapPage: undefined;
-  NotificationsPage: undefined;
-  AlertSetupPage: undefined;
-  EditRolePage: undefined;
-  CreateUserPage: undefined;
-  TeamRolesPage: undefined;
-};
-
-export type TabTwoParamList = {
-  TabTwoScreen: undefined;
-};
-
 export type SignInParamList = {
   SignInScreen: {props: any};
   CredRecovPage: undefined;
@@ -51,7 +30,7 @@ export type CompTelParamList = {
 }
 
 export type ExpandedTelParamList = {
-  ExpandedTelPage: undefined;
+  ExpandedTelPage: { path: string };
 }
 
 export type WorkspaceParamList = {
@@ -60,7 +39,7 @@ export type WorkspaceParamList = {
 
 export type MapParamList = {
   initialPath: undefined;
-  ExpandedTelPage: undefined;
+  Telemetry: { path: string };
   MapPage: undefined;
   CompTelPage: undefined;
   WorkspacePage: undefined;
