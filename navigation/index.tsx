@@ -18,17 +18,17 @@ import {
   findNewToken,
 } from "../util/authenticating-users/firebaseAuth";
 
-const AuthContext = React.createContext();
+const AuthContext = React.createContext({});
 
 export const MyTheme = {
   ...DefaultTheme,
   colors: {
     ...DefaultTheme.colors,
-    primary: "rgb(44, 47, 51)",
+    primary: "rgb(114, 137, 218)",
     background: "rgb(35, 39, 42)",
     card: "rgb(48, 52, 55)",
     text: "rgb(255, 255, 255)",
-    border: "rgb(125, 190, 184)",
+    border: "rgb(35, 39, 42)",
     notification: "rgb(241, 95, 75)",
   },
 };
