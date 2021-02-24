@@ -4,7 +4,7 @@ import {db, auth} from '../authenticating-users/firebaseAuth';
 
 
 // NOTE: organization will be whatever the admin's organization is.
-const usersDBDoc = db.collection('TestOrganization').doc("team").collection("teamMembers");
+export const teamMembersDBDoc = db.collection('Organizations').doc("AdminOrganization").collection("teamMembers");
 
 export function SignUp(fName: string, lName: string, email: any, password: any, role: any) {
       
@@ -12,22 +12,13 @@ export function SignUp(fName: string, lName: string, email: any, password: any, 
       
   return auth.createUserWithEmailAndPassword(email, password)
       .then( registeredUser =>  {
-        usersDBDoc.doc(`${registeredUser.user?.email}`)
-        .set(
-          {
-              uid: registeredUser.user?.uid,
-              role: 'Team Member (Replace)',
-              orgID: 'TestOrganization',
-              email: registeredUser.user?.email,
-              lastName: lName,
-              firstName: fName,
-              
-              
-
-        })
-        //DEBUG
-        // console.log(usersDBDoc.doc(`${registeredUser.user?.email}`))
+        teamMembersDBDoc.add({
+              "uid": registeredUser.user?.uid,
+              "role": role,
+              "orgID": 'TestOrganization',
+              "email": registeredUser.user?.email,
+              "lastName": lName,
+              "firstName": fName,
       })
-
-      
-  }
+    });
+  };
