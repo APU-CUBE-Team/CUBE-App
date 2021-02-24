@@ -22,7 +22,6 @@ export default function ExpandedTelScreen({ route }) {
 
         }, [])
     )
-
     const [render, setRender] = React.useState(0);  // Not entirely sure if this is necessary at this point, but I'm too scared to remove
     const [current, setCurrent] = React.useState("data1");  // Stores what graph to display on the top of screen
     // These are our datasets. Wish this was a react component but our package-lock prevents this
@@ -42,12 +41,14 @@ export default function ExpandedTelScreen({ route }) {
         dates: [1613001378-2100, 1613001378-1800, 1613001378-1500, 1613001378-1200, 1613001378-900, 1613001378-600, 1613001378-300, 1613001378]
     })
     let timeBase = 1613001378   // Starting time interval for our dummy data generation
-
+    let dataSet = 
+    [{key: "data1", name: "Test Data 1", data: data1},
+     {key: "data2", name: "Test Data 2", data: data2},
+     {key: "data3", name: "Test Data 3", data: data3}]
     // Use effect hook to set an interval for generating dummy data. Might be useful for checking for real data in the future?
     React.useEffect(() => {
         const interval = setInterval(() => {
             genEntry()
-            console.log(path)
         }, 15000);
         return () => {clearInterval(interval)};
     }, [current, render]);
@@ -63,9 +64,15 @@ export default function ExpandedTelScreen({ route }) {
     return (
         <View style={{flex: 1}}>
             {path === "\"CompTelPage\"" ? (
-                <CompTelScreen/> 
+                <CompTelScreen 
+                    dataSet={dataSet}
+                /> 
             ) : (
-                <ExpTelScreen dataSet={[data1, data2, data3]}/>
+                <ExpTelScreen 
+                    dataSet={dataSet}
+                    selected={current}
+                    setCurrent={(newData: string) => {setCurrent(newData)}}
+                />
             )}
         </View>
     );
@@ -90,8 +97,6 @@ export default function ExpandedTelScreen({ route }) {
         setData3({...data3, vals: tempVal3, dates: tempDate3})
     }
 }
-
-
 
 const styles = StyleSheet.create({
     container: {
