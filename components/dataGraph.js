@@ -3,6 +3,7 @@ import { LineChart, Grid, YAxis, XAxis, ScaleType } from 'react-native-svg-chart
 import * as shape from 'd3-shape'
 import { View, Text } from 'react-native'
 import moment from 'moment';
+import Colors from '../constants/Colors'
 
 const axesSvg = { fontSize: 10, fill: 'grey' };
 const verticalContentInset = { top: 10, bottom: 10 }
@@ -14,7 +15,6 @@ export default class DataGraph extends React.PureComponent {
         vals: this.props.data.vals,
         dates: this.props.data.dates,
     }
-    
 
     render() {
         return (
@@ -27,12 +27,19 @@ export default class DataGraph extends React.PureComponent {
                 />
                 <View style={{ flex: 1, marginLeft: 10 }}>
                     <LineChart
-                        style={{ flex: 1 }}
+                        style={{ 
+                            flex: 1,
+                            shadowColor: '#000', // IOS
+                            shadowOffset: { height: 5, width: 3 }, // IOS
+                            shadowOpacity: 2, // IOS
+                            shadowRadius: 2, //IOS
+                            elevation: 2, // Android 
+                        }}
                         data={this.state.vals}
                         contentInset={verticalContentInset}
-                        svg={{ stroke: 'rgb(134, 65, 244)' }}
+                        svg={{ stroke: Colors.newColors.text }}
                         animate={true}
-                        curve={shape.curveMonotoneX}
+                        curve={shape.curveCatmullRom}
                     >
                         <Grid/>
                     </LineChart>
@@ -53,7 +60,7 @@ export default class DataGraph extends React.PureComponent {
                         numberOfTicks={5}
                         data={this.state.vals}
                         formatLabel={ (index) => 
-                            moment.unix(this.state.dates[index]).format('HH:mm')
+                            `${moment.unix(this.state.dates[index]).format('HH:mm')}`
                         }
                         contentInset={{ left: 10, right: 10 }}
                         svg={axesSvg}
