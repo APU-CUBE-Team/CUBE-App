@@ -26,11 +26,12 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: Colors.c.black,
+    backgroundColor: Colors.newColors.background,
   },
   inputSafeArea: {
     flex: 1,
     marginTop: 30,
+    backgroundColor: Colors.newColors.background,
   },
   buttonSafeArea: {
     flex: 1,
@@ -47,25 +48,25 @@ const styles = StyleSheet.create({
     width: "80%",
   },
   text: {
-    color: Colors.c.white,
+    color: Colors.newColors.text,
     fontSize: 30,
     textAlign: "center",
     marginTop: 10,
   },
   text2: {
-    color: Colors.c.white,
+    color: Colors.newColors.text,
     fontSize: 20,
     textAlign: "left",
     marginLeft: 15,
     marginTop: 10,
   },
   text3: {
-    color: Colors.c.white,
+    color: Colors.newColors.text,
     fontSize: 20,
     textAlign: "center",
   },
   saveButton: {
-    backgroundColor: Colors.c.blue,
+    backgroundColor: Colors.newColors.primary,
     width: screen.width - 30,
     height: 60,
     alignItems: "center",
