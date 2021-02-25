@@ -10,7 +10,7 @@ import CompTelScreen from './CompTel_Screen3';
 import ExpTelScreen from './ExpandedTel_Screen4';
 
 
-export default function ExpandedTelScreen({ route }) {
+export default function ExpandedTelScreen({ navigation, route }) {
     const [path, setPath] = React.useState("ExpandedTelPage");
     // Hook that functions like componentDidMount. Ever screen will need this to ensure correct rotation
     useFocusEffect(
@@ -19,7 +19,6 @@ export default function ExpandedTelScreen({ route }) {
             AsyncStorage.getItem('@Telemetry').then((ret: any) => {
                 setPath(ret)
             })
-
         }, [])
     )
     const [render, setRender] = React.useState(0);  // Not entirely sure if this is necessary at this point, but I'm too scared to remove
