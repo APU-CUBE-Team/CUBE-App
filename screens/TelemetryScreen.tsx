@@ -25,17 +25,20 @@ export default function ExpandedTelScreen({ navigation, route }) {
     const [current, setCurrent] = React.useState("data1");  // Stores what graph to display on the top of screen
     // These are our datasets. Wish this was a react component but our package-lock prevents this
     const [data1, setData1] = React.useState({
-        key: "Test Telemetry 1",
+        key: "data1", 
+        name: "Test Data 1",
         vals: [1.4, 1.8, 1.7, 1.4, 1.5, 1.5, 1.4, 1.3],
         dates: [1613001378-2100, 1613001378-1800, 1613001378-1500, 1613001378-1200, 1613001378-900, 1613001378-600, 1613001378-300, 1613001378]
     })
     const [data2, setData2] = React.useState({
-        key: "Test Telemetry 2",
+        key: "data1", 
+        name: "Test Data 1",
         vals: [23, 12, 12.3, 12.5, 14, 16, 14, 20],
         dates: [1613001378-2100, 1613001378-1800, 1613001378-1500, 1613001378-1200, 1613001378-900, 1613001378-600, 1613001378-300, 1613001378]
     })
     const [data3, setData3] = React.useState({
-        key: "Test Telemetry 3",
+        key: "data1", 
+        name: "Test Data 1",
         vals: [.2, .11, .3, .4, .3, -.1, -.4, -.8],
         dates: [1613001378-2100, 1613001378-1800, 1613001378-1500, 1613001378-1200, 1613001378-900, 1613001378-600, 1613001378-300, 1613001378]
     })

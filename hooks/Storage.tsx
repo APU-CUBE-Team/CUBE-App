@@ -1,4 +1,5 @@
 import AsyncStorage from '@react-native-community/async-storage';
+import { telemetryList } from '../constants/FullTelemetrySet';
 
 export const storeToken = async (value: String) => {
     const jsonValue = JSON.stringify(value)
@@ -20,7 +21,7 @@ export async function deleteToken() {
     return AsyncStorage.removeItem('@Token')
 }
 
-export const storeTelemetryPreference = async (value: String) => {
+export const storeTelemetryPreference = async (value: string) => {
     const jsonValue = JSON.stringify(value)
     return AsyncStorage.setItem('@Telemetry', jsonValue)
 }
@@ -41,10 +42,6 @@ export const setSettings = async (val: any) => {
 // This will likely need to ping our database and ask for the full list of telemetry that exists and initialize all of that to true,
 //  but one bridge at a time shall we?
 const initSettings = async () => {
-    const jsonValue = [
-        {key: "data1", visible: true}, 
-        {key: "data2", visible: true},
-        {key: "data3", visible: true},
-    ]
+    const jsonValue = telemetryList
     return setSettings(jsonValue);
 }

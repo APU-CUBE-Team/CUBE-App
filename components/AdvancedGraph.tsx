@@ -2,6 +2,7 @@ import React from 'react'
 import { View, TouchableOpacity, LayoutAnimation, Text, Platform, UIManager } from 'react-native'
 import DataGraph from './dataGraph';
 import Screen from '../constants/Layout';
+import Colors from '../constants/Colors';
 
 const CustomLayoutAnimation = {
     duration: 400,
@@ -27,7 +28,15 @@ export default function AdvGraph({ data }: {data: any}) {
     const [expanded, setExpanded] = React.useState(false);
     return (
         <TouchableOpacity
-            style={{flexDirection: 'column', marginVertical: 10}}
+            style={{
+                flexDirection: 'column', 
+                marginVertical: 10, 
+                shadowColor: "rgba(0,0,0, .4)", // IOS
+                shadowOffset: { height: 2, width: 0 }, // IOS
+                shadowOpacity: 1, // IOS
+                shadowRadius: 1.5, //IOS
+                elevation: 10, // Android
+        }}
             onPress={() => {
                 LayoutAnimation.configureNext(CustomLayoutAnimation);
                 setExpanded(!expanded);
@@ -35,7 +44,7 @@ export default function AdvGraph({ data }: {data: any}) {
             <View style={{
                 width: Screen.window.width-30, 
                 height: expanded ? Screen.window.height / 3 : 50, 
-                backgroundColor: '#a8bff7', 
+                backgroundColor: '#15181a', 
                 flexDirection: 'column',
                 borderRadius: 15
             }}>
@@ -52,11 +61,11 @@ export default function AdvGraph({ data }: {data: any}) {
                 </Text>}
                 {expanded && (
                     <View style={{
-                        backgroundColor: "#4976a6",
+                        backgroundColor: "#15181a",
                         flexDirection: 'column',
                         flex: 1,
                         borderWidth: 5,
-                        borderColor: "#a8bff7",
+                        borderColor: "#15181a",
                         borderRadius: 25
                     }}>
                         <View style={{
@@ -66,8 +75,13 @@ export default function AdvGraph({ data }: {data: any}) {
                             flexDirection: 'column', 
                             justifyContent: 'center', 
                             alignItems: 'center', 
-                            backgroundColor: '#fff',
-                            borderRadius: 15
+                            borderRadius: 15,
+                            backgroundColor: Colors.newColors.background2,
+                            shadowColor: "rgba(0,0,0, .4)", // IOS
+                            shadowOffset: { height: 2, width: 0 }, // IOS
+                            shadowOpacity: 1, // IOS
+                            shadowRadius: 1.5, //IOS
+                            elevation: 2, // Android
                         }}>
                             <DataGraph
                                 data = {data.data}
