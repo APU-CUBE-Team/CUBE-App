@@ -20,6 +20,8 @@ import { Text, View } from "../components/Themed";
 
 import Colors from "../constants/Colors";
 import Screen from "../constants/Layout";
+import { MyTheme } from "../navigation/index";
+
 import { SignUp } from "../util/create-user/createUser";
 
 const screen = Dimensions.get("window");
@@ -29,16 +31,18 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: Colors.c.black,
+    backgroundColor: Colors.newColors.background,
   },
   inputSafeArea: {
     flex: 1,
     marginTop: 30,
+    backgroundColor: Colors.newColors.background,
   },
   buttonSafeArea: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+    backgroundColor: Colors.newColors.background2,
   },
   title: {
     fontSize: 20,
@@ -50,19 +54,19 @@ const styles = StyleSheet.create({
     width: "80%",
   },
   text: {
-    color: Colors.c.white,
+    color: Colors.newColors.text,
     fontSize: 20,
     textAlign: "center",
   },
   text2: {
-    color: Colors.c.white,
+    color: Colors.newColors.text,
     fontSize: 15,
     textAlign: "left",
     marginLeft: 15,
     marginTop: 7,
   },
   input: {
-    backgroundColor: Colors.c.darkGray,
+    backgroundColor: Colors.newColors.background2,
     fontSize: 20,
     padding: 10,
     margin: 5,
@@ -71,7 +75,7 @@ const styles = StyleSheet.create({
     color: Colors.c.white,
   },
   signInButton: {
-    backgroundColor: Colors.c.blue,
+    backgroundColor: Colors.newColors.primary,
     width: screen.width - 30,
     height: 60,
     alignItems: "center",
@@ -80,10 +84,16 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     borderRadius: 10,
     margin: 5,
+
+    shadowColor: "rgba(0,0,0, .4)", // IOS
+    shadowOffset: { height: 5, width: 5 }, // IOS
+    shadowOpacity: 1, // IOS
+    shadowRadius: 1.5, //IOS
+    elevation: 2, // Android
   },
   picker: {
     width: screen.width - 30,
-    backgroundColor: Colors.c.darkGray,
+    backgroundColor: Colors.newColors.background2,
     borderBottomColor: "transparent",
     borderRadius: 10,
     margin: 5,
@@ -97,6 +107,7 @@ const styles = StyleSheet.create({
   pickerContainer: {
     flexDirection: "row",
     alignItems: "center",
+    backgroundColor: Colors.newColors.background,
   },
 });
 
