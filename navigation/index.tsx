@@ -31,6 +31,7 @@ export const MyTheme = {
     border: "rgb(35, 39, 42)",
     notification: "rgb(241, 95, 75)",
   },
+  font: {},
 };
 
 // If you are not familiar with React Navigation, we recommend going through the

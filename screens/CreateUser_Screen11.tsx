@@ -84,6 +84,12 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     borderRadius: 10,
     margin: 5,
+
+    shadowColor: "rgba(0,0,0, .4)", // IOS
+    shadowOffset: { height: 5, width: 5 }, // IOS
+    shadowOpacity: 1, // IOS
+    shadowRadius: 1.5, //IOS
+    elevation: 2, // Android
   },
   picker: {
     width: screen.width - 30,

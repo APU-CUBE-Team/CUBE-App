@@ -102,6 +102,11 @@ export default function ExpandedTelScreen() {
           alignItems: "center",
           backgroundColor: Colors.newColors.background2,
           borderRadius: 10,
+          shadowColor: "rgba(0,0,0, .4)", // IOS
+          shadowOffset: { height: 2, width: 0 }, // IOS
+          shadowOpacity: 1, // IOS
+          shadowRadius: 1.5, //IOS
+          elevation: 2, // Android
         }}
       >
         {current === "data1" && (
@@ -195,11 +200,17 @@ const styles = StyleSheet.create({
   button: {
     height: 40,
     width: Screen.window.width / 1.2,
-    backgroundColor: "#808080",
+    backgroundColor: Colors.newColors.secondary,
     borderRadius: 15,
     marginVertical: 10,
     alignItems: "center",
     justifyContent: "center",
+
+    shadowColor: "rgba(0,0,0, .4)", // IOS
+    shadowOffset: { height: 5, width: 0 }, // IOS
+    shadowOpacity: 1, // IOS
+    shadowRadius: 1.5, //IOS
+    elevation: 2, // Android
   },
   separator: {
     marginVertical: 30,
@@ -208,5 +219,10 @@ const styles = StyleSheet.create({
   },
   text: {
     color: Colors.newColors.text,
+    shadowColor: "rgba(0,0,0, .4)", // IOS
+    shadowOffset: { height: 1, width: 1 }, // IOS
+    shadowOpacity: 1, // IOS
+    shadowRadius: 1, //IOS
+    elevation: 2, // Android
   },
 });

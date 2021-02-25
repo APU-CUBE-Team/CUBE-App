@@ -46,10 +46,12 @@ export default {
 
   newColors: {
     primary: "rgb(100, 110, 218)",
+    secondary: "rgb(85, 89, 92)",
     background: "rgb(35, 39, 42)",
     background2: "rgb(40, 44, 47)",
     card: "rgb(48, 52, 55)",
     text: "rgb(255, 255, 255)",
+    grayText: "rgb(200, 200, 200)",
     border: "rgb(35, 39, 42)",
     notification: "rgb(241, 95, 75)",
 
