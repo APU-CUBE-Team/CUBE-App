@@ -11,8 +11,8 @@ import {
   Image,
   KeyboardAvoidingView,
 } from "react-native";
-import { useFocusEffect } from '@react-navigation/native';
-import { resetOrientation } from '../hooks/resetOrientation';
+import { useFocusEffect } from "@react-navigation/native";
+import { resetOrientation } from "../hooks/resetOrientation";
 
 import { Text, View } from "../components/Themed";
 
@@ -26,17 +26,20 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: Colors.c.black,
+    backgroundColor: Colors.newColors.background,
   },
   iconSafeArea: {
+    top: 10,
     flex: 2,
     alignItems: "center",
     justifyContent: "center",
+    backgroundColor: Colors.newColors.background,
   },
   inputSafeArea: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+    backgroundColor: Colors.newColors.background,
   },
   title: {
     width: 1008 / 4,
@@ -49,30 +52,30 @@ const styles = StyleSheet.create({
     width: "80%",
   },
   text: {
-    color: Colors.c.white2,
+    color: Colors.newColors.text,
     fontSize: 20,
     textAlign: "center",
   },
   text2: {
-    color: Colors.c.blue,
+    color: Colors.newColors.notification,
     fontSize: 12,
     textAlign: "center",
     padding: 5,
   },
   text3: {
-    color: Colors.c.white,
+    color: Colors.newColors.text,
     paddingTop: 20,
     fontSize: 70,
     textAlign: "center",
   },
   input: {
-    backgroundColor: Colors.c.darkGray,
+    backgroundColor: Colors.newColors.background2,
     fontSize: 20,
     padding: 10,
     margin: 5,
     width: screen.width - 30,
     borderRadius: 10,
-    color: Colors.c.white,
+    color: Colors.newColors.text,
   },
   icon: {
     width: 300,
@@ -82,7 +85,7 @@ const styles = StyleSheet.create({
     tintColor: "#fff",
   },
   signInButton: {
-    backgroundColor: Colors.c.blue,
+    backgroundColor: Colors.newColors.primary,
     width: screen.width - 30,
     height: 40,
     alignItems: "center",
@@ -90,6 +93,12 @@ const styles = StyleSheet.create({
     marginTop: 5,
     marginBottom: 10,
     borderRadius: 10,
+
+    shadowColor: "rgba(0,0,0, .4)", // IOS
+    shadowOffset: { height: 5, width: 5 }, // IOS
+    shadowOpacity: 1, // IOS
+    shadowRadius: 1.5, //IOS
+    elevation: 2, // Android
   },
 });
 
@@ -101,9 +110,9 @@ export default function SignInScreen({ route, navigation }) {
 
   useFocusEffect(
     React.useCallback(() => {
-        resetOrientation();
+      resetOrientation();
     }, [])
-  )
+  );
 
   // checks for empty string, or if there is nothing in general. either signs in,
   // or you get bonked.
@@ -161,7 +170,9 @@ export default function SignInScreen({ route, navigation }) {
             <Text style={styles.text}>Sign In</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={() => navigation.navigate('CredRecovPage')}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("CredRecovPage")}
+          >
             <Text style={styles.text2}>Forgot Password</Text>
           </TouchableOpacity>
         </View>
