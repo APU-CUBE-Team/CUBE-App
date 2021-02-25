@@ -24,7 +24,6 @@ export default {
   c: {
     black: '#000000',
 
-
     gray: '#434345',
     gray2: '#666969',
 
@@ -43,6 +42,20 @@ export default {
     purple: '#968DA5',
     darkPurple: '#504B82',
     blue: '#1877f2'
+  },
 
+  newColors: {
+    primary: "rgb(100, 110, 218)",
+    background: "rgb(35, 39, 42)",
+    background2: "rgb(40, 44, 47)",
+    card: "rgb(48, 52, 55)",
+    text: "rgb(255, 255, 255)",
+    border: "rgb(35, 39, 42)",
+    notification: "rgb(241, 95, 75)",
+
+    //SWEETEST BLUE-GREEN
+    bluegreen: "rgb(10, 137, 218)",
   }
+
+  
 };

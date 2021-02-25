@@ -102,7 +102,7 @@ function TestMode() {
 
   const authContext = React.useMemo(
     () => ({
-      signIn: async (data) => {
+      signIn: async (data: any) => {
         emailSignIn(data.username, data.password)
           .then((ret) => {
             console.log("Sign-In Success");
