@@ -21,12 +21,9 @@ export default function CompTelScreen({ dataSet }: { dataSet: any }) {
                         res = ret2;
                     })
             }).finally(() => {
-                console.log('Res', res)
-                console.log('Typeof Res', typeof(res))
                 res.forEach((e) => {
                     settings[settings.findIndex(p => p.key === e.key)].visible = e.visible
                 });
-                console.log(settings)
                 rerender(r+1);
             })
         }, []))

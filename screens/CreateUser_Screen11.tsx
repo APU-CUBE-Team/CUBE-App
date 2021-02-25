@@ -128,8 +128,6 @@ export default function CreateUserScreen() {
   // TODO
   // taking in parameters password and confirm password
   function checkPW() {
-    console.log("Passed")
-    console.log(password === confirmPassword)
     if (password === confirmPassword) {
         console.log("Success")
         SignUp(firstName, lastName, email, password, role);
