@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
     width: "80%",
   },
   text: {
-    color: Colors.c.white2,
+    color: Colors.newColors.text,
     fontSize: 20,
     textAlign: "center",
   },
@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     padding: 5,
   },
   text3: {
-    color: Colors.c.white,
+    color: Colors.newColors.text,
     paddingTop: 20,
     fontSize: 70,
     textAlign: "center",
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
     margin: 5,
     width: screen.width - 30,
     borderRadius: 10,
-    color: Colors.c.white,
+    color: Colors.newColors.text,
   },
   icon: {
     width: 300,
@@ -93,6 +93,12 @@ const styles = StyleSheet.create({
     marginTop: 5,
     marginBottom: 10,
     borderRadius: 10,
+
+    shadowColor: "rgba(0,0,0, .4)", // IOS
+    shadowOffset: { height: 5, width: 5 }, // IOS
+    shadowOpacity: 1, // IOS
+    shadowRadius: 1.5, //IOS
+    elevation: 2, // Android
   },
 });
 

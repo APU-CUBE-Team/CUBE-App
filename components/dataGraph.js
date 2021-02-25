@@ -28,12 +28,19 @@ export default class DataGraph extends React.PureComponent {
                 />
                 <View style={{ flex: 1, marginLeft: 10 }}>
                     <LineChart
-                        style={{ flex: 1 }}
+                        style={{ 
+                            flex: 1,
+                            shadowColor: '#000', // IOS
+                            shadowOffset: { height: 5, width: 3 }, // IOS
+                            shadowOpacity: 2, // IOS
+                            shadowRadius: 2, //IOS
+                            elevation: 2, // Android 
+                        }}
                         data={this.state.vals}
                         contentInset={verticalContentInset}
                         svg={{ stroke: Colors.newColors.text }}
                         animate={true}
-                        curve={shape.curveNatural}
+                        curve={shape.curveCatmullRom}
                     >
                         <Grid/>
                     </LineChart>

@@ -56,13 +56,13 @@ const styles = StyleSheet.create({
     padding: 5,
   },
   input: {
-    // backgroundColor: Colors.newColors.background,
+    backgroundColor: Colors.newColors.background2,
     fontSize: 20,
     padding: 10,
     margin: 5,
     width: screen.width - 30,
     borderRadius: 10,
-    color: Colors.c.lightGray,
+    color: Colors.newColors.grayText,
   },
   reportButton: {
     backgroundColor: Colors.newColors.primary,
