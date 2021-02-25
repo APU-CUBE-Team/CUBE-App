@@ -111,6 +111,9 @@ const styles = StyleSheet.create({
         marginLeft: 4,
         marginVertical: 4,
         color: '#4976a6',
-        fontSize: 20
+        fontSize: 20,
+        textShadowOffset:{width: 0, height: 0}, 
+        textShadowColor:'#fff', 
+        textShadowRadius:10,
     }
 });
