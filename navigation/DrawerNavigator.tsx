@@ -3,8 +3,7 @@ import { TouchableOpacity, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList, DrawerItem } from '@react-navigation/drawer';
 import { createStackNavigator } from '@react-navigation/stack';
-import { DrawerParamList, LandingParamList, ThreeOrbitParamList, MapParamList, NotificationsParamList, UserPermParamList } from '../types';
-import useColorScheme from '../hooks/useColorScheme';
+import { DrawerParamList, ThreeOrbitParamList, MapParamList, NotificationsParamList, UserPermParamList } from '../types';
 import { storeTelemetryPreference } from '../hooks/Storage';
 //How we will be importing our screens. I would prefer if we separate Screen imports from component imports so that it is easier to tell what 
 // is what.
@@ -25,7 +24,6 @@ const Drawer = createDrawerNavigator<DrawerParamList>();
 export default function DrawerNavigator({ route }) {
   //We will use this hook eventually. It enables us to more easily establish a consistent colorscheme throughout the app
   const { signOut } = React.useContext(route.params?.SignOut);
-  const colorScheme = useColorScheme();
 
   return (
     //This is how navigation works in v5. The Drawer.Navigator is what initializes our Drawers navigation. It creates and handles

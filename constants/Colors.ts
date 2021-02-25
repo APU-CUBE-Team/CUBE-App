@@ -1,7 +1,5 @@
-//Justin: made this a .js file so I could colorize. Hope that's alright
 const tintColorLight = '#2f95dc';
 const tintColorDark = '#fff';
-
 
 // Exports our different color options
 export default {
@@ -22,7 +20,6 @@ export default {
   c: {
     black: '#000000',
 
-
     gray: '#434345',
     gray2: '#666969',
 
@@ -41,6 +38,22 @@ export default {
     purple: '#968DA5',
     darkPurple: '#504B82',
     blue: '#1877f2'
+  },
 
+  newColors: {
+    primary: "rgb(100, 110, 218)",
+    secondary: "rgb(85, 89, 92)",
+    background: "rgb(35, 39, 42)",
+    background2: "rgb(40, 44, 47)",
+    card: "rgb(48, 52, 55)",
+    text: "rgb(255, 255, 255)",
+    grayText: "rgb(200, 200, 200)",
+    border: "rgb(35, 39, 42)",
+    notification: "rgb(241, 95, 75)",
+
+    //SWEETEST BLUE-GREEN
+    bluegreen: "rgb(10, 137, 218)",
   }
+
+  
 };
