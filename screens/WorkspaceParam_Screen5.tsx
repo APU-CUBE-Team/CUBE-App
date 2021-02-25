@@ -5,16 +5,14 @@ import { useFocusEffect } from '@react-navigation/native';
 import { resetOrientation } from '../hooks/resetOrientation';
 import Screen from '../constants/Layout';
 import Colors from '../constants/Colors';
-import { storeTelemetryPreference, getSettings } from '../hooks/Storage';
+import { telemetryList } from '../constants/FullTelemetrySet';
+import { storeTelemetryPreference, getSettings, setSettings } from '../hooks/Storage';
 
 export default function WorkspaceScreen({ route }) {
     const [isEnabled, switchSelected] = React.useState(false);
     const [preference, setPreference] = React.useState(Telemetry.Expanded);
     const [r, rerender] = React.useState(0);
-    const [settings, setSettings] = React.useState([
-        {key: "data1", visible: true}, 
-        {key: "data2", visible: false},
-        {key: "data3", visible: true},])
+    const [settings, setSet] = React.useState(telemetryList)
 
     useFocusEffect(
         React.useCallback(() => {
@@ -41,8 +39,6 @@ export default function WorkspaceScreen({ route }) {
                         res = ret2;
                     })
             }).finally(() => {
-                console.log('Res', res)
-                console.log('Typeof Res', typeof(res))
                 res.forEach((e) => {
                     settings[settings.findIndex(p => p.key === e.key)].visible = e.visible
                 });
@@ -93,6 +89,7 @@ export default function WorkspaceScreen({ route }) {
     function toggleSwitch(e: any) {
         e.visible = !e.visible
         rerender(r+1)
+        setSettings(settings)
     }
 
     function toggleLayout() {
