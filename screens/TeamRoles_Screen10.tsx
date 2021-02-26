@@ -160,8 +160,8 @@ export default function TeamRolesScreen({ navigation }) {
             first="Kenny"
             last="G"
             email="KennyTheLegen@apu.edu"
-            onPress={() =>
-              navigation.navigate(PUT NAME OF SCREEN HERE)
+            onPress={() => console.log('Reeeeee')
+              // navigation.navigate(PUT NAME OF SCREEN HERE)
             }
 
           />
