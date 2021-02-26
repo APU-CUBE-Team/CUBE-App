@@ -46,7 +46,7 @@ export default function Orbit() {
 
   const onContextCreate = async (gl: ExpoWebGLRenderingContext) => {
     const { drawingBufferWidth: width, drawingBufferHeight: height } = gl;
-    const sceneColor = "#fff";
+    const sceneColor = "rgb(40, 44, 47)";
 
     // Create a WebGLRenderer without a DOM element
     const renderer = new Renderer({ gl });
