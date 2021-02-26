@@ -11,8 +11,8 @@ export default function CreateUserScreen() {
   );
 
   return (
-    <UserInfo 
-      create 
+    <UserInfo
+      create={true}
       user={null}
     />
   );

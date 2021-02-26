@@ -21,7 +21,7 @@ export type ThreeOrbitParamList = {
 }
 
 export type SignInParamList = {
-  SignInScreen: {props: any};
+  SignInScreen: { props: any };
   CredRecovPage: undefined;
 }
 
@@ -60,4 +60,5 @@ export type UserPermParamList = {
   CreateUserPage: undefined;
   EditRolePage: undefined;
   TeamRolePage: undefined;
+  EditUserPage: undefined;
 }

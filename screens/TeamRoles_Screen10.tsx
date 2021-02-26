@@ -104,11 +104,18 @@ const styles = StyleSheet.create({
 ////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////
 export default function TeamRolesScreen({ navigation }) {
+  //same as set state
   useFocusEffect(
     React.useCallback(() => {
       resetOrientation();
     }, [])
   );
+
+  const testUser = {
+    f: "justin",
+    l: "watson",
+    e: "jwatson17@apu.edu"
+  }
 
   return (
     <KeyboardAvoidingView
@@ -125,16 +132,20 @@ export default function TeamRolesScreen({ navigation }) {
             last="Watson"
             email="jwatson17@apu.edu"
             onPress={() =>
-              // navigation.navigate('Quiz', {
-              //     // title: 'Computers',
-              //     // questions: computerQuestions,
-              //     // color: '#49475B',
-              // })
-              alert("TODO")
+              navigation.navigate('EditUserPage', { testUser })
+
             }
+          // onPress={() =>
+          //   navigation.navigate('Quiz', {
+          //     title: 'Computers',
+          //     questions: computerQuestions,
+          //     color: '#49475B',
+          //   })
+          //   alert("TODO")
+          // }
           />
 
-          <RowItem
+          < RowItem
             first="Josh"
             last="Roland"
             email="jroland16@apu.edu"

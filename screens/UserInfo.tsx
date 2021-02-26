@@ -1,3 +1,10 @@
+/////////////////////////////////////////////////////////////////////////////////////////
+//
+//  THIS FILE ACTS AS A TEMPLATE FOR TEAMROLES_SCREEN10 and EDITUSER_SCREEN
+// 
+/////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////
+
 import * as React from "react";
 import {
     Button,
@@ -36,6 +43,10 @@ const styles = StyleSheet.create({
     inputSafeArea: {
         flex: 1,
         marginTop: 30,
+        backgroundColor: Colors.newColors.background,
+    },
+    inputSafeArea2: {
+        flex: 1,
         backgroundColor: Colors.newColors.background,
     },
     buttonSafeArea: {
@@ -111,7 +122,7 @@ const styles = StyleSheet.create({
     },
 });
 
-export default function UserScreen({ create, user } : { create: boolean, user: any }) {
+export default function UserScreen({ create, user }: { create: boolean, user: object }) {
 
     const [firstName, setFirstName] = React.useState("");
     const [lastName, setLastName] = React.useState("");
@@ -119,6 +130,16 @@ export default function UserScreen({ create, user } : { create: boolean, user: a
     const [password, setPassword] = React.useState("");
     const [confirmPassword, setConfirmPassword] = React.useState("");
     const [role, setRole] = React.useState("1");
+
+    useFocusEffect(
+        React.useCallback(() => {
+            if (user) {
+                setFirstName(user.f)
+                setLastName(user.l)
+                setEmail(user.e)
+            }
+        }, [])
+    );
 
     function checkPW() {
         console.log("Passed")
@@ -131,6 +152,7 @@ export default function UserScreen({ create, user } : { create: boolean, user: a
             alert("Please double check that your passwords match");
         }
     }
+
 
     function checkVersion() {
         if (create) {
@@ -178,32 +200,32 @@ export default function UserScreen({ create, user } : { create: boolean, user: a
                             autoCapitalize="none"
                             placeholderTextColor={Colors.c.gray2}
                         />
-                        {create && 
-                        <View style={{flex: 1}}>
-                        <Text style={styles.text2}>Password</Text>
-                        <TextInput
-                            placeholder="******"
-                            value={password}
-                            onChangeText={(password) => setPassword(password)}
-                            secureTextEntry={true}
-                            style={styles.input}
-                            autoCapitalize="none"
-                            placeholderTextColor={Colors.c.gray2}
-                        />
+                        {create &&
+                            <View style={styles.inputSafeArea2}>
+                                <Text style={styles.text2}>Password</Text>
+                                <TextInput
+                                    placeholder="******"
+                                    value={password}
+                                    onChangeText={(password) => setPassword(password)}
+                                    secureTextEntry={true}
+                                    style={styles.input}
+                                    autoCapitalize="none"
+                                    placeholderTextColor={Colors.c.gray2}
+                                />
 
-                        <Text style={styles.text2}>Confirm Password</Text>
-                        <TextInput
-                            placeholder="******"
-                            value={confirmPassword}
-                            onChangeText={(confirmPassword) =>
-                                setConfirmPassword(confirmPassword)
-                            }
-                            secureTextEntry={true}
-                            style={styles.input}
-                            autoCapitalize="none"
-                            placeholderTextColor={Colors.c.gray2}
-                        />
-                        </View>
+                                <Text style={styles.text2}>Confirm Password</Text>
+                                <TextInput
+                                    placeholder="******"
+                                    value={confirmPassword}
+                                    onChangeText={(confirmPassword) =>
+                                        setConfirmPassword(confirmPassword)
+                                    }
+                                    secureTextEntry={true}
+                                    style={styles.input}
+                                    autoCapitalize="none"
+                                    placeholderTextColor={Colors.c.gray2}
+                                />
+                            </View>
                         }
                         <Text style={styles.text2}>Permissions</Text>
                         {/* TODO: WE'RE GONNA NEED TO CONNECT THIS TO BACK END */}
@@ -214,13 +236,8 @@ export default function UserScreen({ create, user } : { create: boolean, user: a
                                 itemStyle={styles.pickerItem}
                                 onValueChange={(itemValue, itemIndex) => setRole(itemValue)}
                             >
-                                <Picker.Item label="Team Lead Assistant (Replace)" value="1" />
-                                <Picker.Item label="Team Member (Replace)" value="2" />
-                                <Picker.Item label="Assistant (Replace)" value="3" />
-                                <Picker.Item
-                                    label="Assistant to the Regional Manager (Replace)"
-                                    value="4"
-                                />
+                                <Picker.Item label="Admin" value="1" />
+                                <Picker.Item label="User" value="2" />
                             </Picker>
                         </View>
                         <TouchableOpacity
