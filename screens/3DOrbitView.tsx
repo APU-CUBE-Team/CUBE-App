@@ -22,6 +22,8 @@ import {
   MeshPhongMaterial,
   MeshBasicMaterial,
   TorusGeometry,
+  BoxGeometry,
+  BackSide,
 } from 'three';
 import { useFocusEffect } from '@react-navigation/native';
 import { resetOrientation } from '../hooks/resetOrientation';
@@ -76,13 +78,60 @@ export default function Orbit() {
     scene.add(globe)
     scene.add(orbitTracker)
 
-    const asset = Asset.fromModule(require('../assets/images/globe.png'));
+    const globeAsset = Asset.fromModule(require('../assets/images/globe.png'));
+    const skyleftAsset = Asset.fromModule(require('../assets/images/skybox/sky_left.png'));
+    const skybackAsset = Asset.fromModule(require('../assets/images/skybox/sky_back.png'));
+    const skyrightAsset = Asset.fromModule(require('../assets/images/skybox/sky_right.png'));
+    const skyfrontAsset = Asset.fromModule(require('../assets/images/skybox/sky_front.png'));
+    const skyupAsset = Asset.fromModule(require('../assets/images/skybox/sky_up.png'));
+    const skydownAsset = Asset.fromModule(require('../assets/images/skybox/sky_down.png'));
+    await globeAsset.downloadAsync();  
+    await skyleftAsset.downloadAsync();  
+    await skybackAsset.downloadAsync();  
+    await skyrightAsset.downloadAsync();  
+    await skyfrontAsset.downloadAsync();  
+    await skyupAsset.downloadAsync();  
+    await skydownAsset.downloadAsync();  
+    globeAsset.localUri = globeAsset.localUri?.replace(":/", "://")
+    skyleftAsset.localUri = skyleftAsset.localUri?.replace(":/", "://")
+    skybackAsset.localUri = skybackAsset.localUri?.replace(":/", "://")
+    skyrightAsset.localUri = skyrightAsset.localUri?.replace(":/", "://")
+    skyfrontAsset.localUri = skyfrontAsset.localUri?.replace(":/", "://")
+    skyupAsset.localUri = skyupAsset.localUri?.replace(":/", "://")
+    skydownAsset.localUri = skydownAsset.localUri?.replace(":/", "://")
 
-    await asset.downloadAsync();  
+    const globeTexture = new TextureLoader().load(globeAsset);
+    const skyLeftTexture = new TextureLoader().load(skyleftAsset);
+    const skyBackTexture = new TextureLoader().load(skybackAsset);
+    const skyRightTexture = new TextureLoader().load(skyrightAsset);
+    const skyFrontTexture = new TextureLoader().load(skyfrontAsset);
+    const skyUpTexture = new TextureLoader().load(skyupAsset);
+    const skyDownTexture = new TextureLoader().load(skydownAsset);
 
-    asset.localUri = asset.localUri?.replace(":/", "://")
+    const skyBox = new BoxGeometry(1000, 1000, 1000)
 
-    const globeTexture = new TextureLoader().load(asset);
+    let skyBoxLeftMesh = new MeshBasicMaterial({
+      map: skyLeftTexture, side: BackSide
+    });
+    let skyBoxBackMesh = new MeshBasicMaterial({
+      map: skyBackTexture, side: BackSide
+    });
+    let skyBoxRightMesh = new MeshBasicMaterial({
+      map: skyRightTexture, side: BackSide
+    });
+    let skyBoxFrontMesh = new MeshBasicMaterial({
+      map: skyFrontTexture, side: BackSide
+    });
+    let skyBoxUpMesh = new MeshBasicMaterial({
+      map: skyUpTexture, side: BackSide
+    });
+    let skyBoxDownMesh = new MeshBasicMaterial({
+      map: skyDownTexture, side: BackSide
+    });
+
+    let skyMesh = new Mesh(skyBox, [skyBoxFrontMesh, skyBoxBackMesh, skyBoxUpMesh, skyBoxDownMesh, skyBoxLeftMesh, skyBoxRightMesh,])
+
+    scene.add(skyMesh)
 
     const globeGeometry = new SphereGeometry(15, 100, 80);
 
