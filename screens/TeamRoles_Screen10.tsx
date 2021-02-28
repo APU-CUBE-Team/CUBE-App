@@ -1,4 +1,5 @@
 import * as React from "react";
+
 import {
   Button,
   StyleSheet,
@@ -20,6 +21,8 @@ import Colors from "../constants/Colors";
 import EditScreenInfo from "../components/EditScreenInfo";
 import { Text, View } from "../components/Themed";
 
+import { RowItem } from '../components/UserRowItem';
+
 const screen = Dimensions.get("window");
 const styles = StyleSheet.create({
   container: {
@@ -30,8 +33,13 @@ const styles = StyleSheet.create({
   },
   inputSafeArea: {
     flex: 1,
-    marginTop: 30,
     backgroundColor: Colors.newColors.background,
+    width: screen.width - 20
+  },
+  separator: {
+    marginVertical: 30,
+    height: 1,
+    width: "80%",
   },
   buttonSafeArea: {
     flex: 1,
@@ -42,16 +50,12 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
   },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: "80%",
-  },
   text: {
     color: Colors.newColors.text,
     fontSize: 30,
     textAlign: "center",
     marginTop: 10,
+    marginBottom: 10,
   },
   text2: {
     color: Colors.newColors.text,
@@ -84,12 +88,34 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function TeamRolesScreen() {
+
+////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
+//
+//  TODO PSUEDO
+//    Step one: access array of user info
+//    Step two: function that separates into an Admin and User Array based on role number 1 or 2
+//    Step three: render screen with loop that creates row components with respect to n items
+//      ---- MAKE SCREEN SCROLLABLE ----
+//    Step four: make on touch navigatability to EditUser_Screen
+//    Step five: populate EditUser_Screen with passed in parameters of selected user
+//    Step six: save changes and push back to DB
+//
+////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
+export default function TeamRolesScreen({ navigation }) {
+  //same as set state
   useFocusEffect(
     React.useCallback(() => {
       resetOrientation();
     }, [])
   );
+
+  const testUser = {
+    f: "justin",
+    l: "watson",
+    e: "jwatson17@apu.edu"
+  }
 
   return (
     <KeyboardAvoidingView
@@ -100,26 +126,67 @@ export default function TeamRolesScreen() {
         <StatusBar barStyle="light-content" />
 
         <View style={styles.inputSafeArea}>
-          <Text style={styles.text}>Admin</Text>
-          <Text style={styles.text2}>Justin Watson</Text>
+          <Text style={styles.text}>ADMIN</Text>
+          <RowItem
+            first="Justin"
+            last="Watson"
+            email="jwatson17@apu.edu"
+            onPress={() =>
+              navigation.navigate('EditUserPage', { testUser })
 
-          <Text style={styles.text2}>Josh Roland</Text>
+            }
+          // onPress={() =>
+          //   navigation.navigate('Quiz', {
+          //     title: 'Computers',
+          //     questions: computerQuestions,
+          //     color: '#49475B',
+          //   })
+          //   alert("TODO")
+          // }
+          />
 
-          <Text style={styles.text}>Assistant Leads</Text>
+          < RowItem
+            first="Josh"
+            last="Roland"
+            email="jroland16@apu.edu"
+            onPress={() =>
+              alert("TODO")
+            }
 
-          <Text style={styles.text2}>Cole Gunter</Text>
+          />
 
-          <Text style={styles.text2}>Mark Magnuson</Text>
-          <Text style={styles.text}>Guest</Text>
+          <RowItem
+            first="Mark"
+            last="Magnuson"
+            email="mmagnuson16@apu.edu"
+            onPress={() =>
+              alert("TODO")
+            }
 
-          <Text style={styles.text2}>Nate Bowman</Text>
+          />
 
-          <TouchableOpacity
-            style={styles.saveButton}
-            onPress={() => alert("Changes Saved")}
-          >
-            <Text style={styles.text3}>Save Changes</Text>
-          </TouchableOpacity>
+          <Text style={styles.text}>USERS</Text>
+
+          <RowItem
+            first="Kenny"
+            last="G"
+            email="KennyTheLegen@apu.edu"
+            onPress={() => console.log('Reeeeee')
+              // navigation.navigate(PUT NAME OF SCREEN HERE)
+            }
+
+          />
+          <RowItem
+            first="Nate"
+            last="Bowman"
+            email="nbowman16@apu.edu"
+            onPress={() =>
+              alert("TODO")
+            }
+
+          />
+
+
         </View>
       </SafeAreaView>
     </KeyboardAvoidingView>
