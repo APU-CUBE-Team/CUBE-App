@@ -22,7 +22,7 @@ import Colors from "../constants/Colors";
 import Screen from "../constants/Layout";
 import { MyTheme } from "../navigation/index";
 
-import { SignUp } from "../util/create-user/createUser";
+import { SignUp } from "../util/create-user";
 
 const screen = Dimensions.get("window");
 
@@ -129,13 +129,12 @@ export default function CreateUserScreen() {
   // taking in parameters password and confirm password
   function checkPW() {
     if (password === confirmPassword) {
-        console.log("Success")
-        SignUp(firstName, lastName, email, password, role);
-        alert("New User Created")
+      console.log("Success");
+      SignUp(firstName, lastName, email, password, role);
+      alert("New User Created");
     } else {
-        alert("Please double check that your passwords match");
+      alert("Please double check that your passwords match");
     }
-    
   }
 
   return (
