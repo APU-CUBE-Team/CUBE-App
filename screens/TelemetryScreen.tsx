@@ -8,19 +8,13 @@ import Screen from '../constants/Layout'
 import { useFocusEffect } from '@react-navigation/native';
 import CompTelScreen from './CompTel_Screen3';
 import ExpTelScreen from './ExpandedTel_Screen4';
-
+import { telemetryDBDoc } from '../util/firebase-util';
 
 export default function ExpandedTelScreen({ navigation, route }) {
     const [path, setPath] = React.useState("ExpandedTelPage");
-    // Hook that functions like componentDidMount. Ever screen will need this to ensure correct rotation
-    useFocusEffect(
-        React.useCallback(() => {
-            resetOrientation();
-            AsyncStorage.getItem('@Telemetry').then((ret: any) => {
-                setPath(ret)
-            })
-        }, [])
-    )
+    const [fetched, setFetched] = React.useState(false);
+    let dataPoints: any[] = [];
+    
     const [render, setRender] = React.useState(0);  // Not entirely sure if this is necessary at this point, but I'm too scared to remove
     const [current, setCurrent] = React.useState("data1");  // Stores what graph to display on the top of screen
     // These are our datasets. Wish this was a react component but our package-lock prevents this
@@ -47,6 +41,30 @@ export default function ExpandedTelScreen({ navigation, route }) {
     [{key: "data1", name: "Test Data 1", data: data1},
      {key: "data2", name: "Test Data 2", data: data2},
      {key: "data3", name: "Test Data 3", data: data3}]
+
+      // Hook that functions like componentDidMount. Ever screen will need this to ensure correct rotation
+    useFocusEffect(
+        React.useCallback(() => {
+            resetOrientation();
+            AsyncStorage.getItem('@Telemetry').then((ret: any) => {
+                setPath(ret)
+            })
+            if (!fetched)
+                telemetryDBDoc.then(ret => {
+                    const data = ret.data();
+                    data.names.forEach((item: {item: string}) => {
+                        dataPoints.push({
+                            key: item,
+                            vals: data[item+"_Vals"],
+                            dates: data[item+"_Times"]
+                        })
+                    });
+                    console.log(dataPoints)
+                    setFetched(true);
+                })
+        }, [])
+    )
+
     // Use effect hook to set an interval for generating dummy data. Might be useful for checking for real data in the future?
     React.useEffect(() => {
         const interval = setInterval(() => {

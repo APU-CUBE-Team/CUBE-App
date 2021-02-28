@@ -23,3 +23,10 @@ export const teamMembersDBDoc = db
   .collection("Organizations")
   .doc("AdminOrganization")
   .collection("teamMembers");
+
+export const telemetryDBDoc = db
+  .collection("Organizations")
+  .doc("UserOrganization")
+  .collection("cubesats")
+  .doc("Fox1_Cliff")
+  .get()
