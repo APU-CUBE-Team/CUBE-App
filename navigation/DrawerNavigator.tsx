@@ -18,6 +18,8 @@ import EditRoleScreen from '../screens/EditRole_Screen12';
 import CreateUserScreen from '../screens/CreateUser_Screen11';
 import TeamRolesScreen from '../screens/TeamRoles_Screen10';
 import UserPerm from '../screens/UserPerm_Screen10';
+import EditUser from '../screens/EditUser_Screen';
+import EditUserScreen from '../screens/EditUser_Screen';
 
 const Drawer = createDrawerNavigator<DrawerParamList>();
 
@@ -109,7 +111,7 @@ function TelemetryMap({ navigation, route }) {
         options={{
           headerTitle: 'CUBE Telemetry',
           headerRight: () => <DrawerToggle onPress={() => { navigation.toggleDrawer() }} />,
-          headerLeft: () => <TouchableOpacity style={{marginLeft: 5}} onPress={() => {
+          headerLeft: () => <TouchableOpacity style={{ marginLeft: 5 }} onPress={() => {
             navigation.navigate("WorkspacePage")
           }}><Ionicons size={30} style={{ marginBottom: -3, color: '#fff' }} name="cog-outline" /></TouchableOpacity>,
         }}
@@ -160,18 +162,18 @@ const NotificationStack = createStackNavigator<NotificationsParamList>();
 function Notifications({ navigation }) {
   return (
     <NotificationStack.Navigator>
-      <NotificationStack.Screen 
+      <NotificationStack.Screen
         name="NotificationsPage"
         component={NotificationsScreen}
         options={{
           headerTitle: 'Alert History',
           headerRight: () => <DrawerToggle onPress={() => { navigation.toggleDrawer() }} />,
-          headerLeft: () => <TouchableOpacity style={{marginLeft: 5}} onPress={() => {
+          headerLeft: () => <TouchableOpacity style={{ marginLeft: 5 }} onPress={() => {
             navigation.navigate("AlertConditionsPage")
           }}><Ionicons size={30} style={{ marginBottom: -3, color: '#fff' }} name="pencil-outline" /></TouchableOpacity>
         }}
       />
-      <NotificationStack.Screen 
+      <NotificationStack.Screen
         name="AlertConditionsPage"
         component={AlertConditionsScreen}
         options={{
@@ -196,18 +198,18 @@ const TeamStack = createStackNavigator<UserPermParamList>();
 function UserPermissions({ navigation }) {
   return (
     <TeamStack.Navigator>
-      <TeamStack.Screen 
+      <TeamStack.Screen
         name="TeamRolePage"
         component={TeamRolesScreen}
         options={{
           headerTitle: 'Team Roles',
           headerRight: () => <DrawerToggle onPress={() => { navigation.toggleDrawer() }} />,
-          headerLeft: () => <TouchableOpacity style={{marginLeft: 5}} onPress={() => {
+          headerLeft: () => <TouchableOpacity style={{ marginLeft: 5 }} onPress={() => {
             navigation.navigate("CreateUserPage")
           }}><Ionicons size={30} style={{ marginBottom: -3, color: '#fff' }} name="person-add-outline" /></TouchableOpacity>
         }}
       />
-      <TeamStack.Screen 
+      <TeamStack.Screen
         name="CreateUserPage"
         component={CreateUserScreen}
         options={{
@@ -215,7 +217,7 @@ function UserPermissions({ navigation }) {
           headerRight: () => <DrawerToggle onPress={() => { navigation.toggleDrawer() }} />
         }}
       />
-      <TeamStack.Screen 
+      <TeamStack.Screen
         name="EditRolePage"
         component={EditRoleScreen}
         options={{
@@ -223,12 +225,22 @@ function UserPermissions({ navigation }) {
           headerRight: () => <DrawerToggle onPress={() => { navigation.toggleDrawer() }} />
         }}
       />
-      <TeamStack.Screen 
+      {/* <TeamStack.Screen
         name="UserPermPage"
         component={UserPerm}
         options={{
           headerTitle: 'User Permissions',
           headerRight: () => <DrawerToggle onPress={() => { navigation.toggleDrawer() }} />
+        }}
+      /> */}
+      <TeamStack.Screen
+        name="EditUserPage"
+        component={EditUserScreen}
+        options={{
+          headerTitle: 'Edit User',
+          headerLeft: () => <TouchableOpacity style={{ marginLeft: 5 }} onPress={() => {
+            navigation.navigate("TeamRolePage")
+          }}><Ionicons size={30} style={{ marginBottom: -3, color: '#fff' }} name="arrow-back-outline" /></TouchableOpacity>
         }}
       />
     </TeamStack.Navigator>
