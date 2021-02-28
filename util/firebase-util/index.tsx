@@ -19,7 +19,7 @@ export const auth = firebase.auth();
 export const organizations = db.collection("Organizations");
 export const bugReportsDB = db.collection("BugReports");
 
-export const teamMembersDBDoc = db
+export const teamMembersDBColl = db
   .collection("Organizations")
   .doc("AdminOrganization")
   .collection("teamMembers");
