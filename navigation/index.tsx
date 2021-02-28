@@ -16,7 +16,7 @@ import {
   emailSignIn,
   signOut,
   findNewToken,
-} from "../util/authenticating-users";
+} from "../util/authenticating-users/index";
 
 const AuthContext = React.createContext({});
 
