@@ -1,15 +1,17 @@
-import {db, auth} from '../firebase-util';
+import {auth} from '../firebase-util';
+import * as firebase from 'firebase';
 
   // Listen for authentication state to change.
 export function emailSignIn(username: any, password: any) { 
   return auth.signInWithEmailAndPassword(username, password)
 }
 
-export function signOut() {auth.signOut()
-  .then((res) => {
+export function signOut() {
+  firebase.auth().signOut()
+  .then(() => {
     
-    console.log('Sign-Out Success');
     // Sign-out successful.
+    console.log('Sign-Out Success');
   }).catch((error) => {
     // An error happened.
     var errorCode = error.code;
@@ -21,7 +23,10 @@ export function signOut() {auth.signOut()
 
 export async function findNewToken() {
   auth.onAuthStateChanged(user => {
-    if (user) {
+    if (user != null) {
+      console.log('Authenticated!');
+
+      // getting id token
       user.getIdToken().then(idToken => {
         console.log(idToken);
         return idToken
