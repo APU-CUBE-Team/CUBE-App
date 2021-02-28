@@ -1,14 +1,11 @@
-import * as firebase from "firebase";
-import "firebase/firestore";
-import { firebaseConfig, auth, db } from "../authenticating-users/firebaseAuth";
-
-// checks if firebase has been initialized already. mainly just for refreshing purposes.
-!firebase.apps.length ? firebase.initializeApp(firebaseConfig) : firebase.app();
+import firebase from "firebase";
+import { auth, db } from "../firebase-util";
 
 // might need to initialize as admin? unless this works. we'll find out.
 
 // instantiate time stamp
 let currTime = firebase.firestore.Timestamp.fromDate(new Date());
+
 
 // get username from current logged in user
 
