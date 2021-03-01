@@ -13,6 +13,7 @@ import {
   Alert,
   Platform,
   FlatList,
+  ScrollView
 } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import { resetOrientation } from "../hooks/resetOrientation";
@@ -27,6 +28,7 @@ import {
   listAllTeamMembers,
   getAdminsOfTeam,
   getUsersOfTeam,
+  getAdmins
 } from "../util/edit-roles";
 
 const screen = Dimensions.get("window");
@@ -120,51 +122,58 @@ export default function TeamRolesScreen({ navigation }) {
     }, [])
   );
 
+
   const testUser = {
     f: "justin",
     l: "watson",
     e: "jwatson17@apu.edu",
   };
 
-  const temp = getAdminsOfTeam();
-  console.log(temp);
+  //let arr: any[] = getAdminsOfTeam();
+  const admins = getAdminsOfTeam();
+  // const users = getUsersOfTeam();
+  // console.log('this is correct')
+  console.log(admins);
+  //console.log("ADMINS\n", admins);
+  //console.log("USERS\n", { users })
 
   return (
     <KeyboardAvoidingView
       style={styles.container}
       behavior={Platform.OS === "ios" ? "padding" : null}
     >
-      <SafeAreaView style={styles.container}>
-        <StatusBar barStyle="light-content" />
+      <ScrollView>
+        <SafeAreaView style={styles.container}>
+          <StatusBar barStyle="light-content" />
 
-        <View style={styles.inputSafeArea}>
-          <Text style={styles.text}>ADMIN</Text>
+          <View style={styles.inputSafeArea}>
+            <Text style={styles.text}>ADMIN</Text>
 
-          <RowItem
-            first="Admins"
-            last="Button"
-            email="returns all admins in log"
-            onPress={() => {
-              getAdminsOfTeam();
-            }}
-          />
+            <RowItem
+              first="Admins"
+              last="Button"
+              email="returns all admins in log"
+              onPress={() => {
+                getAdminsOfTeam();
+              }}
+            />
 
-          <Text style={styles.text}>USERS</Text>
+            <Text style={styles.text}>USERS</Text>
 
-          <RowItem
-            first="Users"
-            last="Button"
-            email="returns all users in log"
-            onPress={() => {
-              getUsersOfTeam();
-            }}
-          />
+            <RowItem
+              first="Users"
+              last="Button"
+              email="returns all users in log"
+              onPress={() => {
+                getUsersOfTeam();
+              }}
+            />
 
-          <RowItem
-            first="Justin"
-            last="Watson"
-            email="jwatson17@apu.edu"
-            onPress={() => navigation.navigate("EditUserPage", { testUser })}
+            <RowItem
+              first="Justin"
+              last="Watson"
+              email="jwatson17@apu.edu"
+              onPress={() => navigation.navigate("EditUserPage", { testUser })}
             // onPress={() =>
             //   navigation.navigate('Quiz', {
             //     title: 'Computers',
@@ -173,16 +182,18 @@ export default function TeamRolesScreen({ navigation }) {
             //   })
             //   alert("TODO")
             // }
-          />
+            />
 
-          <RowItem
-            first="Josh"
-            last="Roland"
-            email="jroland16@apu.edu"
-            onPress={() => alert("TODO")}
-          />
-        </View>
-      </SafeAreaView>
+            <RowItem
+              first="Josh"
+              last="Roland"
+              email="jroland16@apu.edu"
+              onPress={() => alert("TODO")}
+            />
+          </View>
+        </SafeAreaView>
+      </ScrollView>
+
     </KeyboardAvoidingView>
   );
 }
