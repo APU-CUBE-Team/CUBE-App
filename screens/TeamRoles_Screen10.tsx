@@ -23,7 +23,11 @@ import EditScreenInfo from "../components/EditScreenInfo";
 import { Text, View } from "../components/Themed";
 
 import { RowItem } from "../components/UserRowItem";
-import { teamMembersDBColl } from "../util/firebase-util";
+import {
+  listAllTeamMembers,
+  getAdminsOfTeam,
+  getUsersOfTeam,
+} from "../util/edit-roles";
 
 const screen = Dimensions.get("window");
 const styles = StyleSheet.create({
@@ -105,18 +109,9 @@ const styles = StyleSheet.create({
 ////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////
 
-///////////////////////////////////
-// COMPONENT: List all users from teamMembersDoc
-// Organize users into 2 lists: Admin / User
+// How to List things. I recommend, since we're splitting between users and admins, doing 2 FlatLists
+// https://reactnative.dev/docs/using-a-listview
 
-function teamMembers() {
-  teamMembersDBColl.get().then((querySnapshot) => {
-    querySnapshot.forEach((doc) => {
-      // doc.data() is never undefined for query doc snapshots
-      console.log(doc.id, "=>", doc.data());
-    });
-  });
-}
 export default function TeamRolesScreen({ navigation }) {
   //same as set state
   useFocusEffect(
@@ -141,42 +136,46 @@ export default function TeamRolesScreen({ navigation }) {
 
         <View style={styles.inputSafeArea}>
           <Text style={styles.text}>ADMIN</Text>
+
           <RowItem
-            first="Test"
+            first="Admins"
             last="Button"
-            email="returns all team members in log"
+            email="returns all admins in log"
             onPress={() => {
-              teamMembers();
+              getAdminsOfTeam();
             }}
           />
+
+          <Text style={styles.text}>USERS</Text>
+
+          <RowItem
+            first="Users"
+            last="Button"
+            email="returns all users in log"
+            onPress={() => {
+              getUsersOfTeam();
+            }}
+          />
+
+          <RowItem
+            first="Justin"
+            last="Watson"
+            email="jwatson17@apu.edu"
+            onPress={() => navigation.navigate("EditUserPage", { testUser })}
+            // onPress={() =>
+            //   navigation.navigate('Quiz', {
+            //     title: 'Computers',
+            //     questions: computerQuestions,
+            //     color: '#49475B',
+            //   })
+            //   alert("TODO")
+            // }
+          />
+
           <RowItem
             first="Josh"
             last="Roland"
             email="jroland16@apu.edu"
-            onPress={() => alert("TODO")}
-          />
-
-          <RowItem
-            first="Mark"
-            last="Magnuson"
-            email="mmagnuson16@apu.edu"
-            onPress={() => alert("TODO")}
-          />
-          <Text style={styles.text}>USERS</Text>
-
-          <RowItem
-            first="Kenny"
-            last="G"
-            email="KennyTheLegen@apu.edu"
-            onPress={
-              () => console.log("Reeeeee")
-              // navigation.navigate(PUT NAME OF SCREEN HERE)
-            }
-          />
-          <RowItem
-            first="Nate"
-            last="Bowman"
-            email="nbowman16@apu.edu"
             onPress={() => alert("TODO")}
           />
         </View>

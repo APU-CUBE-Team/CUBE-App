@@ -19,6 +19,9 @@ export const auth = firebase.auth();
 export const organizations = db.collection("Organizations");
 export const bugReportsDB = db.collection("BugReports");
 
+// TODO!!!!! Query current user's organization
+const currenOrg = auth.currentUser?.uid;
+
 export const teamMembersDBColl = db
   .collection("Organizations")
   .doc("AdminOrganization")
