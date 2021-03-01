@@ -126,6 +126,9 @@ export default function TeamRolesScreen({ navigation }) {
     e: "jwatson17@apu.edu",
   };
 
+  const temp = getAdminsOfTeam();
+  console.log(temp);
+
   return (
     <KeyboardAvoidingView
       style={styles.container}
