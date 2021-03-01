@@ -142,9 +142,11 @@ const styles = StyleSheet.create({
     },
     workspaceSwitch: {
         width: 50,
-        height: 50,
-        transform: [{ scaleX: 1.5 }, { scaleY: 1.5 }],
+        height: 30,
+        transform: [{ scaleX: 1 }, { scaleY: 1 }],
         marginLeft: 25,
+        marginTop: 10,
+        marginBottom: 10,
     },
     switchRow: {
         flexDirection: 'row', 
