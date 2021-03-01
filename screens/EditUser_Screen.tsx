@@ -9,12 +9,12 @@ export default function EditUserScreen({ navigation, route }) {
             resetOrientation();
         }, [])
     );
-    console.log(route.params?.testUser)
+    console.log(route.params?.e)
 
     return (
         <UserInfo
             create={false}
-            user={route.params?.testUser}
+            user={route.params?.e}
         />
     );
 }

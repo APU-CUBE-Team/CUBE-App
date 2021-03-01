@@ -28,7 +28,6 @@ import {
   listAllTeamMembers,
   getAdminsOfTeam,
   getUsersOfTeam,
-  getAdmins
 } from "../util/edit-roles";
 
 const screen = Dimensions.get("window");
@@ -115,27 +114,25 @@ const styles = StyleSheet.create({
 // https://reactnative.dev/docs/using-a-listview
 
 export default function TeamRolesScreen({ navigation }) {
-  //same as set state
+  const [admins, setAdmins] = React.useState([]);
+  const [users, setUsers] = React.useState([]);
+  const [render, rerender] = React.useState(0);
+
   useFocusEffect(
     React.useCallback(() => {
       resetOrientation();
+      getAdminsOfTeam().then((response) => {
+        setAdmins(response);
+        rerender(render + 1);
+      });
+      getUsersOfTeam().then((response) => {
+        setUsers(response);
+        rerender(render + 1);
+      });
     }, [])
   );
 
 
-  const testUser = {
-    f: "justin",
-    l: "watson",
-    e: "jwatson17@apu.edu",
-  };
-
-  //let arr: any[] = getAdminsOfTeam();
-  const admins = getAdminsOfTeam();
-  // const users = getUsersOfTeam();
-  // console.log('this is correct')
-  console.log(admins);
-  //console.log("ADMINS\n", admins);
-  //console.log("USERS\n", { users })
 
   return (
     <KeyboardAvoidingView
@@ -149,47 +146,34 @@ export default function TeamRolesScreen({ navigation }) {
           <View style={styles.inputSafeArea}>
             <Text style={styles.text}>ADMIN</Text>
 
-            <RowItem
-              first="Admins"
-              last="Button"
-              email="returns all admins in log"
-              onPress={() => {
-                getAdminsOfTeam();
-              }}
-            />
+            {
+              admins.map((e) => {
+                return (
+                  <RowItem
+                    first={e.firstName}
+                    last={e.lastName}
+                    email={e.email}
+                    onPress={() => navigation.navigate("EditUserPage", { e })}
+                  />
+                )
+              })
+            }
+
 
             <Text style={styles.text}>USERS</Text>
 
-            <RowItem
-              first="Users"
-              last="Button"
-              email="returns all users in log"
-              onPress={() => {
-                getUsersOfTeam();
-              }}
-            />
-
-            <RowItem
-              first="Justin"
-              last="Watson"
-              email="jwatson17@apu.edu"
-              onPress={() => navigation.navigate("EditUserPage", { testUser })}
-            // onPress={() =>
-            //   navigation.navigate('Quiz', {
-            //     title: 'Computers',
-            //     questions: computerQuestions,
-            //     color: '#49475B',
-            //   })
-            //   alert("TODO")
-            // }
-            />
-
-            <RowItem
-              first="Josh"
-              last="Roland"
-              email="jroland16@apu.edu"
-              onPress={() => alert("TODO")}
-            />
+            {
+              users.map((e) => {
+                return (
+                  <RowItem
+                    first={e.firstName}
+                    last={e.lastName}
+                    email={e.email}
+                    onPress={() => navigation.navigate("EditUserPage", { e })}
+                  />
+                )
+              })
+            }
           </View>
         </SafeAreaView>
       </ScrollView>
