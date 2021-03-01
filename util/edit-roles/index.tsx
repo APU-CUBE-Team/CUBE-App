@@ -14,58 +14,46 @@ export function listAllTeamMembers() {
   return teamMembersArray;
 }
 
-export function getUsersOfTeam() {
-  let usersArray: any[] = [];
-  teamMembersDBColl
-    .where("role", "==", "2")
-    .get()
-    .then((querySnapshot) => {
-      // console.log("Users:\n");
-      querySnapshot.forEach((doc) => {
-        // doc.data() is never undefined for query doc snapshots
-        //console.log(doc.id, "=>", doc.data());
-        usersArray.push(doc.data());
-      });
-    });
-}
-
-// export async function getAdminsOfTeam() {
-//   let adminsArray: any[] = [];
-//   let response = await teamMembersDBColl
-//     .where("role", "==", "1")
-//     .get()
-//     .then((querySnapshot) => {
-//       // console.log("Admins:\n");
-//       const data1 = querySnapshot.docs;
-//       // console.log(data1);
-//       // data1.forEach(doc => {
-//       //   console.log(doc.data());
-//       // })
-//       data1.forEach((doc) => {
-//         // doc.data() is never undefined for query doc snapshots
-//         //console.log(doc.id, "=>", doc.data());
-//         adminsArray.push(doc.data());
-//       });
-
-//     });
-//     return Promise.resolve(adminsArray);
-// }
-
+/////////////////////////////////////////////////////////////////
+// BACKEND FUNCTION: retrieves a promise of all admins from
+//  a specific organization
+/////////////////////////////////////////////////////////////////
 export async function getAdminsOfTeam() {
   let adminsArray: any[] = [];
-  let response = await teamMembersDBColl
+  await teamMembersDBColl
     .where("role", "==", "1")
     .get()
     .then((querySnapshot) => {
-      const data1 = querySnapshot.docs;
-
-      data1.forEach((doc) => {
+      const a = querySnapshot.docs;
+      a.forEach((doc) => {
         adminsArray.push(doc.data());
       });
     });
-  return Promise.resolve(adminsArray);
+  return adminsArray;
 }
 
+/////////////////////////////////////////////////////////////////
+// BACKEND FUNCTION: retrieves a promise of all users from
+//  a specific organization
+/////////////////////////////////////////////////////////////////
+export async function getUsersOfTeam() {
+  let usersArray: any[] = [];
+  await teamMembersDBColl
+    .where("role", "==", "2")
+    .get()
+    .then((querySnapshot) => {
+      const u = querySnapshot.docs;
+      u.forEach((doc) => {
+        usersArray.push(doc.data());
+      });
+      console.log(usersArray)
+    });
+  return usersArray;
+}
+
+/////////////////////////////////////////////////////////////////
+// TODO
+/////////////////////////////////////////////////////////////////
 export function updateUser(data: any) {
   console.log("TODO");
 }
