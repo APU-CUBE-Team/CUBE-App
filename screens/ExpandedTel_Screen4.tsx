@@ -13,11 +13,15 @@ import Screen from '../constants/Layout'
 
 export default function ExpandedTelScreen({ dataSet, selected, setCurrent }: { dataSet: any, selected: string, setCurrent: Function }) {
 
+    const [loaded, setLoaded] = React.useState(false);
+
     return (
         <View style={styles.container}>
             <View style={styles.GraphArea}>
                 {dataSet.map((e: any) => {
+                    
                     return(
+                        (!loaded &&
                         <View 
                             style={selected === e.key ? {
                                 flex: 1, 
@@ -35,7 +39,7 @@ export default function ExpandedTelScreen({ dataSet, selected, setCurrent }: { d
                                 width={Screen.window.width - 40}
                                 height={250}
                             />
-                        </View>
+                        </View>)
                     )
                 })}
             </View>

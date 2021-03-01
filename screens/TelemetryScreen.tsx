@@ -12,7 +12,6 @@ import { telemetryDBDoc } from '../util/firebase-util';
 
 export default function ExpandedTelScreen({ navigation, route }) {
     const [path, setPath] = React.useState("ExpandedTelPage");
-    const [fetched, setFetched] = React.useState(false);
     const [dataPoints, setDataPoints] = React.useState([]);
     
     const [render, setRender] = React.useState(0);  // Not entirely sure if this is necessary at this point, but I'm too scared to remove
@@ -25,7 +24,9 @@ export default function ExpandedTelScreen({ navigation, route }) {
             AsyncStorage.getItem('@Telemetry').then((ret: any) => {
                 setPath(ret)
             })
-            if (!fetched)
+            console.log(fetched)
+
+            if (dataPoints.length == 0) {
                 telemetryDBDoc.then(ret => {
                     const data = ret.data();
                     data.names.forEach((item: {item: string}) => {
@@ -36,9 +37,8 @@ export default function ExpandedTelScreen({ navigation, route }) {
                         })
                     });
                     setDataPoints(dataPoints);
-                    setCurrent(dataPoints[dataPoints.length-1])
-                    setFetched(true);
-                })
+                    setCurrent(dataPoints[dataPoints.length-1].key)
+                })}
         }, [])
     )
 
