@@ -10,7 +10,6 @@ import { getSettings } from '../hooks/Storage';
 export default function CompTelScreen({ dataSet }: { dataSet: any }) {
     const [r, rerender] = React.useState(0);
     const [settings, setSet] = React.useState(telemetryList)
-
     useFocusEffect(
         React.useCallback(() => {
             let res: any[]
@@ -31,12 +30,14 @@ export default function CompTelScreen({ dataSet }: { dataSet: any }) {
         <View style={styles.container}>
             <ScrollView style={{flex:1}}>
                 {dataSet.map((e: any) => {
+
                     return(
-                        <View style={settings[settings.findIndex(p => p.key === e.key)].visible ? {} : {height: 0, marginLeft: -500}}>
+                        // <View style={settings[settings.findIndex(p => p.key === e.key)].visible ? {} : {height: 0, marginLeft: -500}}>
                             <Graph 
                                 data={e}
                             />
-                        </View>
+                        // </View>
+                        // <View/>
                     )
                 })}
             </ScrollView>

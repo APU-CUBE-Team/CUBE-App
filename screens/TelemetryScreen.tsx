@@ -13,7 +13,8 @@ import { telemetryDBDoc } from '../util/firebase-util';
 export default function ExpandedTelScreen({ navigation, route }) {
     const [path, setPath] = React.useState("ExpandedTelPage");
     const [fetched, setFetched] = React.useState(false);
-    let dataPoints: any[] = [];
+    const [dataPoints, setDataPoints] = React.useState([]);
+    //: any[] = [];
     
     const [render, setRender] = React.useState(0);  // Not entirely sure if this is necessary at this point, but I'm too scared to remove
     const [current, setCurrent] = React.useState("data1");  // Stores what graph to display on the top of screen
@@ -59,7 +60,9 @@ export default function ExpandedTelScreen({ navigation, route }) {
                             dates: data[item+"_Times"]
                         })
                     });
-                    console.log(dataPoints)
+                    setDataPoints(dataPoints);
+                    console.log("DataPoints: ", dataPoints)
+
                     setFetched(true);
                 })
         }, [])
@@ -82,10 +85,11 @@ export default function ExpandedTelScreen({ navigation, route }) {
 
 
     return (
+        fetched && 
         <View style={{flex: 1}}>
             {path === "\"CompTelPage\"" ? (
                 <CompTelScreen 
-                    dataSet={dataSet}
+                    dataSet={dataPoints}
                 /> 
             ) : (
                 <ExpTelScreen 
