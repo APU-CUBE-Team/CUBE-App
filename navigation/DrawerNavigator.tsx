@@ -120,19 +120,19 @@ function TelemetryMap({ navigation, route }) {
         }}
       />
       <TelemetryMapStack.Screen
+        name="WorkspacePage"
+        component={WorkspaceScreen}
+        options={{
+          headerTitle: 'Workspace Settings',
+          headerRight: () => <DrawerToggle onPress={() => { navigation.toggleDrawer() }} />
+        }}
+      />
+      <TelemetryMapStack.Screen
         name="MapPage"
         component={MapScreen}
         options={{
           headerShown: false,
           headerTitle: 'Location Tracking',
-          headerRight: () => <DrawerToggle onPress={() => { navigation.toggleDrawer() }} />
-        }}
-      />
-      <TelemetryMapStack.Screen
-        name="WorkspacePage"
-        component={WorkspaceScreen}
-        options={{
-          headerTitle: 'Workspace Settings',
           headerRight: () => <DrawerToggle onPress={() => { navigation.toggleDrawer() }} />
         }}
       />
