@@ -30,6 +30,7 @@ import Screen from "../constants/Layout";
 import { MyTheme } from "../navigation/index";
 
 import { SignUp } from "../util/create-user/index";
+import { updateUser } from "../util/edit-roles";
 
 const screen = Dimensions.get("window");
 
@@ -159,9 +160,12 @@ export default function UserScreen({
   }
 
   function checkVersion() {
+    // is this create user or edit user screen?
     if (create) {
-      checkPW();
+      checkPW(); // check pw and create user
     } else {
+      // navigate to edit user page and update user stuff
+      updateUser();
     }
   }
 
