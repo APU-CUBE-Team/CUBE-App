@@ -28,10 +28,10 @@ export default function ExpandedTelScreen({ dataSet, selected, setCurrent }: { d
                                 height: 0, 
                                 width: 0, 
                                 position: 'absolute', 
-                                top: -350
+                                top: -500
                         }}>
                             <Graph 
-                                data={e.data}
+                                data={e}
                                 width={Screen.window.width - 40}
                                 height={250}
                             />
@@ -41,57 +41,20 @@ export default function ExpandedTelScreen({ dataSet, selected, setCurrent }: { d
             </View>
             <View style={{height: Screen.window.height / 3}}/>
             <ScrollView style={{flex:1}}>
-                <TouchableOpacity
-                    style={styles.button}
-                    onPress={() => {
-                        setCurrent("data1");
-                    }}
-                >
-                    <Text style={styles.text}>
-                        Test Data 1 (RT): {`${Math.round(dataSet[0].data.vals[dataSet[0].data.vals.length -1] * 100) / 100}`}
-                    </Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    style={styles.button}
-                    onPress={() => {
-                        setCurrent("data2");
-                    }}
-                >
-                    <Text style={styles.text}>
-                        Test Data 2 (RT): {`${Math.round(dataSet[1].data.vals[dataSet[1].data.vals.length -1] * 100) / 100}`}
-                    </Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    style={styles.button}
-                    onPress={() => {
-                        setCurrent("data3");
-                    }}
-                >
-                    <Text style={styles.text}>
-                        Test Data 3 (RT): {`${Math.round(dataSet[2].data.vals[dataSet[2].data.vals.length -1] * 100) / 100}`}
-                    </Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.button} onPress={() => {}}>
-                <Text></Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.button} onPress={() => {}}>
-                <Text></Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.button} onPress={() => {}}>
-                <Text></Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.button} onPress={() => {}}>
-                <Text></Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.button} onPress={() => {}}>
-                <Text></Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.button} onPress={() => {}}>
-                <Text></Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.button} onPress={() => {}}>
-                <Text></Text>
-                </TouchableOpacity>
+                {dataSet.map((e: any) => {
+                    return(
+                        <TouchableOpacity
+                            style={styles.button}
+                            onPress={() => {
+                                setCurrent(e.key);
+                            }}
+                        >
+                            <Text style={styles.text}>
+                                {`${e.key}`} (RT): {`${Math.round(e.vals[e.vals.length -1] * 100) / 100}`}
+                            </Text>
+                        </TouchableOpacity>
+                    )
+                })}
             </ScrollView>
         </View>
     );
