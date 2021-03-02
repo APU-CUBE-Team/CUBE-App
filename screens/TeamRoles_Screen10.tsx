@@ -12,6 +12,8 @@ import {
   KeyboardAvoidingView,
   Alert,
   Platform,
+  FlatList,
+  ScrollView
 } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import { resetOrientation } from "../hooks/resetOrientation";
@@ -21,7 +23,12 @@ import Colors from "../constants/Colors";
 import EditScreenInfo from "../components/EditScreenInfo";
 import { Text, View } from "../components/Themed";
 
-import { RowItem } from '../components/UserRowItem';
+import { RowItem } from "../components/UserRowItem";
+import {
+  listAllTeamMembers,
+  getAdminsOfTeam,
+  getUsersOfTeam,
+} from "../util/edit-roles";
 
 const screen = Dimensions.get("window");
 const styles = StyleSheet.create({
@@ -34,7 +41,7 @@ const styles = StyleSheet.create({
   inputSafeArea: {
     flex: 1,
     backgroundColor: Colors.newColors.background,
-    width: screen.width - 20
+    width: screen.width - 20,
   },
   separator: {
     marginVertical: 30,
@@ -88,7 +95,6 @@ const styles = StyleSheet.create({
   },
 });
 
-
 ////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////
 //
@@ -103,92 +109,75 @@ const styles = StyleSheet.create({
 //
 ////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////
+
+// How to List things. I recommend, since we're splitting between users and admins, doing 2 FlatLists
+// https://reactnative.dev/docs/using-a-listview
+
 export default function TeamRolesScreen({ navigation }) {
-  //same as set state
+  const [admins, setAdmins] = React.useState([]);
+  const [users, setUsers] = React.useState([]);
+  const [render, rerender] = React.useState(0);
+
   useFocusEffect(
     React.useCallback(() => {
       resetOrientation();
+      getAdminsOfTeam().then((response) => {
+        setAdmins(response);
+        rerender(render + 1);
+      });
+      getUsersOfTeam().then((response) => {
+        setUsers(response);
+        rerender(render + 1);
+      });
     }, [])
   );
 
-  const testUser = {
-    f: "justin",
-    l: "watson",
-    e: "jwatson17@apu.edu"
-  }
+
 
   return (
     <KeyboardAvoidingView
       style={styles.container}
       behavior={Platform.OS === "ios" ? "padding" : null}
     >
-      <SafeAreaView style={styles.container}>
-        <StatusBar barStyle="light-content" />
+      <ScrollView>
+        <SafeAreaView style={styles.container}>
+          <StatusBar barStyle="light-content" />
 
-        <View style={styles.inputSafeArea}>
-          <Text style={styles.text}>ADMIN</Text>
-          <RowItem
-            first="Justin"
-            last="Watson"
-            email="jwatson17@apu.edu"
-            onPress={() =>
-              navigation.navigate('EditUserPage', { testUser })
+          <View style={styles.inputSafeArea}>
+            <Text style={styles.text}>ADMIN</Text>
 
-            }
-          // onPress={() =>
-          //   navigation.navigate('Quiz', {
-          //     title: 'Computers',
-          //     questions: computerQuestions,
-          //     color: '#49475B',
-          //   })
-          //   alert("TODO")
-          // }
-          />
-
-          < RowItem
-            first="Josh"
-            last="Roland"
-            email="jroland16@apu.edu"
-            onPress={() =>
-              alert("TODO")
+            {
+              admins.map((e) => {
+                return (
+                  <RowItem
+                    first={e.firstName}
+                    last={e.lastName}
+                    email={e.email}
+                    onPress={() => navigation.navigate("EditUserPage", { e })}
+                  />
+                )
+              })
             }
 
-          />
 
-          <RowItem
-            first="Mark"
-            last="Magnuson"
-            email="mmagnuson16@apu.edu"
-            onPress={() =>
-              alert("TODO")
+            <Text style={styles.text}>USERS</Text>
+
+            {
+              users.map((e) => {
+                return (
+                  <RowItem
+                    first={e.firstName}
+                    last={e.lastName}
+                    email={e.email}
+                    onPress={() => navigation.navigate("EditUserPage", { e })}
+                  />
+                )
+              })
             }
+          </View>
+        </SafeAreaView>
+      </ScrollView>
 
-          />
-
-          <Text style={styles.text}>USERS</Text>
-
-          <RowItem
-            first="Kenny"
-            last="G"
-            email="KennyTheLegen@apu.edu"
-            onPress={() => console.log('Reeeeee')
-              // navigation.navigate(PUT NAME OF SCREEN HERE)
-            }
-
-          />
-          <RowItem
-            first="Nate"
-            last="Bowman"
-            email="nbowman16@apu.edu"
-            onPress={() =>
-              alert("TODO")
-            }
-
-          />
-
-
-        </View>
-      </SafeAreaView>
     </KeyboardAvoidingView>
   );
 }

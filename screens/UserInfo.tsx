@@ -30,6 +30,7 @@ import Screen from "../constants/Layout";
 import { MyTheme } from "../navigation/index";
 
 import { SignUp } from "../util/create-user/index";
+import { updateUser } from "../util/edit-roles";
 
 const screen = Dimensions.get("window");
 
@@ -139,9 +140,10 @@ export default function UserScreen({
   useFocusEffect(
     React.useCallback(() => {
       if (user) {
-        setFirstName(user.f);
-        setLastName(user.l);
-        setEmail(user.e);
+        setFirstName(user.firstName);
+        setLastName(user.lastName);
+        setEmail(user.email);
+        setRole(user.role);
       }
     }, [])
   );
@@ -159,9 +161,12 @@ export default function UserScreen({
   }
 
   function checkVersion() {
+    // is this create user or edit user screen?
     if (create) {
-      checkPW();
+      checkPW(); // check pw and create user
     } else {
+      // navigate to edit user page and update user stuff
+      updateUser();
     }
   }
 
@@ -231,6 +236,7 @@ export default function UserScreen({
               </View>
             )}
             <Text style={styles.text2}>Permissions</Text>
+
             {/* TODO: WE'RE GONNA NEED TO CONNECT THIS TO BACK END */}
             <View style={styles.pickerContainer}>
               <Picker
@@ -243,11 +249,19 @@ export default function UserScreen({
                 <Picker.Item label="User" value="2" />
               </Picker>
             </View>
+
             <TouchableOpacity
               style={styles.signInButton}
               onPress={() => checkVersion()}
             >
-              <Text style={styles.text}>Add User</Text>
+              {
+                create ?
+                  (
+                    <Text style={styles.text}>Add User</Text>
+                  ) : (
+                    <Text style={styles.text}>Save Changes</Text>
+                  )
+              }
             </TouchableOpacity>
           </View>
         </ScrollView>
