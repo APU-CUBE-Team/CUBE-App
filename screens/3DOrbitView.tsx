@@ -1,5 +1,5 @@
 import { ExpoWebGLRenderingContext, GLView } from 'expo-gl';
-import { Renderer, TextureLoader, loadAsync } from 'expo-three';
+import { Renderer, TextureLoader, loadAsync, THREE } from 'expo-three';
 import OrbitControlsView from 'expo-three-orbit-controls';
 import * as React from 'react';
 import { Image } from 'react-native';
@@ -25,6 +25,7 @@ import {
   BoxGeometry,
   BackSide,
 } from 'three';
+global.Image = undefined;
 import { useFocusEffect } from '@react-navigation/native';
 import { resetOrientation } from '../hooks/resetOrientation';
 
