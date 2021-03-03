@@ -25,6 +25,7 @@ if (Platform.OS === "android" && UIManager.setLayoutAnimationEnabledExperimental
     { UIManager.setLayoutAnimationEnabledExperimental(true); }
 
 export default function AdvGraph({ data }: {data: any}) {
+    
     const [expanded, setExpanded] = React.useState(false);
     return (
         <TouchableOpacity
@@ -57,7 +58,7 @@ export default function AdvGraph({ data }: {data: any}) {
                     textShadowRadius:10,
                     marginLeft: 10
                 }}>
-                    {`${data.name}`} (RT): {`${Math.round(data.data.vals[data.data.vals.length -1] * 100) / 100}`}
+                    {`${data.key}`} (RT): {`${Math.round(data.vals[data.vals.length -1] * 100) / 100}`}
                 </Text>}
                 {expanded && (
                     <View style={{
@@ -84,7 +85,7 @@ export default function AdvGraph({ data }: {data: any}) {
                             elevation: 2, // Android
                         }}>
                             <DataGraph
-                                data = {data.data}
+                                data = {data}
                                 width = {Screen.window.width - 40}
                                 height = {250}
                             />

@@ -117,6 +117,7 @@ export default function SignInScreen({ route, navigation }) {
   // checks for empty string, or if there is nothing in general. either signs in,
   // or you get bonked.
   // Justin (2/6): defined variable types for username and password for good housekeeping
+
   function signInAuth(username: any, password: any) {
     if (username != "" && password != "" && username && password) {
       signIn({ username, password });
@@ -151,7 +152,7 @@ export default function SignInScreen({ route, navigation }) {
             onChangeText={(username) => setUsername(username)}
             style={styles.input}
             autoCapitalize="none"
-            placeholderTextColor={Colors.c.white}
+            placeholderTextColor={Colors.newColors.grayText}
           />
           <TextInput
             placeholder="Password"
@@ -160,12 +161,14 @@ export default function SignInScreen({ route, navigation }) {
             secureTextEntry={true}
             style={styles.input}
             autoCapitalize="none"
-            placeholderTextColor={Colors.c.white}
+            placeholderTextColor={Colors.newColors.grayText}
           />
 
           <TouchableOpacity
             style={styles.signInButton}
-            onPress={() => signInAuth(username, password)}
+            onPress={() => {
+              signInAuth(username, password);
+            }}
           >
             <Text style={styles.text}>Sign In</Text>
           </TouchableOpacity>

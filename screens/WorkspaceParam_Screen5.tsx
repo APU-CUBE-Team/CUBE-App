@@ -146,7 +146,8 @@ const styles = StyleSheet.create({
         transform: [{ scaleX: 1 }, { scaleY: 1 }],
         marginLeft: 25,
         marginTop: 10,
-        marginBottom: 10,    },
+        marginBottom: 10,    
+    },
     switchRow: {
         flexDirection: 'row', 
         alignItems: 'center', 
