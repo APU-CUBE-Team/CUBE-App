@@ -24,7 +24,6 @@ export default function ExpandedTelScreen({ navigation, route }) {
             AsyncStorage.getItem('@Telemetry').then((ret: any) => {
                 setPath(ret)
             })
-            console.log(fetched)
 
             if (dataPoints.length == 0) {
                 telemetryDBDoc.then(ret => {
@@ -52,7 +51,7 @@ export default function ExpandedTelScreen({ navigation, route }) {
 
 
     return (
-        fetched && 
+        dataPoints.length != 0 && 
         <View style={{flex: 1}}>
             {path === "\"CompTelPage\"" ? (
                 <CompTelScreen 
