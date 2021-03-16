@@ -3,7 +3,14 @@ import { TouchableOpacity, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList, DrawerItem } from '@react-navigation/drawer';
 import { createStackNavigator } from '@react-navigation/stack';
-import { DrawerParamList, ThreeOrbitParamList, MapParamList, NotificationsParamList, UserPermParamList } from '../types';
+import {
+  DrawerParamList,
+  ThreeOrbitParamList,
+  MapParamList,
+  NotificationsParamList,
+  UserPermParamList,
+  BugReportParamList
+} from '../types';
 import { storeTelemetryPreference } from '../hooks/Storage';
 //How we will be importing our screens. I would prefer if we separate Screen imports from component imports so that it is easier to tell what 
 // is what.
@@ -69,7 +76,7 @@ export default function DrawerNavigator({ route }) {
       />
       <Drawer.Screen
         name="Bug Report"
-        component={BugReportScreen}
+        component={BugReport}
       />
       <Drawer.Screen
         name="User Permissions"
@@ -192,6 +199,24 @@ function Notifications({ navigation }) {
     </NotificationStack.Navigator>
   )
 }
+
+const BugReportStack = createStackNavigator<BugReportParamList>();
+
+function BugReport({ navigation }) {
+  return (
+    <BugReportStack.Navigator>
+      <BugReportStack.Screen
+        name="BugReportPage"
+        component={BugReportScreen}
+        options={{
+          headerTitle: 'Report a bug',
+          headerRight: () => <DrawerToggle onPress={() => { navigation.toggleDrawer() }} />,
+        }}
+      />
+    </BugReportStack.Navigator>
+  )
+}
+
 
 const TeamStack = createStackNavigator<UserPermParamList>();
 

@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function BugReportScreen(props) {
+export default function BugReportScreen() {
   useFocusEffect(
     React.useCallback(() => {
       resetOrientation();
@@ -92,14 +92,6 @@ export default function BugReportScreen(props) {
     >
       <SafeAreaView style={styles.container}>
         <StatusBar barStyle="light-content" />
-
-        {/* <TextField>
-                    label="Description"
-                    placeholder="Tell us what happened..."
-                    value={report}
-                    onChangeText={report => setReport(report)}
-                    multiline="true"
-                </TextField> */}
 
         <TextInput
           style={styles.input}

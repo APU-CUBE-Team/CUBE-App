@@ -1,10 +1,12 @@
 import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import React, { useContext } from "react";
-import { ColorSchemeName } from "react-native";
+import { ColorSchemeName, TouchableOpacity } from "react-native";
 import AsyncStorage from "@react-native-community/async-storage";
 import * as firebase from "firebase";
 import * as SplashScreen from "expo-splash-screen";
+import { Ionicons } from '@expo/vector-icons';
+
 
 import { RootStackParamList, SignInParamList } from "../types";
 import DrawerNavigator from "./DrawerNavigator";
@@ -17,6 +19,7 @@ import {
   signOut,
   findNewToken,
 } from "../util/authenticating-users";
+import { TouchableNativeFeedback } from "react-native-gesture-handler";
 
 const AuthContext = React.createContext({});
 
@@ -144,7 +147,9 @@ function TestMode() {
 
   return <RootNavigator />;
 
-  function SignIn() {
+
+
+  function SignIn({ navigation }) {
     return (
       <Login.Navigator
         screenOptions={{
@@ -156,7 +161,18 @@ function TestMode() {
           component={SignInScreen}
           initialParams={{ props: AuthContext }}
         />
-        <Login.Screen name="CredRecovPage" component={CredRecoveryScreen} />
+        <Login.Screen
+          name="CredRecovPage"
+          component={CredRecoveryScreen}
+          options={{
+            headerShown: true,
+            headerTitle: 'Forgot Password',
+            headerLeft: () => <TouchableOpacity style={{ marginLeft: 5 }} onPress={() => {
+              navigation.navigate("SignInScreen")
+            }}><Ionicons size={30} style={{ marginBottom: -3, color: '#fff' }} name="arrow-back-outline" /></TouchableOpacity>
+
+          }}
+        />
       </Login.Navigator>
     );
   }
