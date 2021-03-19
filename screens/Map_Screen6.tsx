@@ -1,27 +1,10 @@
 import * as React from 'react';
-import { StyleSheet, Image } from 'react-native';
+import { StyleSheet, Image, Dimensions } from 'react-native';
 import * as ScreenOrientation from 'expo-screen-orientation';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
-
+import Svg, { Path } from 'react-native-svg';
 
 import { Text, View } from '../components/Themed';
-
-
-export default function MapScreen() {
-    const navigation = useNavigation();
-    
-    ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE_LEFT)
-
-    return (
-        <View style={styles.container}>
-            <Image 
-                source={require('../assets/images/globe.png')} style={styles.map}
-                resizeMode="contain"
-            />
-        </View>
-    );
-    
-}
 
 const styles = StyleSheet.create({
     container: {
@@ -41,5 +24,34 @@ const styles = StyleSheet.create({
     map: {
         flex: 1,
         
+    },
+    sine: {
     }
 });
+
+export default function MapScreen() {
+    const navigation = useNavigation();
+    
+    // thinking about grabbing the window dimensions as a way of generating the graph instead of wasting time 
+    // trying to eyeball it
+    const windowHeight = Dimensions.get('window').height;
+    const windowWidth = Dimensions.get('window').width;
+
+
+    ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE_LEFT)
+
+    return (
+        <View style={styles.container}>
+            <Svg height="inherit" width="inherit">
+                <Path>
+                    <Image 
+                        source={require('../assets/images/globe.png')} style={styles.map}
+                        resizeMode="contain"
+                    />
+                </Path>
+            </Svg>
+        </View>
+    );
+    
+}
+
