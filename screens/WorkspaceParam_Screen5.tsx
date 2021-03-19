@@ -7,12 +7,14 @@ import Screen from '../constants/Layout';
 import Colors from '../constants/Colors';
 import { telemetryList } from '../constants/FullTelemetrySet';
 import { storeTelemetryPreference, getSettings, setSettings } from '../hooks/Storage';
+import OverlayPrompt from '../components/Prompt';
 
 export default function WorkspaceScreen({ route }) {
     const [isEnabled, switchSelected] = React.useState(false);
     const [preference, setPreference] = React.useState(Telemetry.Expanded);
     const [r, rerender] = React.useState(0);
-    const [settings, setSet] = React.useState(telemetryList)
+    const [settings, setSet] = React.useState(telemetryList);
+    const [overlay, setOverlay] = React.useState(false);
 
     useFocusEffect(
         React.useCallback(() => {
@@ -50,7 +52,10 @@ export default function WorkspaceScreen({ route }) {
 
     return (
         <View style={styles.container}>
-            <TouchableOpacity style={[styles.area, styles.exportBtn]}>
+            <TouchableOpacity 
+                style={[styles.area, styles.exportBtn]}
+                onPress={() => setOverlay(true)}
+            >
                 <Text style={styles.title}>Export Data to CSV</Text>
             </TouchableOpacity>
             <View style={styles.area}>
@@ -83,8 +88,25 @@ export default function WorkspaceScreen({ route }) {
                     )
                 })}
             </View>
+            {overlay ? 
+                <OverlayPrompt
+                    promptText={"Are you sure you want to export to the email attached to this account?"}
+                    closeOverlay={() => setOverlay(false)}
+                    btns={[
+                        {key: "Yes", action: () => {exportTelemetry()}},
+                        {key: "No", action: () => {setOverlay(false)}},
+                    ]}
+                />
+                : 
+                null
+            }
         </View>
     );
+
+    function exportTelemetry() {
+        //TODO: I guess this is where we call the cloud function and then inform the user when it is complete.
+        alert("Functions yeet")
+    }
 
     function toggleSwitch(e: any) {
         e.visible = !e.visible
@@ -152,5 +174,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row', 
         alignItems: 'center', 
         justifyContent: 'space-between',
-    }
+    },
+    
 });
