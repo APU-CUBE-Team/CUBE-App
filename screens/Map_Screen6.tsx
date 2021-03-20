@@ -1,11 +1,10 @@
 import * as React from 'react';
-import { StyleSheet, Image, Dimensions, ImageBackground } from 'react-native';
+import { StyleSheet, Image, Dimensions, ImageBackground, TouchableOpacity } from 'react-native';
 import * as ScreenOrientation from 'expo-screen-orientation';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import Svg, { Path } from 'react-native-svg';
 import OverlayPrompt from '../components/Prompt';
 import { Text, View } from '../components/Themed';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const styles = StyleSheet.create({
     container: {
@@ -59,7 +58,7 @@ export default function MapScreen({ navigation }) {
 
     let rarity = 14
     let freq = .1;
-    let phase = 10;
+    let phase = 100;
     let amplitude = windowWidth /5;
     let origin = {
         x: 0,
@@ -103,10 +102,10 @@ export default function MapScreen({ navigation }) {
             setX(pathing[index].x)
             setY(pathing[index].y)
             index++;
-            // if (x > windowWidth && index < 5){ index=0; console.log("WTF")}
+            if (index > 55){ index=0; console.log("WTF")}
             // setIndex(index+1);
             // if (index > pathing.length) setIndex(0);
-        }, 200);
+        }, 2000);
         return () => {clearInterval(interval)};
     }, [index]);
     // console.log(y)
@@ -126,18 +125,23 @@ export default function MapScreen({ navigation }) {
                         strokeWidth={5}
                     />
                 </Svg>
-                <TouchableOpacity style={styles.CUBE}>
-                    <Image 
+                <TouchableOpacity 
+                    style={[styles.CUBE, {top: y - (styles.CUBE.height / 2), left: x - (styles.CUBE.width / 2)}]}
+                    onPress={() => setOverlay(true)}
+                >
+                   <Image 
                         source={require('../assets/images/telemSat_icon.png')}
-                        style={[styles.CUBE, {top: y - (styles.CUBE.height / 2), left: x - (styles.CUBE.width / 2)  }]}
+                        style={[styles.CUBE, 
+                            // {top: y - (styles.CUBE.height / 2), left: x - (styles.CUBE.width / 2)  }
+                        ]}
                     />
-                </TouchableOpacity>
+                </TouchableOpacity> 
+                
             </ImageBackground>}
             {overlay ? 
                 <OverlayPrompt
                     promptText={"Would you like to view this CUBE's Telemetry or Controls"}
                     closeOverlay={() => setOverlay(false)}
-                    disableTap
                     btns={[
                         {key: "  Telemetry  ", action: () => {navigation.navigate("Telemetry")}},
                         {key: "  Control  ", action: () => {alert("TODO")}},
