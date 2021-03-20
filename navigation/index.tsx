@@ -5,7 +5,7 @@ import { ColorSchemeName } from "react-native";
 import AsyncStorage from "@react-native-community/async-storage";
 import * as firebase from "firebase";
 import * as SplashScreen from "expo-splash-screen";
-
+import OverlayPrompt from '../components/Prompt';
 import { RootStackParamList, SignInParamList } from "../types";
 import DrawerNavigator from "./DrawerNavigator";
 import LinkingConfiguration from "./LinkingConfiguration";
@@ -17,8 +17,10 @@ import {
   signOut,
   findNewToken,
 } from "../util/authenticating-users";
+import { View } from "../components/Themed";
 
 const AuthContext = React.createContext({});
+
 
 export const MyTheme = {
   ...DefaultTheme,
@@ -50,6 +52,8 @@ const Stack = createStackNavigator<RootStackParamList>();
 const Login = createStackNavigator<SignInParamList>();
 
 function TestMode() {
+  const [overlay, setOverlay] = React.useState(false);
+  const [prompt, setPrompt] = React.useState("");
   const [state, dispatch] = React.useReducer(
     (prevState: any, action: any) => {
       switch (action.type) {
@@ -123,12 +127,18 @@ function TestMode() {
             var errorMessage = error.message;
 
             console.log(errorMessage, errorCode);
-            if (errorCode === "auth/invalid-email")
-              alert("Your Email is Invalid.");
-            if (errorCode === "auth/user-not-found")
-              alert("Your Email is incorrect.");
-            if (errorCode === "auth/wrong-password")
-              alert("Password is Incorrect");
+            if (errorCode === "auth/invalid-email") {
+              setPrompt("Your Email is Invalid.");
+              setOverlay(true);
+            }
+            if (errorCode === "auth/user-not-found") {
+              setPrompt("Your Email is incorrect.");
+              setOverlay(true);
+            }
+            if (errorCode === "auth/wrong-password") {
+              setPrompt("Password is Incorrect");
+              setOverlay(true);
+            }
           });
       },
       signOut: () => {
@@ -163,23 +173,37 @@ function TestMode() {
 
   function RootNavigator() {
     return (
-      <AuthContext.Provider value={authContext}>
-        <Stack.Navigator
-          screenOptions={{
-            headerShown: false,
-          }}
-        >
-          {state.userToken == null ? (
-            <Stack.Screen name="SignIn" component={SignIn} />
-          ) : (
-            <Stack.Screen
-              name="Root"
-              component={DrawerNavigator}
-              initialParams={{ SignOut: AuthContext }}
-            />
-          )}
-        </Stack.Navigator>
-      </AuthContext.Provider>
+      <View style={{flex:1}}>
+        <AuthContext.Provider value={authContext}>
+          <Stack.Navigator
+            screenOptions={{
+              headerShown: false,
+            }}
+          >
+            {state.userToken == null ? (
+              <Stack.Screen name="SignIn" component={SignIn} />
+            ) : (
+              <Stack.Screen
+                name="Root"
+                component={DrawerNavigator}
+                initialParams={{ SignOut: AuthContext }}
+              />
+            )}
+          </Stack.Navigator>
+        </AuthContext.Provider>
+        {overlay ? 
+          <OverlayPrompt
+              promptText={prompt}
+              closeOverlay={() => setOverlay(false)}
+              disableTap
+              btns={[
+                  {key: "  Okay  ", action: () => {setOverlay(false)}},
+              ]}
+          />
+          : 
+          null
+        }
+      </View>
     );
   }
 }

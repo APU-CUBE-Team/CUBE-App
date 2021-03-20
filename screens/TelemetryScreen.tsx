@@ -41,15 +41,6 @@ export default function ExpandedTelScreen({ navigation, route }) {
         }, [])
     )
 
-    // This was necessary at one point to force a rerender. Again, scared to remove it
-    React.useEffect(() => {
-        const interval = setInterval(() => {
-            setRender(render+1)
-        }, 15000);
-        return () => {clearInterval(interval)};
-    }, [render]);
-
-
     return (
         dataPoints.length != 0 && 
         <View style={{flex: 1}}>
