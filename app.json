@@ -3,7 +3,7 @@
     "name": "CUBE",
     "slug": "CUBE",
     "scheme": "cube",
-    "version": "0.2.0",
+    "version": "0.3.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "userInterfaceStyle": "automatic",
@@ -27,7 +27,7 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "versionCode": 12,
+      "versionCode": 13,
       "permissions": [
         "CAMERA",
         "RECORD_AUDIO",
