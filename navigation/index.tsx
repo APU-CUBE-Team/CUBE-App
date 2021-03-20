@@ -15,7 +15,7 @@ import CredRecoveryScreen from "../screens/CredRecov_Screen2";
 import {
   emailSignIn,
   signOut,
-  findNewToken,
+  useCustomToken,
 } from "../util/authenticating-users";
 import { View } from "../components/Themed";
 
@@ -91,8 +91,12 @@ function TestMode() {
 
       try {
         userToken = await AsyncStorage.getItem("@Token");
+        // DEBUG
+        // console.log("testing customToken: ", userToken);
+        return await useCustomToken(userToken);
       } catch (e) {
         // Restoring token failed
+        console.log("Restoring token failed");
       }
 
       // After restoring token, we may need to validate it in production apps
@@ -111,11 +115,11 @@ function TestMode() {
         emailSignIn(data.username, data.password)
           .then((ret) => {
             console.log("Sign-In Success");
-            var user = ret.user;
             firebase.auth().onAuthStateChanged((user) => {
               if (user) {
                 user.getIdToken().then((idToken) => {
-                  console.log(idToken);
+                  // DEBUG
+                  // console.log(idToken);
                   storeToken(idToken);
                   dispatch({ type: "SIGN_IN", token: idToken });
                 });

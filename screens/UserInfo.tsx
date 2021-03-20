@@ -32,6 +32,8 @@ import { MyTheme } from "../navigation/index";
 import { SignUp } from "../util/create-user/index";
 import { updateUser } from "../util/edit-roles";
 
+import OverlayPrompt from "../components/Prompt";
+
 const screen = Dimensions.get("window");
 
 const styles = StyleSheet.create({
@@ -94,7 +96,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     marginTop: 5,
     marginBottom: 10,
-    borderRadius: 10,
+    borderRadius: 25,
     margin: 5,
 
     shadowColor: "rgba(0,0,0, .4)", // IOS
@@ -136,6 +138,8 @@ export default function UserScreen({
   const [password, setPassword] = React.useState("");
   const [confirmPassword, setConfirmPassword] = React.useState("");
   const [role, setRole] = React.useState("1");
+  const [prompt, setPrompt] = React.useState(""); // for prompt component
+  const [overlay, setOverlay] = React.useState(false); // for prompt component
 
   useFocusEffect(
     React.useCallback(() => {
@@ -151,12 +155,17 @@ export default function UserScreen({
   function checkPW() {
     console.log("Passed");
     console.log(password === confirmPassword);
-    if (password === confirmPassword) {
+    if (password.length < 6) {
+      setPrompt("Password must be more than 6 chars.");
+      setOverlay(true);
+    } else if (password === confirmPassword) {
       console.log("Success");
       SignUp(firstName, lastName, email, password, role);
-      alert("New User Created");
+      setPrompt("New User Created");
+      setOverlay(true);
     } else {
-      alert("Please double check that your passwords match");
+      setPrompt("Please double check that your passwords match");
+      setOverlay(true);
     }
   }
 
@@ -254,18 +263,29 @@ export default function UserScreen({
               style={styles.signInButton}
               onPress={() => checkVersion()}
             >
-              {
-                create ?
-                  (
-                    <Text style={styles.text}>Add User</Text>
-                  ) : (
-                    <Text style={styles.text}>Save Changes</Text>
-                  )
-              }
+              {create ? (
+                <Text style={styles.text}>Add User</Text>
+              ) : (
+                <Text style={styles.text}>Save Changes</Text>
+              )}
             </TouchableOpacity>
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
+      {overlay ? (
+        <OverlayPrompt
+          promptText={prompt}
+          closeOverlay={() => setOverlay(false)}
+          btns={[
+            {
+              key: "Okay",
+              action: () => {
+                setOverlay(false);
+              },
+            },
+          ]}
+        />
+      ) : null}
     </SafeAreaView>
   );
 }
