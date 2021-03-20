@@ -92,10 +92,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     marginTop: 5,
     marginBottom: 10,
-    borderRadius: 10,
+    borderRadius: 25,
 
     shadowColor: "rgba(0,0,0, .4)", // IOS
-    shadowOffset: { height: 5, width: 5 }, // IOS
+    shadowOffset: { height: 2, width: 2 }, // IOS
     shadowOpacity: 1, // IOS
     shadowRadius: 1.5, //IOS
     elevation: 2, // Android

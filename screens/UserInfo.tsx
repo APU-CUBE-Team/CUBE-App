@@ -32,6 +32,8 @@ import { MyTheme } from "../navigation/index";
 import { SignUp } from "../util/create-user/index";
 import { updateUser } from "../util/edit-roles";
 
+import OverlayPrompt from "../components/Prompt";
+
 const screen = Dimensions.get("window");
 
 const styles = StyleSheet.create({
@@ -94,7 +96,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     marginTop: 5,
     marginBottom: 10,
-    borderRadius: 10,
+    borderRadius: 25,
     margin: 5,
 
     shadowColor: "rgba(0,0,0, .4)", // IOS
@@ -154,15 +156,16 @@ export default function UserScreen({
     console.log("Passed");
     console.log(password === confirmPassword);
     if (password.length < 6) {
-      alert("password must be more than 6 chars");
-    }
-
-    if (password === confirmPassword) {
+      setPrompt("Password must be more than 6 chars.");
+      setOverlay(true);
+    } else if (password === confirmPassword) {
       console.log("Success");
       SignUp(firstName, lastName, email, password, role);
-      alert("New User Created");
+      setPrompt("New User Created");
+      setOverlay(true);
     } else {
-      alert("Please double check that your passwords match");
+      setPrompt("Please double check that your passwords match");
+      setOverlay(true);
     }
   }
 
@@ -269,6 +272,20 @@ export default function UserScreen({
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
+      {overlay ? (
+        <OverlayPrompt
+          promptText={prompt}
+          closeOverlay={() => setOverlay(false)}
+          btns={[
+            {
+              key: "Okay",
+              action: () => {
+                setOverlay(false);
+              },
+            },
+          ]}
+        />
+      ) : null}
     </SafeAreaView>
   );
 }
