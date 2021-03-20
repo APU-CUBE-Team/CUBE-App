@@ -2,7 +2,7 @@ import * as firebase from "firebase";
 import "firebase/firestore";
 
 export const firebaseConfig = {
-  apiKey: "AIzaSyBMciA5V--El4jRZ42jPH5yFQwBhXiocPE",
+  apiKey: "AIzaSyAjMfXewB_82kpyEJsDweu75x8SLXlOT8c",
   authDomain: "cube-301820.firebaseapp.com",
   projectId: "cube-301820",
   storageBucket: "cube-301820.appspot.com",

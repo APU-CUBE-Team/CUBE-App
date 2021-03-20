@@ -3,8 +3,9 @@ import { StyleSheet, Image, Dimensions, ImageBackground } from 'react-native';
 import * as ScreenOrientation from 'expo-screen-orientation';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import Svg, { Path } from 'react-native-svg';
-
+import OverlayPrompt from '../components/Prompt';
 import { Text, View } from '../components/Themed';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const styles = StyleSheet.create({
     container: {
@@ -37,7 +38,7 @@ const styles = StyleSheet.create({
     }
 });
 
-type Path = {
+type Pather = {
     x: any,
     y: any
 }
@@ -48,12 +49,13 @@ export default function MapScreen({ navigation }) {
     // trying to eyeball it
     const windowHeight = Dimensions.get('window').height;
     const windowWidth = Dimensions.get('window').width;
-    let pathing: Path[] = [];
+    let pathing: Pather[] = [];
     let d: string = "";
     const [x, setX] = React.useState(0.0);
     const [y, setY] = React.useState(0.0);
-    const [index, setIndex] = React.useState(0);
-    // let index = 0;
+    const [overlay, setOverlay] = React.useState(false);
+    // const [index, setIndex] = React.useState(0);
+    let index = 0;
 
     let rarity = 14
     let freq = .1;
@@ -86,7 +88,7 @@ export default function MapScreen({ navigation }) {
             let index =  d.indexOf("L 4")
             let portion = d.substring(index)
             let point = d.substring(index, index+ portion.indexOf("M"))
-            //console.log("D", d)
+            console.log("D", d)
             console.log("Point", point)
             setX(parseFloat(point.substring(1, point.indexOf(",")).trim()))
             setY(parseFloat(point.substring(point.indexOf(",")+1).trim()))
@@ -100,15 +102,15 @@ export default function MapScreen({ navigation }) {
         const interval = setInterval(() => {
             setX(pathing[index].x)
             setY(pathing[index].y)
-            // index++;
+            index++;
             // if (x > windowWidth && index < 5){ index=0; console.log("WTF")}
-            setIndex(index+1);
+            // setIndex(index+1);
             // if (index > pathing.length) setIndex(0);
         }, 200);
         return () => {clearInterval(interval)};
     }, [index]);
     // console.log(y)
-    if (x > windowWidth && index < 5){ setIndex(0); console.log("WTF")}
+    // if (x > windowWidth && index < 5){ setIndex(0); console.log("WTF")}
 
     return (
         <View style={styles.container}>
@@ -124,11 +126,27 @@ export default function MapScreen({ navigation }) {
                         strokeWidth={5}
                     />
                 </Svg>
-                <Image 
-                    source={require('../assets/images/telemSat_icon.png')}
-                    style={[styles.CUBE, {top: y - (styles.CUBE.height / 2), left: x - (styles.CUBE.width / 2)  }]}
-                />
+                <TouchableOpacity style={styles.CUBE}>
+                    <Image 
+                        source={require('../assets/images/telemSat_icon.png')}
+                        style={[styles.CUBE, {top: y - (styles.CUBE.height / 2), left: x - (styles.CUBE.width / 2)  }]}
+                    />
+                </TouchableOpacity>
             </ImageBackground>}
+            {overlay ? 
+                <OverlayPrompt
+                    promptText={"Would you like to view this CUBE's Telemetry or Controls"}
+                    closeOverlay={() => setOverlay(false)}
+                    disableTap
+                    btns={[
+                        {key: "  Telemetry  ", action: () => {navigation.navigate("Telemetry")}},
+                        {key: "  Control  ", action: () => {alert("TODO")}},
+                        {key: "  Cancel  ", action: () => {setOverlay(false)}},
+                    ]}
+                />
+                : 
+                null
+            }
         </View>
     );
     
