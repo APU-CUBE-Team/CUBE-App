@@ -136,6 +136,8 @@ export default function UserScreen({
   const [password, setPassword] = React.useState("");
   const [confirmPassword, setConfirmPassword] = React.useState("");
   const [role, setRole] = React.useState("1");
+  const [prompt, setPrompt] = React.useState(""); // for prompt component
+  const [overlay, setOverlay] = React.useState(false); // for prompt component
 
   useFocusEffect(
     React.useCallback(() => {
@@ -151,6 +153,10 @@ export default function UserScreen({
   function checkPW() {
     console.log("Passed");
     console.log(password === confirmPassword);
+    if (password.length < 6) {
+      alert("password must be more than 6 chars");
+    }
+
     if (password === confirmPassword) {
       console.log("Success");
       SignUp(firstName, lastName, email, password, role);
@@ -254,14 +260,11 @@ export default function UserScreen({
               style={styles.signInButton}
               onPress={() => checkVersion()}
             >
-              {
-                create ?
-                  (
-                    <Text style={styles.text}>Add User</Text>
-                  ) : (
-                    <Text style={styles.text}>Save Changes</Text>
-                  )
-              }
+              {create ? (
+                <Text style={styles.text}>Add User</Text>
+              ) : (
+                <Text style={styles.text}>Save Changes</Text>
+              )}
             </TouchableOpacity>
           </View>
         </ScrollView>
