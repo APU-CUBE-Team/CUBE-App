@@ -14,6 +14,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import { resetOrientation } from "../hooks/resetOrientation";
 
 import FloatingLabelInput from "../components/floatingLabelInput";
+import AppButton from "../components/Button";
 
 //import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from "../components/Themed";
@@ -86,8 +87,6 @@ export default function BugReportScreen() {
   );
 
   const [report, setReport] = React.useState("");
-  const [test, setTest] = React.useState("");
-
 
   return (
     <KeyboardAvoidingView
@@ -100,6 +99,8 @@ export default function BugReportScreen() {
         <FloatingLabelInput
           label="Tell us what happened..."
           value={report}
+          onChange={setReport}
+          customStyle={false}
         ></FloatingLabelInput>
         {/* <TextInput
           style={styles.input}
@@ -110,13 +111,27 @@ export default function BugReportScreen() {
           value={report}
           onChangeText={(report) => setReport(report)}
           multiline={true}
-        /> */}
+        />
         <TouchableOpacity
           style={styles.reportButton}
           onPress={() => console.log({})}
         >
           <Text style={styles.text}>Submit report</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
+
+        <AppButton
+          label="Sumbit Report"
+
+          ///////////////////////////////////////////////////////////////
+          // TODO: CONNECT REPORT TO BACKEND
+          // ──────▄▀▄─────▄▀▄
+          // ─────▄█░░▀▀▀▀▀░░█▄
+          // ─▄▄──█░░░░░░░░░░░█──▄▄
+          // █▄▄█─█░░▀░░┬░░▀░░█─█▄▄█
+          ///////////////////////////////////////////////////////////////
+          onPressAction={() => console.log(report)}
+
+        ></AppButton>
       </SafeAreaView>
 
     </KeyboardAvoidingView>

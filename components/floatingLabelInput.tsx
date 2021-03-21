@@ -23,7 +23,6 @@ const defaultStyles = {
         color: Colors.newColors.grayText,
         borderBottomWidth: 1,
         borderBottomColor: '#aaa',
-        borderRadius: 10,
         width: Screen.window.width - 30,
         // backgroundColor: Colors.newColors.background2,
         padding: 10,
@@ -44,8 +43,8 @@ const defaultStyles = {
 ////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////
 //  FLOATING LABEL INPUT
-//     Takes in a value, a label (the text that animates), and a function passed to set the text
-//      from the input
+//     Takes in a value, a label (the text that animates), a function passed to set the text
+//      from the input, & a boolean to see if it's a sensative secureText type
 //  
 //  State variables
 //      isFocused: determines if the text input box is active or not
@@ -55,7 +54,7 @@ const defaultStyles = {
 //      tempVal: set to passed in value and should return after being updated
 ////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////
-export default function FloatingLabelInput({ value, label, onChange }: { value: any, label: any, onChange: any },) {
+export default function FloatingLabelInput({ value, label, onChange, customStyle }: { value: any, label: any, onChange: any, customStyle: any },) {
     const [isFocused, setIsFocused] = React.useState(false);
     const [_animatedIsFocused, setAnimatedIsFocused] = React.useState(new Animated.Value(0));
     const [tempVal, setTempVal] = React.useState(value);
@@ -112,18 +111,37 @@ export default function FloatingLabelInput({ value, label, onChange }: { value: 
             <Animated.Text style={[style.labelStyle, animatedLabelStyle]}>
                 {label}
             </Animated.Text>
-            <TextInput
-                style={[style.textInput, isFocused && style.focusedTextInput]}
-                onFocus={handleFocus}
-                onBlur={handleBlur}
-                blurOnSubmit
-                selectionColor={style.selectionColor}
-                underlineColorAndroid="transparent"
-                onChangeText={(tempVal) => {
-                    onChange(tempVal)
-                    setTempVal(tempVal)
-                }}
-            />
+            {customStyle ?
+                <TextInput
+                    style={[style.textInput, isFocused && style.focusedTextInput]}
+                    onFocus={handleFocus}
+                    onBlur={handleBlur}
+                    blurOnSubmit
+                    selectionColor={style.selectionColor}
+                    underlineColorAndroid="transparent"
+                    autoCapitalize="none"
+                    onChangeText={(tempVal) => {
+                        onChange(tempVal)
+                        setTempVal(tempVal)
+                    }}
+                    secureTextEntry={true}
+                />
+                :
+                <TextInput
+                    style={[style.textInput, isFocused && style.focusedTextInput]}
+                    onFocus={handleFocus}
+                    onBlur={handleBlur}
+                    blurOnSubmit
+                    selectionColor={style.selectionColor}
+                    underlineColorAndroid="transparent"
+                    autoCapitalize="none"
+                    onChangeText={(tempVal) => {
+                        onChange(tempVal)
+                        setTempVal(tempVal)
+                    }}
+                />
+
+            }
         </View>
     );
 

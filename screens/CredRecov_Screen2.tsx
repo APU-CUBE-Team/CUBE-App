@@ -109,7 +109,7 @@ export default function CredRecoveryScreen() {
         if (email != '') {
             setMessage("An email will be sent to your inbox shortly with instructions")
         }
-        setSuccess(true)
+        setSuccess(true);
     }
 
     React.useEffect(() => {
@@ -117,7 +117,7 @@ export default function CredRecoveryScreen() {
             fadeAnim,
             {
                 toValue: 1,
-                duration: 4000,
+                duration: 3000,
                 useNativeDriver: true,
             }
         ).start();
@@ -144,7 +144,8 @@ export default function CredRecoveryScreen() {
                     <FloatingLabelInput
                         label="Email Address"
                         value={email}
-                        onChange={setEmail}
+                        onChange={checkEmail}
+                        customStyle={false}
                     ></FloatingLabelInput>
 
                     <TouchableOpacity
@@ -154,11 +155,11 @@ export default function CredRecoveryScreen() {
                     >
                         <Text style={styles.text}>Reset password</Text>
                     </TouchableOpacity>
-                    {success && (
-                        <Animated.View style={{ opacity: fadeAnim }}>
-                            <Text style={styles.text2}>{message}</Text>
-                        </Animated.View>
-                    )}
+
+                    <Animated.View style={{ opacity: fadeAnim }}>
+                        <Text style={styles.text2}>{message}</Text>
+                    </Animated.View>
+
 
                 </View>
 
