@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StyleSheet, Image, Dimensions, ImageBackground, TouchableOpacity } from 'react-native';
+import { StyleSheet, Image, Dimensions, ImageBackground, TouchableOpacity, Platform } from 'react-native';
 import * as ScreenOrientation from 'expo-screen-orientation';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import Svg, { Path } from 'react-native-svg';
@@ -43,7 +43,20 @@ type Pather = {
 }
 
 export default function MapScreen({ navigation }) {
-    
+    useFocusEffect(
+        React.useCallback(() => {
+            ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE_LEFT)
+            // let index =  d.indexOf("L 4")
+            // let portion = d.substring(index)
+            // let point = d.substring(index, index+ portion.indexOf("M"))
+            // console.log("D", d)
+            // console.log("Point", point)
+            // setX(parseFloat(point.substring(1, point.indexOf(",")).trim()))
+            // setY(parseFloat(point.substring(point.indexOf(",")+1).trim()))
+            // console.log("X: ", x)
+            // console.log("Y: ", y)
+        }, [])
+    )
     // thinking about grabbing the window dimensions as a way of generating the graph instead of wasting time 
     // trying to eyeball it
     const windowHeight = Dimensions.get('window').height;
@@ -54,12 +67,13 @@ export default function MapScreen({ navigation }) {
     const [y, setY] = React.useState(0.0);
     const [overlay, setOverlay] = React.useState(false);
     // const [index, setIndex] = React.useState(0);
+    
     let index = 0;
 
     let rarity = 14
     let freq = .1;
     let phase = 100;
-    let amplitude = windowWidth /5;
+    let amplitude = windowWidth / 5;
     let origin = {
         x: 0,
         y: windowHeight / 2
@@ -80,21 +94,6 @@ export default function MapScreen({ navigation }) {
 
         pathing.push({x: xT, y: yT})
     }
-    
-    useFocusEffect(
-        React.useCallback(() => {
-            ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE_LEFT)
-            let index =  d.indexOf("L 4")
-            let portion = d.substring(index)
-            let point = d.substring(index, index+ portion.indexOf("M"))
-            console.log("D", d)
-            console.log("Point", point)
-            setX(parseFloat(point.substring(1, point.indexOf(",")).trim()))
-            setY(parseFloat(point.substring(point.indexOf(",")+1).trim()))
-            console.log("X: ", x)
-            console.log("Y: ", y)
-        }, [])
-    )
 
     // Bruh idk how to get this to loop back around
     React.useEffect(() => {
@@ -105,12 +104,14 @@ export default function MapScreen({ navigation }) {
             if (index > 55){ index=0; console.log("WTF")}
             // setIndex(index+1);
             // if (index > pathing.length) setIndex(0);
+            console.log("y value: ", y);
+            console.log("x value: ", x);
         }, 2000);
         return () => {clearInterval(interval)};
     }, [index]);
     // console.log(y)
     // if (x > windowWidth && index < 5){ setIndex(0); console.log("WTF")}
-
+    
     return (
         <View style={styles.container}>
             {d !== "" && 
@@ -129,12 +130,13 @@ export default function MapScreen({ navigation }) {
                     style={[styles.CUBE, {top: y - (styles.CUBE.height / 2), left: x - (styles.CUBE.width / 2)}]}
                     onPress={() => setOverlay(true)}
                 >
-                   <Image 
+                <Image 
                         source={require('../assets/images/telemSat_icon.png')}
                         style={[styles.CUBE, 
                             // {top: y - (styles.CUBE.height / 2), left: x - (styles.CUBE.width / 2)  }
                         ]}
                     />
+                
                 </TouchableOpacity> 
                 
             </ImageBackground>}

@@ -32,4 +32,4 @@ export const telemetryDBDoc = db
   .doc("UserOrganization")
   .collection("cubesats")
   .doc("Fox1_Cliff")
-  .get()
+  .get();
