@@ -13,7 +13,7 @@ import { telemetryDBDoc } from '../util/firebase-util';
 export default function ExpandedTelScreen({ navigation, route }) {
     const [path, setPath] = React.useState("ExpandedTelPage");
     const [dataPoints, setDataPoints] = React.useState([]);
-    
+
     const [render, setRender] = React.useState(0);  // Not entirely sure if this is necessary at this point, but I'm too scared to remove
     const [current, setCurrent] = React.useState("data1");  // Stores what graph to display on the top of screen
 
@@ -28,40 +28,41 @@ export default function ExpandedTelScreen({ navigation, route }) {
             if (dataPoints.length == 0) {
                 telemetryDBDoc.then(ret => {
                     const data = ret.data();
-                    data.names.forEach((item: {item: string}) => {
+                    data.names.forEach((item: { item: string }) => {
                         dataPoints.push({
                             key: item,
-                            vals: data[item+"_Vals"],
-                            dates: data[item+"_Times"]
+                            vals: data[item + "_Vals"],
+                            dates: data[item + "_Times"]
                         })
                     });
                     setDataPoints(dataPoints);
-                    setCurrent(dataPoints[dataPoints.length-1].key)
-                })}
+                    setCurrent(dataPoints[dataPoints.length - 1].key)
+                })
+            }
         }, [])
     )
 
     // This was necessary at one point to force a rerender. Again, scared to remove it
     React.useEffect(() => {
         const interval = setInterval(() => {
-            setRender(render+1)
+            setRender(render + 1)
         }, 15000);
-        return () => {clearInterval(interval)};
-    }, [render]);
+        return () => { clearInterval(interval) };
+    }, []);
 
 
     return (
-        dataPoints.length != 0 && 
-        <View style={{flex: 1}}>
+        dataPoints.length != 0 &&
+        <View style={{ flex: 1 }}>
             {path === "\"CompTelPage\"" ? (
-                <CompTelScreen 
+                <CompTelScreen
                     dataSet={dataPoints}
-                /> 
+                />
             ) : (
-                <ExpTelScreen 
+                <ExpTelScreen
                     dataSet={dataPoints}
                     selected={current}
-                    setCurrent={(newData: string) => {setCurrent(newData)}}
+                    setCurrent={(newData: string) => { setCurrent(newData) }}
                 />
             )}
         </View>
@@ -89,14 +90,14 @@ const styles = StyleSheet.create({
         height: 1,
         width: '80%',
     },
-    GraphArea: { 
+    GraphArea: {
         position: 'absolute',
         top: 2,
-        height: Screen.window.height / 3, 
+        height: Screen.window.height / 3,
         width: Screen.window.width - 40,
-        flexDirection: 'column', 
-        justifyContent: 'center', 
-        alignItems: 'center', 
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
         backgroundColor: '#fff',
         borderRadius: 25,
         elevation: 10,

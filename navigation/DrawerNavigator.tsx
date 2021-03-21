@@ -103,8 +103,18 @@ function DrawerToggle(props: { onPress }) {
 // stack navigator to store all the screens that can be accessed from that button in the drawer menu, i.e. the various telemetry screens in one 
 // stack. The navigation.toggleDrawer() will be able to be accessed from any function within the drawer which should be all of them.
 
-
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+// STACK NAVIGATORS - These are passed as objects to the drawer navigators
+//    TelemetryMapStack
+//    ThreeOrbitStack
+//    NotificationStack
+//    BugReportStack
+//////////////////////////////////////////////////////////////////////////////////////////////////////
 const TelemetryMapStack = createStackNavigator<MapParamList>();
+const ThreeOrbitStack = createStackNavigator<ThreeOrbitParamList>();
+const NotificationStack = createStackNavigator<NotificationsParamList>();
+const BugReportStack = createStackNavigator<BugReportParamList>();
+
 
 function TelemetryMap({ navigation, route }) {
   let path = route.params?.InitialPath;
@@ -147,8 +157,6 @@ function TelemetryMap({ navigation, route }) {
   )
 }
 
-const ThreeOrbitStack = createStackNavigator<ThreeOrbitParamList>();
-
 function ThreeOrbit({ navigation }) {
   return (
     <ThreeOrbitStack.Navigator>
@@ -164,7 +172,6 @@ function ThreeOrbit({ navigation }) {
   );
 }
 
-const NotificationStack = createStackNavigator<NotificationsParamList>();
 
 function Notifications({ navigation }) {
   return (
@@ -200,7 +207,6 @@ function Notifications({ navigation }) {
   )
 }
 
-const BugReportStack = createStackNavigator<BugReportParamList>();
 
 function BugReport({ navigation }) {
   return (
@@ -216,7 +222,6 @@ function BugReport({ navigation }) {
     </BugReportStack.Navigator>
   )
 }
-
 
 const TeamStack = createStackNavigator<UserPermParamList>();
 
@@ -239,7 +244,10 @@ function UserPermissions({ navigation }) {
         component={CreateUserScreen}
         options={{
           headerTitle: 'Create a User',
-          headerRight: () => <DrawerToggle onPress={() => { navigation.toggleDrawer() }} />
+          headerLeft: () => <TouchableOpacity style={{ marginLeft: 5 }} onPress={() => {
+            navigation.navigate("TeamRolePage")
+          }}><Ionicons size={30} style={{ marginBottom: -3, color: '#fff' }} name="arrow-back-outline" /></TouchableOpacity>
+          //headerRight: () => <DrawerToggle onPress={() => { navigation.toggleDrawer() }} />
         }}
       />
       <TeamStack.Screen

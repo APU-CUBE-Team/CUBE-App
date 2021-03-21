@@ -13,6 +13,8 @@ import {
 import { useFocusEffect } from "@react-navigation/native";
 import { resetOrientation } from "../hooks/resetOrientation";
 
+import FloatingLabelInput from "../components/floatingLabelInput";
+
 //import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from "../components/Themed";
 
@@ -21,7 +23,7 @@ import { TextField } from "../components/Form";
 import Colors from "../constants/Colors";
 import Screen from "../constants/Layout";
 
-const screen = Dimensions.get("window");
+//const screen = Dimensions.get("window");
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -60,13 +62,13 @@ const styles = StyleSheet.create({
     fontSize: 20,
     padding: 10,
     margin: 5,
-    width: screen.width - 30,
+    width: Screen.window.width - 30,
     borderRadius: 10,
     color: Colors.newColors.grayText,
   },
   reportButton: {
     backgroundColor: Colors.newColors.primary,
-    width: screen.width - 30,
+    width: Screen.window.width - 30,
     height: 40,
     alignItems: "center",
     justifyContent: "center",
@@ -84,6 +86,8 @@ export default function BugReportScreen() {
   );
 
   const [report, setReport] = React.useState("");
+  const [test, setTest] = React.useState("");
+
 
   return (
     <KeyboardAvoidingView
@@ -93,7 +97,11 @@ export default function BugReportScreen() {
       <SafeAreaView style={styles.container}>
         <StatusBar barStyle="light-content" />
 
-        <TextInput
+        <FloatingLabelInput
+          label="Tell us what happened..."
+          value={report}
+        ></FloatingLabelInput>
+        {/* <TextInput
           style={styles.input}
           autoCapitalize="none"
           placeholderTextColor={Colors.c.lightGray}
@@ -102,14 +110,15 @@ export default function BugReportScreen() {
           value={report}
           onChangeText={(report) => setReport(report)}
           multiline={true}
-        />
+        /> */}
         <TouchableOpacity
           style={styles.reportButton}
-          onPress={() => alert("TODO")}
+          onPress={() => console.log({})}
         >
           <Text style={styles.text}>Submit report</Text>
         </TouchableOpacity>
       </SafeAreaView>
+
     </KeyboardAvoidingView>
   );
 }
