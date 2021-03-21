@@ -3,23 +3,19 @@ import { createStackNavigator } from "@react-navigation/stack";
 import React, { useContext } from "react";
 import { ColorSchemeName } from "react-native";
 import AsyncStorage from "@react-native-community/async-storage";
-import * as firebase from "firebase";
 import * as SplashScreen from "expo-splash-screen";
-import OverlayPrompt from '../components/Prompt';
+import OverlayPrompt from "../components/Prompt";
 import { RootStackParamList, SignInParamList } from "../types";
 import DrawerNavigator from "./DrawerNavigator";
 import LinkingConfiguration from "./LinkingConfiguration";
 import { getToken, storeToken, deleteToken } from "../hooks/Storage";
 import SignInScreen from "../screens/SignIn_Screen1";
 import CredRecoveryScreen from "../screens/CredRecov_Screen2";
-import {
-  emailSignIn,
-  signOut,
-} from "../util/authenticating-users";
+import { emailSignIn, signOut } from "../util/authenticating-users";
 import { View } from "../components/Themed";
+import { auth } from "../util/firebase-util";
 
 const AuthContext = React.createContext({});
-
 
 export const MyTheme = {
   ...DefaultTheme,
@@ -111,7 +107,7 @@ function TestMode() {
         emailSignIn(data.username, data.password)
           .then((ret) => {
             console.log("Sign-In Success");
-            firebase.auth().onAuthStateChanged((user) => {
+            auth.onAuthStateChanged((user) => {
               if (user) {
                 user.getIdToken().then((idToken) => {
                   // DEBUG
@@ -173,7 +169,7 @@ function TestMode() {
 
   function RootNavigator() {
     return (
-      <View style={{flex:1}}>
+      <View style={{ flex: 1 }}>
         <AuthContext.Provider value={authContext}>
           <Stack.Navigator
             screenOptions={{
@@ -191,18 +187,21 @@ function TestMode() {
             )}
           </Stack.Navigator>
         </AuthContext.Provider>
-        {overlay ? 
+        {overlay ? (
           <OverlayPrompt
-              promptText={prompt}
-              closeOverlay={() => setOverlay(false)}
-              disableTap
-              btns={[
-                  {key: "  Okay  ", action: () => {setOverlay(false)}},
-              ]}
+            promptText={prompt}
+            closeOverlay={() => setOverlay(false)}
+            disableTap
+            btns={[
+              {
+                key: "  Okay  ",
+                action: () => {
+                  setOverlay(false);
+                },
+              },
+            ]}
           />
-          : 
-          null
-        }
+        ) : null}
       </View>
     );
   }
