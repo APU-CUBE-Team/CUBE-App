@@ -1,10 +1,11 @@
 import * as React from 'react';
-import { StyleSheet, Image, Dimensions, ImageBackground, TouchableOpacity } from 'react-native';
+import { StyleSheet, Image, Dimensions, ImageBackground, TouchableOpacity, LayoutAnimation, Platform, UIManager } from 'react-native';
 import * as ScreenOrientation from 'expo-screen-orientation';
 import { useNavigation, useFocusEffect, NavigationAction } from '@react-navigation/native';
 import Svg, { Path } from 'react-native-svg';
 import OverlayPrompt from '../components/Prompt';
 import { Text, View } from '../components/Themed';
+import Screen from '../constants/Layout'
 
 const styles = StyleSheet.create({
     container: {
@@ -42,102 +43,121 @@ type Pather = {
     y: any
 }
 
+const CustomLayoutAnimation = {
+    duration: 900,
+    create: {
+        property: LayoutAnimation.Properties.scaleXY,
+        type: LayoutAnimation.Types.easeInEaseOut,
+    },
+    update: {
+        property: LayoutAnimation.Properties.scaleXY,
+        type: LayoutAnimation.Types.easeInEaseOut,
+    },
+    delete: {
+        property: LayoutAnimation.Properties.scaleXY,
+        type: LayoutAnimation.Types.easeInEaseOut,
+    },
+}
+
+if (Platform.OS === "android" && UIManager.setLayoutAnimationEnabledExperimental) 
+    { UIManager.setLayoutAnimationEnabledExperimental(true); }
+
 export default function MapScreen({ navigation }) {
-    
-    // thinking about grabbing the window dimensions as a way of generating the graph instead of wasting time 
-    // trying to eyeball it
+    const [loaded, setLoaded] = React.useState(false);
+
     const windowHeight = Dimensions.get('window').height;
     const windowWidth = Dimensions.get('window').width;
-    let pathing: Pather[] = [];
-    let d: string = "";
-    const [x, setX] = React.useState(0.0);
+
+    const [d, setD] = React.useState("")
+    const [x, setX] = React.useState(-1);
     const [y, setY] = React.useState(0.0);
     const [overlay, setOverlay] = React.useState(false);
-    // const [index, setIndex] = React.useState(0);
+    const [pathing, setPathing] = React.useState<Pather[]>([]);
+    
     let index = 0;
-
-    let rarity = 14
-    let freq = .1;
-    let phase = 100;
-    let amplitude = windowWidth /5;
-    let origin = {
-        x: 0,
-        y: windowHeight / 2
-    }
-    for(var i = 0; i < windowWidth; i++) {
-        var operator = ' M ';
-    
-        d += operator + ((i - 1) * rarity + origin.x) + ', ';
-        d += (Math.sin(freq * (i - 1 + phase)) * amplitude + origin.y);
-    
-        if(operator !== ' L ') { operator = ' L '; }
-        
-        let xT = (i * rarity + origin.x)
-        let yT = (Math.sin(freq * (i + phase)) * amplitude + origin.y)
-
-        d += ' L ' + xT + ', ';
-        d += yT;
-
-        pathing.push({x: xT, y: yT})
-    }
-    
     useFocusEffect(
         React.useCallback(() => {
             ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE_LEFT)
-            let index =  d.indexOf("L 4")
-            let portion = d.substring(index)
-            let point = d.substring(index, index+ portion.indexOf("M"))
-            console.log("D", d)
-            console.log("Point", point)
-            setX(parseFloat(point.substring(1, point.indexOf(",")).trim()))
-            setY(parseFloat(point.substring(point.indexOf(",")+1).trim()))
-            console.log("X: ", x)
-            console.log("Y: ", y)
+            .then(() => {
+                const windowHeight = Screen.window.width;
+                const windowWidth = Screen.window.height;
+                let pathing: Pather[] = [];
+                let d: string = "";
+                let rarity = 14
+                let freq = .1;
+                let phase = 100;
+                let amplitude = windowWidth / 5;
+                let origin = {
+                    x: 0,
+                    y: windowHeight / 2
+                }
+                for(var i = 0; i < windowWidth; i++) {
+                    var operator = ' M ';
+                
+                    d += operator + ((i - 1) * rarity + origin.x) + ', ';
+                    d += (Math.sin(freq * (i - 1 + phase)) * amplitude + origin.y);
+                
+                    if(operator !== ' L ') { operator = ' L '; }
+                    
+                    let xT = (i * rarity + origin.x)
+                    let yT = (Math.sin(freq * (i + phase)) * amplitude + origin.y)
+
+                    d += ' L ' + xT + ', ';
+                    d += yT;
+
+                    pathing.push({x: xT, y: yT})
+                    
+                }
+                setPathing(pathing)
+                setD(d)
+                setLoaded(true)
+            })
         }, [])
     )
 
-    // Bruh idk how to get this to loop back around
     React.useEffect(() => {
-        const interval = setInterval(() => {
-            setX(pathing[index].x)
-            setY(pathing[index].y)
-            index++;
-            if (index > 55){ index=0; console.log("WTF")}
-            // setIndex(index+1);
-            // if (index > pathing.length) setIndex(0);
-        }, 2000);
-        return () => {clearInterval(interval)};
-    }, [index]);
-    // console.log(y)
-    // if (x > windowWidth && index < 5){ setIndex(0); console.log("WTF")}
-
+        if (loaded) {
+            const interval = setInterval(() => {
+                setX(pathing[index].x)
+                setY(pathing[index].y)
+                index++;
+                if (index > 55)
+                    index=0;
+                if (index !== 1)
+                    LayoutAnimation.configureNext(CustomLayoutAnimation);
+            }, 1000);
+            return () => {clearInterval(interval)};
+        }
+    }, [loaded]);
+    
     return (
+    <View style={[styles.container]}>
+        {loaded ? 
         <View style={styles.container}>
-            {d !== "" && 
             <ImageBackground
                 source={require('../assets/images/globe.png')} style={styles.map}
             >
-                <Svg height={`${windowHeight}`} width={`${windowWidth}`}>
-                    <Path
-                        d={d}
-                        fill={"none"}
-                        stroke={"red"}
-                        strokeWidth={5}
-                    />
-                </Svg>
-                <TouchableOpacity 
-                    style={[styles.CUBE, {top: y - (styles.CUBE.height / 2), left: x - (styles.CUBE.width / 2)}]}
-                    onPress={() => setOverlay(true)}
-                >
-                   <Image 
-                        source={require('../assets/images/telemSat_icon.png')}
-                        style={[styles.CUBE, 
-                            // {top: y - (styles.CUBE.height / 2), left: x - (styles.CUBE.width / 2)  }
-                        ]}
-                    />
-                </TouchableOpacity> 
+                    <Svg height={`${windowHeight}`} width={`${windowWidth}`}>
+                        <Path
+                            d={d}
+                            fill={"none"}
+                            stroke={"red"}
+                            strokeWidth={5}
+                        />
+                    </Svg>
+                    <TouchableOpacity 
+                        style={[styles.CUBE, {top: y - (styles.CUBE.height / 2), left: x - (styles.CUBE.width / 2)}]}
+                        onPress={() => setOverlay(true)}
+                    >
+                        <Image 
+                            source={require('../assets/images/telemSat_icon.png')}
+                            style={[styles.CUBE]}
+                        />
                 
-            </ImageBackground>}
+                    </TouchableOpacity> 
+                 
+                
+            </ImageBackground>
             {overlay ? 
                 <OverlayPrompt
                     promptText={"Would you like to view this CUBE's Telemetry or Controls"}
@@ -155,6 +175,8 @@ export default function MapScreen({ navigation }) {
                 : 
                 null
             }
+        </View>
+        : null}
         </View>
     );
     
