@@ -13,6 +13,7 @@ type PromptProps = {
   promptText: string;
   btns: btns[];
   disableTap?: boolean;
+  yAxis?: boolean; // true for Y axis
 };
 
 export default function Prompt({
@@ -20,7 +21,10 @@ export default function Prompt({
   promptText,
   btns,
   disableTap,
+  yAxis
 }: PromptProps) {
+  let short = Screen.window.width - 40;
+  let long = Screen.window.height / 4;
   const styles = StyleSheet.create({
     overlay: {
       position: "absolute",
@@ -36,8 +40,8 @@ export default function Prompt({
       opacity: 0.5,
     },
     overlayPrompt: {
-      width: Screen.window.width - 40,
-      height: Screen.window.height / 4,
+      width: yAxis ? long * 3 : short,
+      height: long,
       backgroundColor: Colors.newColors.background2,
       alignItems: "center",
       justifyContent: "center",
@@ -94,7 +98,7 @@ export default function Prompt({
           {btns.map((e) => {
             return (
               <TouchableOpacity
-                style={styles.promptBtn}
+                style={[styles.promptBtn, {marginHorizontal: 30 / btns.length}]}
                 onPress={() => {
                   e.action();
                 }}

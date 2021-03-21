@@ -83,7 +83,7 @@ export default function WorkspaceScreen({ route }) {
             style={styles.workspaceSwitch}
           />
         </View>
-        <Text style={[styles.title]}>Visable Data</Text>
+        {/* <Text style={[styles.title]}>Visable Data</Text>
         {settings.map((e) => {
           return (
             <View style={styles.switchRow}>
@@ -101,7 +101,7 @@ export default function WorkspaceScreen({ route }) {
               />
             </View>
           );
-        })}
+        })} */}
       </View>
       {overlay ? (
         <OverlayPrompt

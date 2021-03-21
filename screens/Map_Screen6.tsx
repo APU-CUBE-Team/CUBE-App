@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { StyleSheet, Image, Dimensions, ImageBackground, TouchableOpacity } from 'react-native';
 import * as ScreenOrientation from 'expo-screen-orientation';
-import { useNavigation, useFocusEffect } from '@react-navigation/native';
+import { useNavigation, useFocusEffect, NavigationAction } from '@react-navigation/native';
 import Svg, { Path } from 'react-native-svg';
 import OverlayPrompt from '../components/Prompt';
 import { Text, View } from '../components/Themed';
@@ -142,8 +142,12 @@ export default function MapScreen({ navigation }) {
                 <OverlayPrompt
                     promptText={"Would you like to view this CUBE's Telemetry or Controls"}
                     closeOverlay={() => setOverlay(false)}
+                    yAxis
                     btns={[
-                        {key: "  Telemetry  ", action: () => {navigation.navigate("Telemetry")}},
+                        {key: "  Telemetry  ", action: () => {
+                            setOverlay(false);
+                            navigation.navigate("Telemetry")
+                        }},
                         {key: "  Control  ", action: () => {alert("TODO")}},
                         {key: "  Cancel  ", action: () => {setOverlay(false)}},
                     ]}

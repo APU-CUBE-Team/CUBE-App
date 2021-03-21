@@ -37,12 +37,14 @@ export type WorkspaceParamList = {
   WorkspacePage: undefined;
 }
 
-export type MapParamList = {
+export type TelParamList = {
   initialPath: undefined;
-  Telemetry: { path: string };
-  MapPage: undefined;
-  CompTelPage: undefined;
+  TelemetryScreens: { path: string };
   WorkspacePage: undefined;
+}
+
+export type MapParamList = {
+  MapPage: undefined;
 }
 
 export type NotificationsParamList = {

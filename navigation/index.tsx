@@ -15,7 +15,6 @@ import CredRecoveryScreen from "../screens/CredRecov_Screen2";
 import {
   emailSignIn,
   signOut,
-  useCustomToken,
 } from "../util/authenticating-users";
 import { View } from "../components/Themed";
 
@@ -91,9 +90,6 @@ function TestMode() {
 
       try {
         userToken = await AsyncStorage.getItem("@Token");
-        // DEBUG
-        // console.log("testing customToken: ", userToken);
-        return await useCustomToken(userToken);
       } catch (e) {
         // Restoring token failed
         console.log("Restoring token failed");

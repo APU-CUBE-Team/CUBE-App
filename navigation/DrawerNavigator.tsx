@@ -3,7 +3,7 @@ import { TouchableOpacity, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList, DrawerItem } from '@react-navigation/drawer';
 import { createStackNavigator } from '@react-navigation/stack';
-import { DrawerParamList, ThreeOrbitParamList, MapParamList, NotificationsParamList, UserPermParamList } from '../types';
+import { DrawerParamList, ThreeOrbitParamList, TelParamList, NotificationsParamList, UserPermParamList, MapParamList } from '../types';
 import { storeTelemetryPreference } from '../hooks/Storage';
 //How we will be importing our screens. I would prefer if we separate Screen imports from component imports so that it is easier to tell what 
 // is what.
@@ -54,10 +54,7 @@ export default function DrawerNavigator({ route }) {
       />
       <Drawer.Screen
         name="Cartesian Map"
-        component={TelemetryMap}
-        initialParams={{
-          InitialPath: "MapPage"
-        }}
+        component={Maps}
       />
       <Drawer.Screen
         name="3D Orbit View"
@@ -97,7 +94,7 @@ function DrawerToggle(props: { onPress }) {
 // stack. The navigation.toggleDrawer() will be able to be accessed from any function within the drawer which should be all of them.
 
 
-const TelemetryMapStack = createStackNavigator<MapParamList>();
+const TelemetryMapStack = createStackNavigator<TelParamList>();
 
 function TelemetryMap({ navigation, route }) {
   let path = route.params?.InitialPath;
@@ -106,7 +103,7 @@ function TelemetryMap({ navigation, route }) {
       initialRouteName={path}
     >
       <TelemetryMapStack.Screen
-        name="Telemetry"
+        name="TelemetryScreens"
         component={TelemetryScreen}
         options={{
           headerTitle: 'CUBE Telemetry',
@@ -127,7 +124,16 @@ function TelemetryMap({ navigation, route }) {
           headerRight: () => <DrawerToggle onPress={() => { navigation.toggleDrawer() }} />
         }}
       />
-      <TelemetryMapStack.Screen
+    </TelemetryMapStack.Navigator>
+  )
+}
+
+const MapStack = createStackNavigator<MapParamList>();
+
+function Maps({ navigation }) {
+  return (
+    <MapStack.Navigator>
+      <MapStack.Screen
         name="MapPage"
         component={MapScreen}
         options={{
@@ -136,7 +142,7 @@ function TelemetryMap({ navigation, route }) {
           headerRight: () => <DrawerToggle onPress={() => { navigation.toggleDrawer() }} />
         }}
       />
-    </TelemetryMapStack.Navigator>
+    </MapStack.Navigator>
   )
 }
 
