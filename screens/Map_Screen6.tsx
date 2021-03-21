@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StyleSheet, Image, Dimensions, ImageBackground, TouchableOpacity, Platform } from 'react-native';
+import { StyleSheet, Image, Dimensions, ImageBackground, TouchableOpacity, LayoutAnimation, Platform, UIManager } from 'react-native';
 import * as ScreenOrientation from 'expo-screen-orientation';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import Svg, { Path } from 'react-native-svg';
@@ -42,6 +42,25 @@ type Pather = {
     x: any,
     y: any
 }
+
+const CustomLayoutAnimation = {
+    duration: 900,
+    create: {
+        property: LayoutAnimation.Properties.scaleXY,
+        type: LayoutAnimation.Types.easeInEaseOut,
+    },
+    update: {
+        property: LayoutAnimation.Properties.scaleXY,
+        type: LayoutAnimation.Types.easeInEaseOut,
+    },
+    delete: {
+        property: LayoutAnimation.Properties.scaleXY,
+        type: LayoutAnimation.Types.easeInEaseOut,
+    },
+}
+
+if (Platform.OS === "android" && UIManager.setLayoutAnimationEnabledExperimental) 
+    { UIManager.setLayoutAnimationEnabledExperimental(true); }
 
 export default function MapScreen({ navigation }) {
     const [loaded, setLoaded] = React.useState(false);
@@ -102,7 +121,10 @@ export default function MapScreen({ navigation }) {
                 setX(pathing[index].x)
                 setY(pathing[index].y)
                 index++;
-                if (index > 55){ index=0;}
+                if (index > 55)
+                    index=0;
+                if (index !== 1)
+                    LayoutAnimation.configureNext(CustomLayoutAnimation);
             }, 1000);
             return () => {clearInterval(interval)};
         }
@@ -131,7 +153,7 @@ export default function MapScreen({ navigation }) {
                             source={require('../assets/images/telemSat_icon.png')}
                             style={[styles.CUBE]}
                         />
-                    
+                
                     </TouchableOpacity> 
                  
                 
