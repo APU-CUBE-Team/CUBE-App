@@ -128,9 +128,11 @@ const styles = StyleSheet.create({
 export default function UserScreen({
   create,
   user,
+  goBack,
 }: {
   create: boolean;
   user: object;
+  goBack?: Function;
 }) {
   const [firstName, setFirstName] = React.useState("");
   const [lastName, setLastName] = React.useState("");
@@ -176,6 +178,7 @@ export default function UserScreen({
     } else {
       // navigate to edit user page and update user stuff
       updateUser(email, role, lastName, firstName);
+      goBack(); // don't mind this error if linter picks it up
     }
   }
 
