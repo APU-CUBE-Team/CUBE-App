@@ -1,4 +1,4 @@
-import * as React from 'react';
+import * as React from "react";
 import {
     Button,
     StyleSheet,
@@ -9,21 +9,20 @@ import {
     Dimensions,
     Image,
     KeyboardAvoidingView,
-    Animated
+    Animated,
 } from "react-native";
-import { useFocusEffect, useLinkProps } from '@react-navigation/native';
-import { resetOrientation } from '../hooks/resetOrientation';
+import { useFocusEffect, useLinkProps } from "@react-navigation/native";
+import { resetOrientation } from "../hooks/resetOrientation";
 
 import Colors from "../constants/Colors";
 import Screen from "../constants/Layout";
 
 //import EditScreenInfo from '../components/EditScreenInfo';
-import { Text, View } from '../components/Themed';
+import { Text, View } from "../components/Themed";
 
+import AppButton from "../components/Button";
 import FloatingLabelInput from "../components/floatingLabelInput";
-import { ReverseSubtractEquation } from 'three';
-
-
+import OverlayPrompt from "../components/Prompt";
 
 const styles = StyleSheet.create({
     container: {
@@ -40,12 +39,12 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 20,
-        fontWeight: 'bold',
+        fontWeight: "bold",
     },
     separator: {
         marginVertical: 30,
         height: 1,
-        width: '80%',
+        width: "80%",
     },
     input: {
         backgroundColor: Colors.newColors.background2,
@@ -64,7 +63,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         marginTop: 30,
         marginBottom: 10,
-        borderRadius: 10,
+        borderRadius: 25,
 
         shadowColor: "rgba(0,0,0, .4)", // IOS
         shadowOffset: { height: 5, width: 5 }, // IOS
@@ -83,10 +82,9 @@ const styles = StyleSheet.create({
         textAlign: "center",
         marginLeft: 15,
         marginTop: 10,
-        fontStyle: "italic"
+        fontStyle: "italic",
     },
 });
-
 
 export default function CredRecoveryScreen() {
     useFocusEffect(
@@ -96,42 +94,45 @@ export default function CredRecoveryScreen() {
     );
 
     const [email, setEmail] = React.useState("");
-    const [success, setSuccess] = React.useState(false);
+    const [entered, setEntered] = React.useState(false);
     const [message, setMessage] = React.useState("");
-    const [fadeAnim, setFadeAnim] = React.useState(new Animated.Value(0)) // Initial value for opacity: 0
-
+    const [fadeAnim, setFadeAnim] = React.useState(new Animated.Value(0)); // Initial value for opacity: 0
+    const [prompt, setPrompt] = React.useState("");
+    const [overlay, setOverlay] = React.useState(false);
 
     /////////////////////////////////////////////////////////////////////
     // TODO: Check different cases like if email exists in data base
     /////////////////////////////////////////////////////////////////////
 
     function checkEmail(email: any) {
-        if (email != '') {
-            setMessage("An email will be sent to your inbox shortly with instructions")
-        }
-        setSuccess(true);
+        if (email != "") {
+            setMessage(
+                "An email will be sent to your inbox shortly with instructions."
+            );
+            setEntered(true);
+        } else {
+            setMessage("Please fill in the field above with your email.");
+            setEntered(true);
+        } /** 
+    else if (email does not exist)
+    */
     }
 
     React.useEffect(() => {
-        Animated.timing(
-            fadeAnim,
-            {
-                toValue: 1,
-                duration: 3000,
-                useNativeDriver: true,
-            }
-        ).start();
+        Animated.timing(fadeAnim, {
+            toValue: 1,
+            duration: 4000,
+            useNativeDriver: true,
+        }).start();
     }, [fadeAnim]);
 
     return (
-
         <SafeAreaView style={styles.container}>
             <StatusBar barStyle="light-content" />
             <KeyboardAvoidingView
                 style={styles.container}
                 behavior={Platform.OS === "ios" ? "padding" : null}
             >
-
                 <View style={styles.inputSafeArea}>
                     {/* <TextInput
                         placeholder="Email Address"
@@ -147,14 +148,18 @@ export default function CredRecoveryScreen() {
                         onChange={checkEmail}
                         customStyle={false}
                     ></FloatingLabelInput>
+                    <AppButton
+                        label="Reset password"
+                        onPressAction={() => { checkEmail(email) }}
+                    ></AppButton>
 
-                    <TouchableOpacity
+                    {/* <TouchableOpacity
                         style={styles.reportButton}
                         onPress={() => { checkEmail(email) }}
 
                     >
                         <Text style={styles.text}>Reset password</Text>
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
 
                     <Animated.View style={{ opacity: fadeAnim }}>
                         <Text style={styles.text2}>{message}</Text>
@@ -167,6 +172,3 @@ export default function CredRecoveryScreen() {
         </SafeAreaView>
     );
 }
-
-
-

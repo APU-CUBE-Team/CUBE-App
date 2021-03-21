@@ -120,7 +120,7 @@ export default function BugReportScreen() {
         </TouchableOpacity> */}
 
         <AppButton
-          label="Sumbit Report"
+          label="Submit Report"
 
           ///////////////////////////////////////////////////////////////
           // TODO: CONNECT REPORT TO BACKEND
