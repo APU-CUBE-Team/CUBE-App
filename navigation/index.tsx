@@ -5,8 +5,7 @@ import { ColorSchemeName, TouchableOpacity } from "react-native";
 import AsyncStorage from "@react-native-community/async-storage";
 import * as firebase from "firebase";
 import * as SplashScreen from "expo-splash-screen";
-import { Ionicons } from '@expo/vector-icons';
-
+import { Ionicons } from "@expo/vector-icons";
 
 import { RootStackParamList, SignInParamList } from "../types";
 import DrawerNavigator from "./DrawerNavigator";
@@ -90,12 +89,9 @@ function TestMode() {
 
       try {
         userToken = await AsyncStorage.getItem("@Token");
-        // DEBUG
-        // console.log("testing customToken: ", userToken);
-        return await useCustomToken(userToken);
       } catch (e) {
         // Restoring token failed
-        console.log("Restoring token failed");
+        console.log(e);
       }
 
       // After restoring token, we may need to validate it in production apps
@@ -151,8 +147,6 @@ function TestMode() {
 
   return <RootNavigator />;
 
-
-
   function SignIn({ navigation }) {
     return (
       <Login.Navigator
@@ -170,11 +164,21 @@ function TestMode() {
           component={CredRecoveryScreen}
           options={{
             headerShown: true,
-            headerTitle: 'Forgot Password',
-            headerLeft: () => <TouchableOpacity style={{ marginLeft: 5 }} onPress={() => {
-              navigation.navigate("SignInScreen")
-            }}><Ionicons size={30} style={{ marginBottom: -3, color: '#fff' }} name="arrow-back-outline" /></TouchableOpacity>
-
+            headerTitle: "Forgot Password",
+            headerLeft: () => (
+              <TouchableOpacity
+                style={{ marginLeft: 5 }}
+                onPress={() => {
+                  navigation.navigate("SignInScreen");
+                }}
+              >
+                <Ionicons
+                  size={30}
+                  style={{ marginBottom: -3, color: "#fff" }}
+                  name="arrow-back-outline"
+                />
+              </TouchableOpacity>
+            ),
           }}
         />
       </Login.Navigator>

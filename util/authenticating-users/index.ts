@@ -46,20 +46,3 @@ export async function findNewToken() {
     }
   });
 }
-
-export async function useCustomToken(token: any) {
-  return auth
-    .signInWithCustomToken(token)
-    .then((userCredential) => {
-      //Signed In
-      console.log("custom ID token success");
-      return userCredential.user;
-      // ...
-    })
-    .catch((e) => {
-      var errorCode = e.code;
-      var errorMessage = e.message;
-      return { errorCode, errorMessage };
-      // ..
-    });
-}
