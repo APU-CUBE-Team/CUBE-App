@@ -62,6 +62,7 @@ export default function FloatingLabelInput({ value, label, onChange, customStyle
     useFocusEffect(
         React.useCallback(() => {
             setAnimatedIsFocused(new Animated.Value(value === '' ? 0 : 1));
+            setTempVal(value)
         }, [])
     );
 
@@ -114,6 +115,7 @@ export default function FloatingLabelInput({ value, label, onChange, customStyle
             {customStyle ?
                 <TextInput
                     style={[style.textInput, isFocused && style.focusedTextInput]}
+                    value={value}
                     onFocus={handleFocus}
                     onBlur={handleBlur}
                     blurOnSubmit
@@ -129,6 +131,7 @@ export default function FloatingLabelInput({ value, label, onChange, customStyle
                 :
                 <TextInput
                     style={[style.textInput, isFocused && style.focusedTextInput]}
+                    value={value}
                     onFocus={handleFocus}
                     onBlur={handleBlur}
                     blurOnSubmit
@@ -139,6 +142,7 @@ export default function FloatingLabelInput({ value, label, onChange, customStyle
                         onChange(tempVal)
                         setTempVal(tempVal)
                     }}
+
                 />
 
             }
