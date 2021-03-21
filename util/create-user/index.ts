@@ -1,21 +1,27 @@
-import { auth } from '../firebase-util';
-import { teamMembersDBColl } from '../firebase-util';
+import { auth } from "../firebase-util";
+import { teamMembersDBColl } from "../firebase-util";
 // https://stackoverflow.com/questions/58547671/firebase-user-profile-add-custom-fields
 // https://firebase.google.com/docs/auth/web/manage-users
 
-export function SignUp(fName: string, lName: string, email: any, password: any, role: any) {
-
-  console.log('right here')
-
-  return auth.createUserWithEmailAndPassword(email, password)
-    .then(registeredUser => {
+export function SignUp(
+  fName: string,
+  lName: string,
+  email: any,
+  password: any,
+  role: any
+) {
+  return auth
+    .createUserWithEmailAndPassword(email, password)
+    .then((registeredUser) => {
       teamMembersDBColl.add({
-        "uid": registeredUser.user?.uid,
-        "role": role,
-        "orgID": 'AdminOrganization',
-        "email": registeredUser.user?.email,
-        "lastName": lName,
-        "firstName": fName,
-      })
+        uid: registeredUser.user?.uid,
+        role: role,
+        orgID: "AdminOrganization",
+        email: registeredUser.user?.email,
+        lastName: lName,
+        firstName: fName,
+      });
     });
-};
+}
+
+export function updateUser(email: any, role: any, fName: any, lName: any) {}

@@ -175,7 +175,7 @@ export default function UserScreen({
       checkPW(); // check pw and create user
     } else {
       // navigate to edit user page and update user stuff
-      updateUser();
+      updateUser(email, role, lastName, firstName);
     }
   }
 
