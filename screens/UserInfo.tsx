@@ -225,8 +225,8 @@ export default function UserScreen({
               onChangeText={(firstName) => setFirstName(firstName)}
               style={styles.input}
               autoCapitalize="none"
-            />
-
+            /> */}
+            {/* 
             <Text style={styles.text2}>Last Name</Text>
             <TextInput
               placeholder="Doe"
