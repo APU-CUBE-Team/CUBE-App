@@ -13,11 +13,7 @@ import LinkingConfiguration from "./LinkingConfiguration";
 import { getToken, storeToken, deleteToken } from "../hooks/Storage";
 import SignInScreen from "../screens/SignIn_Screen1";
 import CredRecoveryScreen from "../screens/CredRecov_Screen2";
-import {
-  emailSignIn,
-  signOut,
-  useCustomToken,
-} from "../util/authenticating-users";
+import { emailSignIn, signOut } from "../util/authenticating-users";
 import { TouchableNativeFeedback } from "react-native-gesture-handler";
 
 const AuthContext = React.createContext({});
