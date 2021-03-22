@@ -20,7 +20,6 @@ import Screen from "../constants/Layout";
 //import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from "../components/Themed";
 
-import AppButton from "../components/Button";
 import FloatingLabelInput from "../components/floatingLabelInput";
 import { sendPasswordResetEmail } from "../util/recover-creds";
 
@@ -97,25 +96,30 @@ export default function CredRecoveryScreen() {
   const [entered, setEntered] = React.useState(false);
   const [message, setMessage] = React.useState("");
   const [fadeAnim, setFadeAnim] = React.useState(new Animated.Value(0)); // Initial value for opacity: 0
-  const [prompt, setPrompt] = React.useState("");
-  const [overlay, setOverlay] = React.useState(false);
 
   /////////////////////////////////////////////////////////////////////
   // TODO: Check different cases like if email exists in data base
   /////////////////////////////////////////////////////////////////////
 
-  function checkEmail(email: any) {
+  async function checkEmail(email: any) {
     if (email != "") {
-      setMessage(
-        "An email will be sent to your inbox shortly with instructions."
-      );
+      // email is typed
+      const message = sendPasswordResetEmail(email);
+      if (!message) {
+        // if email is registered
+        setMessage(
+          "An email will be sent to your inbox shortly with instructions."
+        );
+      } else {
+        // if email is invalid
+        setMessage("TODO");
+      }
+
       setEntered(true);
     } else {
       setMessage("Please fill in the field above with your email.");
       setEntered(true);
-    } /** 
-    else if (email does not exist)
-    */
+    }
   }
 
   React.useEffect(() => {
@@ -134,38 +138,26 @@ export default function CredRecoveryScreen() {
         behavior={Platform.OS === "ios" ? "padding" : null}
       >
         <View style={styles.inputSafeArea}>
-          {/* <TextInput
-                        placeholder="Email Address"
-                        value={email}
-                        onChangeText={(email) => setEmail(email)}
-                        style={styles.input}
-                        autoCapitalize="none"
-                        placeholderTextColor={Colors.c.gray2}
-                    /> */}
           <FloatingLabelInput
             label="Email Address"
             value={email}
-            onChange={checkEmail}
+            onChange={setEmail}
             customStyle={false}
           ></FloatingLabelInput>
-          <AppButton
-            label="Reset password"
-            onPressAction={() => {
+
+          <TouchableOpacity
+            style={styles.reportButton}
+            onPress={() => {
               checkEmail(email);
             }}
-          ></AppButton>
-
-          {/* <TouchableOpacity
-                        style={styles.reportButton}
-                        onPress={() => { checkEmail(email) }}
-
-                    >
-                        <Text style={styles.text}>Reset password</Text>
-                    </TouchableOpacity> */}
-
-          <Animated.View style={{ opacity: fadeAnim }}>
-            <Text style={styles.text2}>{message}</Text>
-          </Animated.View>
+          >
+            <Text style={styles.text}>Reset Password</Text>
+          </TouchableOpacity>
+          {entered && (
+            <Animated.View style={{ opacity: fadeAnim }}>
+              <Text style={styles.text2}>{message}</Text>
+            </Animated.View>
+          )}
         </View>
       </KeyboardAvoidingView>
     </SafeAreaView>
