@@ -26,7 +26,13 @@ const styles = StyleSheet.create({
     flex: 10,
   },
 });
-export const RowItem = ({ onPress = () => {}, first, last, email }) => (
+export const RowItem = ({
+  onPress = () => {},
+  first,
+  last,
+  email,
+  editValue,
+}) => (
   <TouchableOpacity onPress={onPress} activeOpacity={0.08}>
     <View
       style={[styles.row, { backgroundColor: Colors.newColors.background2 }]}

@@ -9,7 +9,8 @@ export default function EditUserScreen({ navigation, route }) {
       resetOrientation();
     }, [])
   );
-  console.log(route.params?.e);
+  // DEBUG
+  // console.log(route.params?.e);
 
   return (
     <UserInfo

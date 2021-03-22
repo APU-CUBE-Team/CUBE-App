@@ -46,7 +46,8 @@ export async function getUsersOfTeam() {
       u.forEach((doc) => {
         usersArray.push(doc.data());
       });
-      console.log(usersArray);
+      // DEBUG
+      // console.log(usersArray);
     });
   return usersArray;
 }
@@ -62,7 +63,8 @@ export function updateUser(email: any, role: any, lName: any, fName: any) {
     .get()
     .then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
-        console.log("doc id: \n", doc.id);
+        // DEBUG
+        // console.log("doc id: \n", doc.id);
 
         teamMembersDBColl.doc(doc.id).update({
           email: email,

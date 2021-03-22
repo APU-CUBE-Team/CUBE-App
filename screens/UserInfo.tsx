@@ -195,12 +195,12 @@ export default function UserScreen({
       >
         <ScrollView>
           <View style={styles.inputSafeArea}>
-
             <FloatingLabelInput
               label="First Name"
               value={firstName}
               onChange={setFirstName}
               customStyle={false}
+              editVal={!create}
             ></FloatingLabelInput>
 
             <FloatingLabelInput
@@ -208,6 +208,7 @@ export default function UserScreen({
               value={lastName}
               onChange={setLastName}
               customStyle={false}
+              editVal={!create}
             ></FloatingLabelInput>
 
             <FloatingLabelInput
@@ -215,6 +216,7 @@ export default function UserScreen({
               value={email}
               onChange={setEmail}
               customStyle={false}
+              editVal={!create}
             ></FloatingLabelInput>
 
             {/* <Text style={styles.text2}>First Name</Text>
@@ -302,12 +304,16 @@ export default function UserScreen({
             {create ? (
               <AppButton
                 label="Add User"
-                onPressAction={() => { checkVersion() }}
+                onPressAction={() => {
+                  checkVersion();
+                }}
               ></AppButton>
             ) : (
               <AppButton
                 label="Save Changes"
-                onPressAction={() => { checkVersion() }}
+                onPressAction={() => {
+                  checkVersion();
+                }}
               ></AppButton>
             )}
             {/* <TouchableOpacity
