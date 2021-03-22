@@ -21,7 +21,6 @@
     "@react-navigation/drawer": "^5.11.4",
     "@react-navigation/native": "^5.8.9",
     "@react-navigation/stack": "^5.12.6",
-    "csvtojson": "^2.0.10",
     "expo": "^40.0.1",
     "expo-asset": "~8.2.1",
     "expo-cli": "^4.1.6",
@@ -56,7 +55,6 @@
     "react-native-web": "^0.15.0",
     "react-navigation": "^4.4.3",
     "three": "^0.125.2",
-    "to-csv": "^0.1.1"
   },
   "devDependencies": {
     "@babel/core": "~7.9.0",
