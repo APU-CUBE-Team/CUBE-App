@@ -21,6 +21,7 @@
     "@react-navigation/drawer": "^5.11.4",
     "@react-navigation/native": "^5.8.9",
     "@react-navigation/stack": "^5.12.6",
+    "csvtojson": "^2.0.10",
     "expo": "^40.0.1",
     "expo-asset": "~8.2.1",
     "expo-cli": "^4.1.6",
@@ -39,9 +40,11 @@
     "expo-web-browser": "~8.6.0",
     "express": "^4.17.1",
     "firebase": "7.9.0",
+    "json2csv": "^5.0.6",
     "moment": "^2.29.1",
     "node-forge": "0.10.0",
     "react": "16.13.1",
+    "react-csv": "^2.0.3",
     "react-dom": "16.13.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-40.0.1.tar.gz",
     "react-native-gesture-handler": "~1.8.0",
@@ -52,7 +55,8 @@
     "react-native-svg-charts": "^5.4.0",
     "react-native-web": "^0.15.0",
     "react-navigation": "^4.4.3",
-    "three": "^0.125.2"
+    "three": "^0.125.2",
+    "to-csv": "^0.1.1"
   },
   "devDependencies": {
     "@babel/core": "~7.9.0",

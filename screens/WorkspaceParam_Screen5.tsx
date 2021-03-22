@@ -6,6 +6,7 @@ import { resetOrientation } from "../hooks/resetOrientation";
 import Screen from "../constants/Layout";
 import Colors from "../constants/Colors";
 import { telemetryList } from "../constants/FullTelemetrySet";
+import { sendEmail } from "../util/email-user"
 import {
   storeTelemetryPreference,
   getSettings,
@@ -129,6 +130,7 @@ export default function WorkspaceScreen({ route }) {
   );
 
   function exportTelemetry() {
+    sendEmail('jroland16@apu.edu', 'csv');
     //TODO: I guess this is where we call the cloud function and then inform the user when it is complete.
     alert("Functions yeet");
   }
