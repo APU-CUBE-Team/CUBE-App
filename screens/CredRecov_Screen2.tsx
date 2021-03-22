@@ -83,6 +83,14 @@ const styles = StyleSheet.create({
     marginTop: 10,
     fontStyle: "italic",
   },
+  errorText: {
+    color: Colors.newColors.notification,
+    fontSize: 15,
+    textAlign: "center",
+    marginLeft: 15,
+    marginTop: 10,
+    fontStyle: "italic",
+  },
 });
 
 export default function CredRecoveryScreen() {
@@ -96,6 +104,7 @@ export default function CredRecoveryScreen() {
   const [entered, setEntered] = React.useState(false);
   const [message, setMessage] = React.useState("");
   const [fadeAnim, setFadeAnim] = React.useState(new Animated.Value(0)); // Initial value for opacity: 0
+  const [errMess, setErrMess] = React.useState(true);
 
   /////////////////////////////////////////////////////////////////////
   // TODO: Check different cases like if email exists in data base
@@ -108,16 +117,20 @@ export default function CredRecoveryScreen() {
       // email is typed
       sendPasswordResetEmail(email)
         .then(function () {
+          setErrMess(false);
           setMessage(
             "An email will be sent to your inbox shortly with instructions."
           );
         })
         .catch(function (error) {
           err = error.message;
-          console.log("in call: ", err);
+          console.log(err);
+          setErrMess(true);
           setMessage(err);
         });
     } else {
+      console.log(err);
+      setErrMess(true);
       setMessage("Please fill in the field above with your email.");
       setEntered(true);
     }
@@ -156,7 +169,9 @@ export default function CredRecoveryScreen() {
           </TouchableOpacity>
           {entered && (
             <Animated.View style={{ opacity: fadeAnim }}>
-              <Text style={styles.text2}>{message}</Text>
+              <Text style={errMess ? styles.errorText : styles.text2}>
+                {message}
+              </Text>
             </Animated.View>
           )}
         </View>
