@@ -54,7 +54,7 @@
     "react-native-svg-charts": "^5.4.0",
     "react-native-web": "^0.15.0",
     "react-navigation": "^4.4.3",
-    "three": "^0.125.2",
+    "three": "^0.125.2"
   },
   "devDependencies": {
     "@babel/core": "~7.9.0",
