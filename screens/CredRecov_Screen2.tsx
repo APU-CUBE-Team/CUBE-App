@@ -102,20 +102,21 @@ export default function CredRecoveryScreen() {
   /////////////////////////////////////////////////////////////////////
 
   async function checkEmail(email: any) {
+    let err: any;
+
     if (email != "") {
       // email is typed
-      const message = sendPasswordResetEmail(email);
-      if (!message) {
-        // if email is registered
-        setMessage(
-          "An email will be sent to your inbox shortly with instructions."
-        );
-      } else {
-        // if email is invalid
-        setMessage("TODO");
-      }
-
-      setEntered(true);
+      sendPasswordResetEmail(email)
+        .then(function () {
+          setMessage(
+            "An email will be sent to your inbox shortly with instructions."
+          );
+        })
+        .catch(function (error) {
+          err = error.message;
+          console.log("in call: ", err);
+          setMessage(err);
+        });
     } else {
       setMessage("Please fill in the field above with your email.");
       setEntered(true);
