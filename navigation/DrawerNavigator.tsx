@@ -1,10 +1,16 @@
 import * as React from 'react';
-import { TouchableOpacity, View } from 'react-native';
+import { TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList, DrawerItem } from '@react-navigation/drawer';
 import { createStackNavigator } from '@react-navigation/stack';
-import { DrawerParamList, ThreeOrbitParamList, TelParamList, NotificationsParamList, UserPermParamList, MapParamList } from '../types';
-import { storeTelemetryPreference } from '../hooks/Storage';
+import {
+  DrawerParamList,
+  ThreeOrbitParamList,
+  MapParamList,
+  NotificationsParamList,
+  UserPermParamList,
+  BugReportParamList
+} from '../types';
 //How we will be importing our screens. I would prefer if we separate Screen imports from component imports so that it is easier to tell what 
 // is what.
 import ThreeOrbitView from '../screens/3DOrbitView';
@@ -17,8 +23,6 @@ import NotificationsScreen from '../screens/Notifications_Screen7';
 import EditRoleScreen from '../screens/EditRole_Screen12';
 import CreateUserScreen from '../screens/CreateUser_Screen11';
 import TeamRolesScreen from '../screens/TeamRoles_Screen10';
-import UserPerm from '../screens/UserPerm_Screen10';
-import EditUser from '../screens/EditUser_Screen';
 import EditUserScreen from '../screens/EditUser_Screen';
 
 const Drawer = createDrawerNavigator<DrawerParamList>();
@@ -66,7 +70,7 @@ export default function DrawerNavigator({ route }) {
       />
       <Drawer.Screen
         name="Bug Report"
-        component={BugReportScreen}
+        component={BugReport}
       />
       <Drawer.Screen
         name="User Permissions"
@@ -93,8 +97,18 @@ function DrawerToggle(props: { onPress }) {
 // stack navigator to store all the screens that can be accessed from that button in the drawer menu, i.e. the various telemetry screens in one 
 // stack. The navigation.toggleDrawer() will be able to be accessed from any function within the drawer which should be all of them.
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+// STACK NAVIGATORS - These are passed as objects to the drawer navigators
+//    TelemetryMapStack
+//    ThreeOrbitStack
+//    NotificationStack
+//    BugReportStack
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+const TelemetryMapStack = createStackNavigator<MapParamList>();
+const ThreeOrbitStack = createStackNavigator<ThreeOrbitParamList>();
+const NotificationStack = createStackNavigator<NotificationsParamList>();
+const BugReportStack = createStackNavigator<BugReportParamList>();
 
-const TelemetryMapStack = createStackNavigator<TelParamList>();
 
 function TelemetryMap({ navigation, route }) {
   let path = route.params?.InitialPath;
@@ -146,8 +160,6 @@ function Maps({ navigation }) {
   )
 }
 
-const ThreeOrbitStack = createStackNavigator<ThreeOrbitParamList>();
-
 function ThreeOrbit({ navigation }) {
   return (
     <ThreeOrbitStack.Navigator>
@@ -163,7 +175,6 @@ function ThreeOrbit({ navigation }) {
   );
 }
 
-const NotificationStack = createStackNavigator<NotificationsParamList>();
 
 function Notifications({ navigation }) {
   return (
@@ -199,6 +210,22 @@ function Notifications({ navigation }) {
   )
 }
 
+
+function BugReport({ navigation }) {
+  return (
+    <BugReportStack.Navigator>
+      <BugReportStack.Screen
+        name="BugReportPage"
+        component={BugReportScreen}
+        options={{
+          headerTitle: 'Report a bug',
+          headerRight: () => <DrawerToggle onPress={() => { navigation.toggleDrawer() }} />,
+        }}
+      />
+    </BugReportStack.Navigator>
+  )
+}
+
 const TeamStack = createStackNavigator<UserPermParamList>();
 
 function UserPermissions({ navigation }) {
@@ -220,7 +247,10 @@ function UserPermissions({ navigation }) {
         component={CreateUserScreen}
         options={{
           headerTitle: 'Create a User',
-          headerRight: () => <DrawerToggle onPress={() => { navigation.toggleDrawer() }} />
+          headerLeft: () => <TouchableOpacity style={{ marginLeft: 5 }} onPress={() => {
+            navigation.navigate("TeamRolePage")
+          }}><Ionicons size={30} style={{ marginBottom: -3, color: '#fff' }} name="arrow-back-outline" /></TouchableOpacity>
+          //headerRight: () => <DrawerToggle onPress={() => { navigation.toggleDrawer() }} />
         }}
       />
       <TeamStack.Screen

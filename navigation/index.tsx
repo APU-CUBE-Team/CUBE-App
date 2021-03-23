@@ -1,10 +1,11 @@
 import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import React, { useContext } from "react";
-import { ColorSchemeName } from "react-native";
+import { TouchableOpacity } from "react-native";
 import AsyncStorage from "@react-native-community/async-storage";
-import * as SplashScreen from "expo-splash-screen";
 import OverlayPrompt from "../components/Prompt";
+import { Ionicons } from "@expo/vector-icons";
+
 import { RootStackParamList, SignInParamList } from "../types";
 import DrawerNavigator from "./DrawerNavigator";
 import LinkingConfiguration from "./LinkingConfiguration";
@@ -88,7 +89,7 @@ function TestMode() {
         userToken = await AsyncStorage.getItem("@Token");
       } catch (e) {
         // Restoring token failed
-        console.log("Restoring token failed");
+        console.log(e);
       }
 
       // After restoring token, we may need to validate it in production apps
@@ -150,7 +151,7 @@ function TestMode() {
 
   return <RootNavigator />;
 
-  function SignIn() {
+  function SignIn({ navigation }) {
     return (
       <Login.Navigator
         screenOptions={{
@@ -162,7 +163,28 @@ function TestMode() {
           component={SignInScreen}
           initialParams={{ props: AuthContext }}
         />
-        <Login.Screen name="CredRecovPage" component={CredRecoveryScreen} />
+        <Login.Screen
+          name="CredRecovPage"
+          component={CredRecoveryScreen}
+          options={{
+            headerShown: true,
+            headerTitle: "Forgot Password",
+            headerLeft: () => (
+              <TouchableOpacity
+                style={{ marginLeft: 5 }}
+                onPress={() => {
+                  navigation.navigate("SignInScreen");
+                }}
+              >
+                <Ionicons
+                  size={30}
+                  style={{ marginBottom: -3, color: "#fff" }}
+                  name="arrow-back-outline"
+                />
+              </TouchableOpacity>
+            ),
+          }}
+        />
       </Login.Navigator>
     );
   }

@@ -46,7 +46,8 @@ export async function getUsersOfTeam() {
       u.forEach((doc) => {
         usersArray.push(doc.data());
       });
-      console.log(usersArray)
+      // DEBUG
+      // console.log(usersArray);
     });
   return usersArray;
 }
@@ -54,8 +55,28 @@ export async function getUsersOfTeam() {
 /////////////////////////////////////////////////////////////////
 // TODO
 /////////////////////////////////////////////////////////////////
-export function updateUser(data: any) {
-  console.log("TODO");
+export function updateUser(email: any, role: any, lName: any, fName: any) {
+  console.log(email, role);
+
+  return teamMembersDBColl
+    .where("email", "==", email)
+    .get()
+    .then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        // DEBUG
+        // console.log("doc id: \n", doc.id);
+
+        teamMembersDBColl.doc(doc.id).update({
+          email: email,
+          role: role,
+          lastName: lName,
+          firstName: fName,
+        });
+      });
+    })
+    .catch((error) => {
+      console.log("Error getting document:", error);
+    });
 }
 
 // telemetryDBDoc.then(ret => {
