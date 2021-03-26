@@ -1,7 +1,6 @@
 import { transform } from "@babel/core";
 import * as React from "react";
 import {
-  Button,
   StyleSheet,
   TouchableOpacity,
   TextInput,
@@ -20,7 +19,10 @@ import Colors from "../constants/Colors";
 import Screen from "../constants/Layout";
 //import Icon from '../assets/images/cubeTEMP.png';
 
-const screen = Dimensions.get("window");
+import FloatingLabelInput from "../components/floatingLabelInput";
+import AppButton from "../components/Button";
+
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -73,7 +75,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     padding: 10,
     margin: 5,
-    width: screen.width - 30,
+    width: Screen.window.width - 30,
     borderRadius: 10,
     color: Colors.newColors.text,
   },
@@ -86,16 +88,16 @@ const styles = StyleSheet.create({
   },
   signInButton: {
     backgroundColor: Colors.newColors.primary,
-    width: screen.width - 30,
+    width: Screen.window.width - 30,
     height: 40,
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 5,
+    marginTop: 30,
     marginBottom: 10,
     borderRadius: 10,
 
     shadowColor: "rgba(0,0,0, .4)", // IOS
-    shadowOffset: { height: 5, width: 5 }, // IOS
+    shadowOffset: { height: 2, width: 2 }, // IOS
     shadowOpacity: 1, // IOS
     shadowRadius: 1.5, //IOS
     elevation: 2, // Android
@@ -146,15 +148,22 @@ export default function SignInScreen({ route, navigation }) {
         </View>
 
         <View style={styles.inputSafeArea}>
-          <TextInput
+          {/* <TextInput
             placeholder="Email"
             value={username}
             onChangeText={(username) => setUsername(username)}
             style={styles.input}
             autoCapitalize="none"
             placeholderTextColor={Colors.newColors.grayText}
-          />
-          <TextInput
+          /> */}
+          <FloatingLabelInput
+            label="Email"
+            value={username}
+            onChange={setUsername}
+            customStyle={false}
+
+          ></FloatingLabelInput>
+          {/* <TextInput
             placeholder="Password"
             value={password}
             onChangeText={(password) => setPassword(password)}
@@ -162,17 +171,25 @@ export default function SignInScreen({ route, navigation }) {
             style={styles.input}
             autoCapitalize="none"
             placeholderTextColor={Colors.newColors.grayText}
-          />
-
-          <TouchableOpacity
+          /> */}
+          <FloatingLabelInput
+            label="Password"
+            value={password}
+            onChange={setPassword}
+            customStyle={true}
+          ></FloatingLabelInput>
+          {/* <TouchableOpacity
             style={styles.signInButton}
             onPress={() => {
               signInAuth(username, password);
             }}
           >
             <Text style={styles.text}>Sign In</Text>
-          </TouchableOpacity>
-
+          </TouchableOpacity> */}
+          <AppButton
+            label="Sign In"
+            onPressAction={() => { signInAuth(username, password) }}
+          ></AppButton>
           <TouchableOpacity
             onPress={() => navigation.navigate("CredRecovPage")}
           >
@@ -180,6 +197,6 @@ export default function SignInScreen({ route, navigation }) {
           </TouchableOpacity>
         </View>
       </SafeAreaView>
-    </KeyboardAvoidingView>
+    </KeyboardAvoidingView >
   );
 }

@@ -13,7 +13,7 @@ import {
   Alert,
   Platform,
   FlatList,
-  ScrollView
+  ScrollView,
 } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import { resetOrientation } from "../hooks/resetOrientation";
@@ -132,8 +132,6 @@ export default function TeamRolesScreen({ navigation }) {
     }, [])
   );
 
-
-
   return (
     <KeyboardAvoidingView
       style={styles.container}
@@ -146,38 +144,40 @@ export default function TeamRolesScreen({ navigation }) {
           <View style={styles.inputSafeArea}>
             <Text style={styles.text}>ADMIN</Text>
 
-            {
-              admins.map((e) => {
-                return (
-                  <RowItem
-                    first={e.firstName}
-                    last={e.lastName}
-                    email={e.email}
-                    onPress={() => navigation.navigate("EditUserPage", { e })}
-                  />
-                )
-              })
-            }
-
+            {admins.map((e) => {
+              return (
+                <RowItem
+                  first={e.firstName}
+                  last={e.lastName}
+                  email={e.email}
+                  editValue={1}
+                  onPress={() => {
+                    navigation.navigate("EditUserPage", { e });
+                    // add boolean here to send to floatingInputLabel
+                  }}
+                />
+              );
+            })}
 
             <Text style={styles.text}>USERS</Text>
 
-            {
-              users.map((e) => {
-                return (
-                  <RowItem
-                    first={e.firstName}
-                    last={e.lastName}
-                    email={e.email}
-                    onPress={() => navigation.navigate("EditUserPage", { e })}
-                  />
-                )
-              })
-            }
+            {users.map((e) => {
+              return (
+                <RowItem
+                  first={e.firstName}
+                  last={e.lastName}
+                  email={e.email}
+                  editValue={1}
+                  onPress={() => {
+                    navigation.navigate("EditUserPage", { e });
+                    // add boolean here to send to floatingInputLabel
+                  }}
+                />
+              );
+            })}
           </View>
         </SafeAreaView>
       </ScrollView>
-
     </KeyboardAvoidingView>
   );
 }

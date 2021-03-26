@@ -8,7 +8,11 @@ npm-debug.*
 *.mobileprovision
 *.orig.*
 web-build/
+<<<<<<< HEAD
 firebase-util.*
+=======
+util/firebase-util/**
+>>>>>>> origin/dev
 
 # macOS
 .DS_Store

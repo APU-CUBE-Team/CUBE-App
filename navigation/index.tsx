@@ -1,10 +1,11 @@
 import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import React, { useContext } from "react";
-import { ColorSchemeName } from "react-native";
+import { TouchableOpacity } from "react-native";
 import AsyncStorage from "@react-native-community/async-storage";
+import OverlayPrompt from "../components/Prompt";
+import { Ionicons } from "@expo/vector-icons";
 import * as firebase from "firebase";
-import * as SplashScreen from "expo-splash-screen";
 
 import { RootStackParamList, SignInParamList } from "../types";
 import DrawerNavigator from "./DrawerNavigator";
@@ -12,11 +13,8 @@ import LinkingConfiguration from "./LinkingConfiguration";
 import { getToken, storeToken, deleteToken } from "../hooks/Storage";
 import SignInScreen from "../screens/SignIn_Screen1";
 import CredRecoveryScreen from "../screens/CredRecov_Screen2";
-import {
-  emailSignIn,
-  signOut,
-  findNewToken,
-} from "../util/authenticating-users";
+import { emailSignIn, signOut } from "../util/authenticating-users";
+import { View } from "../components/Themed";
 
 const AuthContext = React.createContext({});
 
@@ -50,6 +48,8 @@ const Stack = createStackNavigator<RootStackParamList>();
 const Login = createStackNavigator<SignInParamList>();
 
 function TestMode() {
+  const [overlay, setOverlay] = React.useState(false);
+  const [prompt, setPrompt] = React.useState("");
   const [state, dispatch] = React.useReducer(
     (prevState: any, action: any) => {
       switch (action.type) {
@@ -89,6 +89,7 @@ function TestMode() {
         userToken = await AsyncStorage.getItem("@Token");
       } catch (e) {
         // Restoring token failed
+        console.log(e);
       }
 
       // After restoring token, we may need to validate it in production apps
@@ -107,11 +108,11 @@ function TestMode() {
         emailSignIn(data.username, data.password)
           .then((ret) => {
             console.log("Sign-In Success");
-            var user = ret.user;
             firebase.auth().onAuthStateChanged((user) => {
               if (user) {
                 user.getIdToken().then((idToken) => {
-                  console.log(idToken);
+                  // DEBUG
+                  // console.log(idToken);
                   storeToken(idToken);
                   dispatch({ type: "SIGN_IN", token: idToken });
                 });
@@ -123,12 +124,18 @@ function TestMode() {
             var errorMessage = error.message;
 
             console.log(errorMessage, errorCode);
-            if (errorCode === "auth/invalid-email")
-              alert("Your Email is Invalid.");
-            if (errorCode === "auth/user-not-found")
-              alert("Your Email is incorrect.");
-            if (errorCode === "auth/wrong-password")
-              alert("Password is Incorrect");
+            if (errorCode === "auth/invalid-email") {
+              setPrompt("Your Email is Invalid.");
+              setOverlay(true);
+            }
+            if (errorCode === "auth/user-not-found") {
+              setPrompt("Your Email is incorrect.");
+              setOverlay(true);
+            }
+            if (errorCode === "auth/wrong-password") {
+              setPrompt("Password is Incorrect");
+              setOverlay(true);
+            }
           });
       },
       signOut: () => {
@@ -144,7 +151,7 @@ function TestMode() {
 
   return <RootNavigator />;
 
-  function SignIn() {
+  function SignIn({ navigation }) {
     return (
       <Login.Navigator
         screenOptions={{
@@ -156,30 +163,68 @@ function TestMode() {
           component={SignInScreen}
           initialParams={{ props: AuthContext }}
         />
-        <Login.Screen name="CredRecovPage" component={CredRecoveryScreen} />
+        <Login.Screen
+          name="CredRecovPage"
+          component={CredRecoveryScreen}
+          options={{
+            headerShown: true,
+            headerTitle: "Forgot Password",
+            headerLeft: () => (
+              <TouchableOpacity
+                style={{ marginLeft: 5 }}
+                onPress={() => {
+                  navigation.navigate("SignInScreen");
+                }}
+              >
+                <Ionicons
+                  size={30}
+                  style={{ marginBottom: -3, color: "#fff" }}
+                  name="arrow-back-outline"
+                />
+              </TouchableOpacity>
+            ),
+          }}
+        />
       </Login.Navigator>
     );
   }
 
   function RootNavigator() {
     return (
-      <AuthContext.Provider value={authContext}>
-        <Stack.Navigator
-          screenOptions={{
-            headerShown: false,
-          }}
-        >
-          {state.userToken == null ? (
-            <Stack.Screen name="SignIn" component={SignIn} />
-          ) : (
-            <Stack.Screen
-              name="Root"
-              component={DrawerNavigator}
-              initialParams={{ SignOut: AuthContext }}
-            />
-          )}
-        </Stack.Navigator>
-      </AuthContext.Provider>
+      <View style={{ flex: 1 }}>
+        <AuthContext.Provider value={authContext}>
+          <Stack.Navigator
+            screenOptions={{
+              headerShown: false,
+            }}
+          >
+            {state.userToken == null ? (
+              <Stack.Screen name="SignIn" component={SignIn} />
+            ) : (
+              <Stack.Screen
+                name="Root"
+                component={DrawerNavigator}
+                initialParams={{ SignOut: AuthContext }}
+              />
+            )}
+          </Stack.Navigator>
+        </AuthContext.Provider>
+        {overlay ? (
+          <OverlayPrompt
+            promptText={prompt}
+            closeOverlay={() => setOverlay(false)}
+            disableTap
+            btns={[
+              {
+                key: "  Okay  ",
+                action: () => {
+                  setOverlay(false);
+                },
+              },
+            ]}
+          />
+        ) : null}
+      </View>
     );
   }
 }
