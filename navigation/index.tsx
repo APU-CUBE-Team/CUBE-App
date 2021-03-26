@@ -5,6 +5,7 @@ import { TouchableOpacity } from "react-native";
 import AsyncStorage from "@react-native-community/async-storage";
 import OverlayPrompt from "../components/Prompt";
 import { Ionicons } from "@expo/vector-icons";
+import * as firebase from "firebase";
 
 import { RootStackParamList, SignInParamList } from "../types";
 import DrawerNavigator from "./DrawerNavigator";
@@ -14,7 +15,6 @@ import SignInScreen from "../screens/SignIn_Screen1";
 import CredRecoveryScreen from "../screens/CredRecov_Screen2";
 import { emailSignIn, signOut } from "../util/authenticating-users";
 import { View } from "../components/Themed";
-import { auth } from "../util/firebase-util";
 
 const AuthContext = React.createContext({});
 
@@ -108,7 +108,7 @@ function TestMode() {
         emailSignIn(data.username, data.password)
           .then((ret) => {
             console.log("Sign-In Success");
-            auth.onAuthStateChanged((user) => {
+            firebase.auth().onAuthStateChanged((user) => {
               if (user) {
                 user.getIdToken().then((idToken) => {
                   // DEBUG
