@@ -7,6 +7,7 @@ import EditScreenInfo from "../components/EditScreenInfo";
 import { Text, View } from "../components/Themed";
 import Colors from "../constants/Colors";
 
+// delete this comment after push 
 export default function AlertConditionsScreen() {
   useFocusEffect(
     React.useCallback(() => {
