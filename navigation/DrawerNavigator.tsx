@@ -198,14 +198,6 @@ function Notifications({ navigation }) {
           headerRight: () => <DrawerToggle onPress={() => { navigation.toggleDrawer() }} />
         }}
       />
-      {/* <NotificationStack.Screen // So this doesn't exist as a screen rn I think because it's a popup?
-        name="AlertSetupPage"
-        component={NotFoundScreen}
-        options={{
-          headerTitle: 'Alert Triggers',
-          headerRight: () => <DrawerToggle onPress={() => { navigation.toggleDrawer() }} />
-        }}
-      /> */}
     </NotificationStack.Navigator>
   )
 }

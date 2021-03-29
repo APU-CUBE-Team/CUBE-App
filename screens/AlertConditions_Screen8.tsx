@@ -1,10 +1,8 @@
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, View, Text, TextInput } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import { resetOrientation } from "../hooks/resetOrientation";
-
-import EditScreenInfo from "../components/EditScreenInfo";
-import { Text, View } from "../components/Themed";
+import { AlertPrompt } from '../components/AlertPrompt';
 import Colors from "../constants/Colors";
 
 export default function AlertConditionsScreen() {
@@ -19,8 +17,10 @@ export default function AlertConditionsScreen() {
       <Text style={styles.title}>AlertConditions</Text>
       <View
         style={styles.separator}
-        lightColor="#eee"
-        darkColor="rgba(255,255,255,0.1)"
+      />
+      <AlertPrompt
+        closeOverlay = {() => {}}
+        promptText = {"Test Case"}
       />
     </View>
   );

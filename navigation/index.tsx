@@ -3,7 +3,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import React, { useContext } from "react";
 import { TouchableOpacity } from "react-native";
 import AsyncStorage from "@react-native-community/async-storage";
-import OverlayPrompt from "../components/Prompt";
+import {OverlayPrompt} from "../components/Prompt";
 import { Ionicons } from "@expo/vector-icons";
 import * as firebase from "firebase";
 

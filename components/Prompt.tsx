@@ -16,15 +16,10 @@ type PromptProps = {
   yAxis?: boolean; // true for Y axis
 };
 
-export default function Prompt({
-  closeOverlay,
-  promptText,
-  btns,
-  disableTap,
-  yAxis
-}: PromptProps) {
+export const OverlayPrompt: React.FunctionComponent<PromptProps> = (props) => {
   let short = Screen.window.width - 40;
   let long = Screen.window.height / 4;
+  const [childHeight, setHeight] = React.useState(-1);
   const styles = StyleSheet.create({
     overlay: {
       position: "absolute",
@@ -40,7 +35,7 @@ export default function Prompt({
       opacity: 0.5,
     },
     overlayPrompt: {
-      width: yAxis ? long * 3 : short,
+      width: props.yAxis ? long * 3 : short,
       height: long,
       backgroundColor: Colors.newColors.background2,
       alignItems: "center",
@@ -82,23 +77,33 @@ export default function Prompt({
     },
   });
 
+  function measureView(event: any) {
+    if (childHeight === -1) {
+      console.log(`*** event: ${JSON.stringify(event.nativeEvent)}`);
+      console.log(`Height  ${event.nativeEvent.layout.height}`)
+      setHeight(event.nativeEvent.layout.height)
+    }
+ }
+ 
+
   return (
     <View style={[styles.overlay, { flex: 1 }]}>
       <View style={[styles.overlay, styles.trans]}>
         <TouchableOpacity
           style={[styles.overlay, { opacity: 1 }]}
           onPress={() => {
-            if (!disableTap) closeOverlay();
+            if (!props.disableTap) props.closeOverlay();
           }}
         />
       </View>
-      <View style={styles.overlayPrompt}>
-        <Text style={styles.promptText}>{promptText}</Text>
+      <View style={[styles.overlayPrompt, {height: childHeight + long / 2}]} onLayout={(event) => {measureView(event)}}>
+        <Text style={styles.promptText}>{props.promptText}</Text>
+        {props.children}
         <View style={{ flexDirection: "row" }}>
-          {btns.map((e) => {
+          {props.btns.map((e) => {
             return (
               <TouchableOpacity
-                style={[styles.promptBtn, {marginHorizontal: 30 / btns.length}]}
+                style={[styles.promptBtn, {marginHorizontal: 30 / props.btns.length}]}
                 onPress={() => {
                   e.action();
                 }}
