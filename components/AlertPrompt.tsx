@@ -127,10 +127,10 @@ export const AlertPrompt: React.FunctionComponent<PromptProps> = (props) => {
                     {telemNames.length !== 0 && 
                     Platform.OS === "android" ? 
                     <View style={{flex:1}}>
-                    <Carousel
-                        data={telemNames}
-                        onChange={i => setTel(i)}
-                    />
+                        <Carousel
+                            data={telemNames}
+                            onChange={i => setTel(i)}
+                        />
                     </View>
                     :
                     <Picker
@@ -144,7 +144,8 @@ export const AlertPrompt: React.FunctionComponent<PromptProps> = (props) => {
                                 <Picker.Item label={e} value={`${count++}`} color={Colors.c.purple}/>
                             )
                         })}
-                    </Picker>}
+                    </Picker>
+                    }
                 </View>
                 <View style={{flexDirection: 'row'}}>
                     <Text style={[styles.promptText]}>is: </Text>
@@ -156,12 +157,12 @@ export const AlertPrompt: React.FunctionComponent<PromptProps> = (props) => {
                     </TouchableOpacity>
                     <Text style={[styles.promptText]}>Than the Value:</Text>
                     <View style={{borderRadius: 25, borderColor: Colors.newColors.bluegreen, borderWidth: 1, marginLeft: -10}}>
-                    <TextInput 
-                        keyboardType="numeric"
-                        style={[styles.promptText]}
-                        value={value}
-                        onChange={(val) => {setVal(parseInt(val))}}
-                    />
+                        <TextInput 
+                            keyboardType="numeric"
+                            style={[styles.promptText]}
+                            value={value}
+                            onChange={(val) => {setVal(parseInt(val))}}
+                        />
                     </View>
                 </View>
                 <View>
@@ -169,7 +170,6 @@ export const AlertPrompt: React.FunctionComponent<PromptProps> = (props) => {
                     <View style={{backgroundColor: Colors.newColors.background, width: Screen.window.width - 60, height: 75}}>
                         <TextInput
                             multiline
-                            numberOfLines={4}
                             style={{margin: 2, color: '#fff'}}
                         />
                     </View>

@@ -1,8 +1,9 @@
 import * as React from "react";
-import { StyleSheet, View, Text, TextInput, SafeAreaView } from "react-native";
+import { StyleSheet, View, Text, TextInput, SafeAreaView, ScrollView } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import { resetOrientation } from "../hooks/resetOrientation";
 import { AlertPrompt } from '../components/AlertPrompt';
+import Button from '../components/Button';
 import Colors from "../constants/Colors";
 
 const styles = StyleSheet.create({
@@ -21,9 +22,23 @@ const styles = StyleSheet.create({
     height: 1,
     width: "80%",
   },
+  morshu: {
+    position: "absolute",
+    bottom: 0
+  },
+  promptText: {
+    fontSize: 20,
+    color: "#fff",
+    textShadowOffset: { width: 0, height: 0 },
+    textShadowColor: Colors.newColors.background2,
+    textShadowRadius: 1,
+    margin: 15,
+  },
 });
 
 export default function AlertConditionsScreen() {
+  const [overlay, setOverlay] = React.useState(false);
+
   useFocusEffect(
     React.useCallback(() => {
       resetOrientation();
@@ -32,29 +47,19 @@ export default function AlertConditionsScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.title}>AlertConditions</Text>
-      <View
-        style={styles.separator}
-        lightColor="#eee"
-        darkColor="rgba(255,255,255,0.1)"
-      />
-      <AppButton
-      label="Parameter 1" // replace with data from db
-      onPressAction={() => alert("navigate to a pop-up")}
-      ></AppButton>
-      <AppButton
-      label="Parameter 2"
-      onPressAction={() => alert("navigate to a pop-up")}
-      ></AppButton>
-      <AppButton
-      label="Parameter 3"
-      onPressAction={() => alert("navigate to a pop-up")}
-      ></AppButton>
+      <ScrollView>
       
-      <AppButton
-      label="New Parameter"
-      onPressAction={()=> alert("navigate to a new sub")}
-      ></AppButton>
+      </ScrollView>      
+      <Button
+        label={"New Parameter"}
+        onPressAction={() => setOverlay(true)}
+      />
+      {overlay &&
+        <AlertPrompt 
+          closeOverlay={() => setOverlay(false)}
+          promptText={"New Parameter"}
+        />
+      }
     </SafeAreaView>
   );
 }
