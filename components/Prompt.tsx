@@ -83,7 +83,7 @@ export const OverlayPrompt: React.FunctionComponent<PromptProps> = (props) => {
       console.log(`Height  ${event.nativeEvent.layout.height}`)
       setHeight(event.nativeEvent.layout.height)
     }
- }
+  }
  
 
   return (
@@ -96,7 +96,7 @@ export const OverlayPrompt: React.FunctionComponent<PromptProps> = (props) => {
           }}
         />
       </View>
-      <View style={[styles.overlayPrompt, {height: childHeight + long / 2}]} onLayout={(event) => {measureView(event)}}>
+      <View style={[styles.overlayPrompt, {height: childHeight + long }]} onLayout={(event) => {measureView(event)}}>
         <Text style={styles.promptText}>{props.promptText}</Text>
         {props.children}
         <View style={{ flexDirection: "row" }}>

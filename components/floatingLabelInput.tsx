@@ -57,7 +57,7 @@ export default function FloatingLabelInput({
   value: any;
   label: any;
   onChange: any;
-  customStyle: any;
+  customStyle?: any;
   editVal?: boolean;
 }) {
   const [isFocused, setIsFocused] = React.useState(false);

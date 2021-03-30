@@ -18,10 +18,6 @@ export default function AlertConditionsScreen() {
       <View
         style={styles.separator}
       />
-      <AlertPrompt
-        closeOverlay = {() => {}}
-        promptText = {"Test Case"}
-      />
     </View>
   );
 }
