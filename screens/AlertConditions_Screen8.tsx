@@ -1,13 +1,9 @@
 import * as React from "react";
-import { StyleSheet, SafeAreaView } from "react-native";
+import { StyleSheet, View, Text, TextInput, SafeAreaView } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import { resetOrientation } from "../hooks/resetOrientation";
-
-import EditScreenInfo from "../components/EditScreenInfo";
-import { Text, View } from "../components/Themed";
+import { AlertPrompt } from '../components/AlertPrompt';
 import Colors from "../constants/Colors";
-import AppButton from "../components/Button";
-import FloatingLabelInput from "../components/floatingLabelInput";
 
 const styles = StyleSheet.create({
   container: {
