@@ -6,19 +6,17 @@ import Colors from "../constants/Colors";
 import Screen from "../constants/Layout";
 import { telemetryDBDoc } from '../util/firebase-util';
 import { OverlayPrompt } from './Prompt';
-import LabelInput from './floatingLabelInput';
-import { Carousel } from './Carousel'
-import FloatingLabelInput from "./floatingLabelInput";
-
-type btns = {
-    key: string;
-    action: Function;
-};
+import { Carousel } from './Carousel';
+import { pushNewAlertParameter } from '../util/push-notifications';
 
 type PromptProps = {
     closeOverlay: Function;
     promptText: string;
 };
+
+type g = {
+    key: string
+}
 
 enum OPs {
     ">",
@@ -39,12 +37,13 @@ namespace OPs {
     }
 }
 
-
 export const AlertPrompt: React.FunctionComponent<PromptProps> = (props) => {
-    const [telemNames, setNames] = React.useState<any[]>([]);
+    const [telemNames, setNames] = React.useState<g[]>([]);
     const [selected, setTel] = React.useState<any>("0");
     const [operation, setOp] = React.useState<OPs>(OPs["="]);
     const [value, setVal] = React.useState(0);
+    const [msg, setMsg] = React.useState("");
+
     
     let count = 0;
     
@@ -53,7 +52,7 @@ export const AlertPrompt: React.FunctionComponent<PromptProps> = (props) => {
             if (telemNames.length == 0) {
                 telemetryDBDoc.then(ret => {
                     const names = ret.data().names;
-                    let d: any[] = []
+                    let d: g[] = []
                     names.forEach(e => {
                         d.push({key: e})
                     });
@@ -114,11 +113,27 @@ export const AlertPrompt: React.FunctionComponent<PromptProps> = (props) => {
         }
     }
 
+    const addParameter = ({telem, msg, op, val}: parameterType) => {
+        console.log("Adding new Parameter")
+        pushNewAlertParameter({telem, msg, op, val})
+        .then((stuff) => {
+            console.log("stuff: ", stuff);
+            props.closeOverlay()
+          })
+          .catch((e) => {
+            console.log("An error occured: ", e);
+          });
+    }
+
     return (
         <OverlayPrompt
             closeOverlay = {props.closeOverlay}
             promptText = {props.promptText}
-            btns = {[{key: "Save", action: () => {alert("TODO")}}, {key: "cancel", action: props.closeOverlay}]}
+            btns = {[{key: "Save", action: () => {
+                let telem = telemNames[selected].key
+                let op = OPs.toString(operation)
+                addParameter({telem, msg, op, val: value})
+            }}, {key: "cancel", action: props.closeOverlay}]}
             disableTap = {true}
         >
             <View style={{justifyContent: 'center', alignItems: 'center'}}>
@@ -161,7 +176,7 @@ export const AlertPrompt: React.FunctionComponent<PromptProps> = (props) => {
                             keyboardType="numeric"
                             style={[styles.promptText]}
                             value={value}
-                            onChange={(val) => {setVal(parseInt(val))}}
+                            onChangeText={(val) => {setVal(parseInt(val))}}
                         />
                     </View>
                 </View>
@@ -171,6 +186,8 @@ export const AlertPrompt: React.FunctionComponent<PromptProps> = (props) => {
                         <TextInput
                             multiline
                             style={{margin: 2, color: '#fff'}}
+                            value={msg}
+                            onChangeText={msg => {setMsg(msg)}}
                         />
                     </View>
                 </View>
@@ -178,3 +195,11 @@ export const AlertPrompt: React.FunctionComponent<PromptProps> = (props) => {
         </OverlayPrompt>
     )
 }
+
+export type parameterType =  {
+    telem: string, 
+    msg: string, 
+    op: any, 
+    val: number
+}
+

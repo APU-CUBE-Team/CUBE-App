@@ -1,4 +1,5 @@
 import { organizations } from "../firebase-util";
+import { parameterType } from '../../components/AlertPrompt';
 
 export const alertsChanges = organizations
   .doc("AdminOrganization")
@@ -7,12 +8,12 @@ export const alertsChanges = organizations
     console.log("Current data: ", doc.docChanges());
   });
 
-export async function pushNewAlertParameter(newParam: any) {
+export async function pushNewAlertParameter(newParam: parameterType) {
   /**
    * docID: {
    *   telem: str,
    *   msg: str, // sent to push notifications
-   *   op: char, // operator symbol/comparator
+   *   op: string, // operator symbol/comparator
    *   val: double // compared by the operator
    *  }
    */
@@ -21,10 +22,4 @@ export async function pushNewAlertParameter(newParam: any) {
     .doc("AdminOrganization")
     .collection("alerts")
     .add(newParam)
-    .then((stuff) => {
-      console.log("stuff: ", stuff);
-    })
-    .catch((e) => {
-      console.log("An error occured: ", e);
-    });
 }
