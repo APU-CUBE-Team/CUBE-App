@@ -34,7 +34,8 @@
         "READ_PHONE_STATE",
         "READ_CONTACTS"
       ],
-      "package": "com.cube.manager"
+      "package": "com.cube.manager",
+      "useNextNotificationsApi": true
     },
     "web": {
       "favicon": "./assets/images/favicon.png"
