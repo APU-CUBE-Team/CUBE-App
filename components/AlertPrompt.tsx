@@ -43,7 +43,7 @@ export const AlertPrompt: React.FunctionComponent<PromptProps> = (props) => {
     const [operation, setOp] = React.useState<OPs>(OPs["="]);
     const [value, setVal] = React.useState(0);
     const [msg, setMsg] = React.useState("");
-
+    const [namesLength, setLeng] = React.useState(0);
     
     let count = 0;
     
@@ -52,6 +52,7 @@ export const AlertPrompt: React.FunctionComponent<PromptProps> = (props) => {
             if (telemNames.length == 0) {
                 telemetryDBDoc.then(ret => {
                     const names = ret.data().names;
+                    setLeng(names.length)
                     let d: g[] = []
                     names.forEach(e => {
                         d.push({key: e})
@@ -137,29 +138,19 @@ export const AlertPrompt: React.FunctionComponent<PromptProps> = (props) => {
             disableTap = {true}
         >
             <View style={{justifyContent: 'center', alignItems: 'center'}}>
-                <View style={{flexDirection: 'row'}}>
-                    <Text style={[styles.promptText, {marginLeft: Platform.OS === "android" ? 10: 0}]}>Notify me when: </Text>
+                <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
+                    <Text style={[styles.promptText, {marginLeft: 10}]}>Notify me when: </Text>
                     {telemNames.length !== 0 && 
-                    Platform.OS === "android" ? 
-                    <View style={{flex:1}}>
-                        <Carousel
-                            data={telemNames}
-                            onChange={i => setTel(i)}
-                        />
-                    </View>
-                    :
-                    <Picker
-                        selectedValue={selected}
-                        style={styles.picker}
-                        itemStyle={styles.pickerItem}
-                        onValueChange={(itemValue, itemIndex) => setTel(itemValue)}
-                    >
-                        {telemNames.map(e => {
-                            return (
-                                <Picker.Item label={e} value={`${count++}`} color={Colors.c.purple}/>
-                            )
-                        })}
-                    </Picker>
+                        <View style={{flex:1}}>
+                            <Carousel
+                                data={telemNames}
+                                onChange={i => {
+                                    if (typeof(i) === 'number')
+                                        i = `${i}`
+                                    setTel(i)
+                                }}
+                            />
+                        </View>
                     }
                 </View>
                 <View style={{flexDirection: 'row'}}>

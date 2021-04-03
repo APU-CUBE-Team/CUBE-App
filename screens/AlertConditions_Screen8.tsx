@@ -6,6 +6,8 @@ import { AlertPrompt } from '../components/AlertPrompt';
 import Button from '../components/Button';
 import Colors from "../constants/Colors";
 
+import { db } from '../util/firebase-util';
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -44,6 +46,66 @@ export default function AlertConditionsScreen() {
       resetOrientation();
     }, [])
   );
+
+  let alerts: any[] = []
+  db.collection("Organizations")
+    .doc("AdminOrganization")
+    .collection("alerts")
+    .get()
+    .then(querySnapshot => {
+      
+      querySnapshot.forEach(doc => {
+        alerts.push(doc.data())
+      })
+      console.log(`Alerts found: `, alerts)
+      db.collection("Organizations")
+        .doc("UserOrganization")
+        .collection("cubesats")
+        .doc("Fox1_Cliff")
+        .get()
+        .then(ret => {
+          let data = ret.data()
+          for (let i = 0; alerts.length; i++) {
+            console.log(alerts[i].telem + "_Vals")
+            let k = data[alerts[i].telem + "_Vals"]
+            console.log("K ", k)
+            let warnLevel = alerts[i].val
+            console.log("warning level ", warnLevel)
+            let warn = false
+            switch (alerts[i].op) {
+              case "=":
+                if (k[k.length - 1] === warnLevel)
+                  warn = true
+                break;
+              case "!=":
+                if (k[k.length - 1] !== warnLevel)
+                  warn = true
+                break;
+              case ">":
+                if (k[k.length - 1] > warnLevel)
+                  warn = true
+                break;
+              case ">=":
+                if (k[k.length - 1] >= warnLevel)
+                  warn = true
+                break;
+              case "<":
+                if (k[k.length - 1] < warnLevel)
+                  warn = true
+                break;
+              case "<=":
+                if (k[k.length - 1] <= warnLevel)
+                  warn = true
+                break;
+            }
+            if (warn) {
+              // TODO 
+              //pushNotification("ExponentPushToken[Ye21XeFmpryWWKEu23OqSP]", alerts[i].msg)
+              console.log(`Successfully triggered on ${alerts[i].telem}`)
+            }
+          }
+        })
+      })
 
   return (
     <SafeAreaView style={styles.container}>
