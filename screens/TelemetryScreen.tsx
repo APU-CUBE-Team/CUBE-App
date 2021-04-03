@@ -7,7 +7,7 @@ import Screen from "../constants/Layout";
 import { useFocusEffect } from "@react-navigation/native";
 import CompTelScreen from "./CompTel_Screen3";
 import ExpTelScreen from "./ExpandedTel_Screen4";
-import { gettelemetryDBDoc } from "../util/firebase-util";
+import { gettelemetryDBDoc } from "../util/query-DB";
 
 export default function ExpandedTelScreen({ navigation, route }) {
   const [path, setPath] = React.useState("ExpandedTelPage");
