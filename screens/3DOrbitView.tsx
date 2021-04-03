@@ -1,8 +1,9 @@
 import { ExpoWebGLRenderingContext, GLView } from 'expo-gl';
 import { Renderer, TextureLoader, loadAsync } from 'expo-three';
+import GLTFLoader from "three-gltf-loader";
 import OrbitControlsView from 'expo-three-orbit-controls';
 import * as React from 'react';
-import { Asset } from 'expo-asset';
+import { Asset, useAssets } from 'expo-asset';
 import {
   AmbientLight,
   BoxBufferGeometry,
@@ -13,7 +14,10 @@ import {
   PerspectiveCamera,
   PointLight,
   Scene,
-  SpotLight,
+  KeyframeTrack,
+  AnimationClip,
+  AnimationAction,
+  AnimationMixer,
   Camera,
   Object3D,
   SphereGeometry,
@@ -33,12 +37,15 @@ export default function Orbit() {
         resetOrientation();
     }, [])
   )
-
-
-  const [camera, setCamera] = React.useState<Camera | null>(null);
+  
   
 
+  const [camera, setCamera] = React.useState<Camera | null>(null);
+  let animLoad = false
   let timeout;
+  let ani
+  let last = new Date().getTime();
+  let model: any
 
   React.useEffect(() => {
     // Clear the animation loop when the component unmounts
@@ -47,7 +54,7 @@ export default function Orbit() {
 
   const onContextCreate = async (gl: ExpoWebGLRenderingContext) => {
     const { drawingBufferWidth: width, drawingBufferHeight: height } = gl;
-    const sceneColor = "rgb(40, 44, 47)";
+    const sceneColor = "#0ff"//"rgb(40, 44, 47)";
 
     // Create a WebGLRenderer without a DOM element
     const renderer = new Renderer({ gl });
@@ -168,18 +175,39 @@ export default function Orbit() {
     // Crappy Meme
     ////////////////////////////////
 
+    let animations: any
+    let mixer: any
+    let action: any
 
-
-
-
-
-
-
+    const  uri = await Asset.fromModule(require('../assets/images/skybox/secret.gltf')).uri;
+    // await asset.downloadAsync();
+    const loader = new GLTFLoader();
+    loader.load(
+      uri || "",
+      // "../assets/images/skybox/secret1.gltf",
+      // "https://threejsfundamentals.org/threejs/resources/models/cartoon_lowpoly_small_city_free_pack/scene.gltf",
+      (gltf) => {
+        model = gltf.scene;
+        
+        model.position.set(0,0,0)
+        animations = gltf.animations[0];
+        //console.log("Animations", animations)
+        scene.add(model);
+        mixer = new AnimationMixer(model);
+        action = mixer.clipAction(animations);
+        action.play();
+        model.tick = (delta) => mixer.update(delta);
+        animLoad = true
+      },
+      (xhr) => {
+        console.log(`${(xhr.loaded / xhr.total)}% loaded`);
+      },
+      (error) => {
+        console.error("An error happened", error);
+      }
+    );
 
     /////////////////////////////////
-
-
-
 
 
     camera.lookAt(globe.position);
@@ -196,6 +224,18 @@ export default function Orbit() {
       update();
       renderer.render(scene, camera);
 
+      const now = .001 * global.nativePerformanceNow();
+      const delta =
+        typeof lastFrameTime !== 'undefined' ? now - lastFrameTime: 0.16666
+      this.rafID = requestAnimationFrame(render)
+
+      if (new Date().getTime() - last > delta) {
+        if (animLoad)
+        model.tick(delta/8)
+        last = new Date().getTime()
+      }
+  
+      
       // ref.current.getControls()?.update();
       gl.endFrameEXP();
     };
@@ -204,7 +244,7 @@ export default function Orbit() {
 
   return (
     <OrbitControlsView style={{ flex: 1 }} camera={camera} enableZoom={false}>
-      <GLView style={{ flex: 1 }} onContextCreate={onContextCreate} key="d" />
+      <GLView style={{ flex: 1 }} onContextCreate={onContextCreate} key="d"/>
     </OrbitControlsView>
   );
 }
