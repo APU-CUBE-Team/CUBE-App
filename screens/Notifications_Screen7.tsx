@@ -14,7 +14,7 @@ import { useNavigation, useFocusEffect, NavigationAction } from '@react-navigati
 import { resetOrientation } from "../hooks/resetOrientation";
 
 import Colors from "../constants/Colors";
-import OverlayPrompt from "../components/Prompt";
+import { OverlayPrompt } from "../components/Prompt";
 
 
 import EditScreenInfo from "../components/EditScreenInfo";
@@ -36,15 +36,17 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.newColors.background,
     width: Screen.window.width - 20,
-
+    marginTop: 10
   },
   overlay: {
     marginTop: Screen.window.width / 2,
   },
   separator: {
-    marginVertical: 30,
+    marginTop: 20,
+    marginBottom: 20,
     height: 1,
     width: "80%",
+    backgroundColor: "white"
   },
   buttonSafeArea: {
     flex: 1,
@@ -71,8 +73,15 @@ const styles = StyleSheet.create({
   },
   text3: {
     color: Colors.newColors.text,
-    fontSize: 20,
-    textAlign: "center",
+    fontSize: 16,
+    textAlign: "left",
+    justifyContent: "flex-end",
+    marginBottom: 20
+  },
+  date: {
+    fontSize: 14,
+    color: Colors.newColors.text,
+    textAlign: "right",
   },
   saveButton: {
     backgroundColor: Colors.newColors.primary,
@@ -110,7 +119,6 @@ export default function NotificationScreen({ navigation }) {
         setNotificationList(response);
         rerender(render + 1);
       });
-      console.log(notificationList)
     }, [])
   );
 
@@ -123,9 +131,6 @@ export default function NotificationScreen({ navigation }) {
         <SafeAreaView style={styles.container}>
 
           <StatusBar barStyle="light-content" />
-
-          <Text style={styles.text}>NOTIFICATIONS</Text>
-
 
           <View style={styles.view}>
 
@@ -160,9 +165,11 @@ export default function NotificationScreen({ navigation }) {
                     },
                     { key: "  Cancel  ", action: () => { setOverlay(false) } },
                   ]}
-                />
-
-
+                >
+                  <Text style={styles.date}>{date}</Text>
+                  <View style={styles.separator} />
+                  <Text style={styles.text3}>{message}</Text>
+                </OverlayPrompt>
                 :
                 null
               }
