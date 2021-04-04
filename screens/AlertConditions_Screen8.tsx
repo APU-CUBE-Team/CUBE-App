@@ -5,8 +5,10 @@ import { resetOrientation } from "../hooks/resetOrientation";
 import { AlertPrompt } from '../components/AlertPrompt';
 import Button from '../components/Button';
 import Colors from "../constants/Colors";
+import Screen from "../constants/Layout";
 
 import { db } from '../util/firebase-util';
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 const styles = StyleSheet.create({
   container: {
@@ -36,6 +38,17 @@ const styles = StyleSheet.create({
     textShadowRadius: 1,
     margin: 15,
   },
+  parameter: {
+     backgroundColor: Colors.c.gray,
+     margin: 30,
+     borderRadius: 25,
+     width: Screen.window.width - 30,
+     height: 40,
+     alignItems: "center",
+     justifyContent: "center",
+
+
+  }
 });
 
 export default function AlertConditionsScreen() {
@@ -110,7 +123,11 @@ export default function AlertConditionsScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
-      
+        <TouchableOpacity
+        style={styles.parameter}
+        >
+        Parameter 1  
+        </TouchableOpacity>  
       </ScrollView>      
       <Button
         label={"New Parameter"}
