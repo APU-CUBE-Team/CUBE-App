@@ -40,14 +40,22 @@ const styles = StyleSheet.create({
   },
   parameter: {
      backgroundColor: Colors.c.gray,
-     margin: 30,
+     margin: 10,
      borderRadius: 25,
-     width: Screen.window.width - 30,
-     height: 40,
+     width: Screen.window.width - 50,
+     height: 50,
      alignItems: "center",
      justifyContent: "center",
-
-
+  },
+  parameterText: {
+    color: Colors.newColors.text,
+    fontSize: 20,
+    textAlign: "center"
+  },
+  parameterSubText: {
+    color: Colors.newColors.text,
+    fontSize: 12,
+    textAlign: "center",
   }
 });
 
@@ -126,8 +134,21 @@ export default function AlertConditionsScreen() {
         <TouchableOpacity
         style={styles.parameter}
         >
-        Parameter 1  
-        </TouchableOpacity>  
+          <Text style={styles.parameterText}>Parameter 1</Text>
+          <Text style={styles.parameterSubText}> thermal conditions</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+        style={styles.parameter}
+        >
+          <Text style={styles.parameterText}>Parameter 2</Text>
+          <Text style={styles.parameterSubText}> propulsion conditions</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+        style={styles.parameter}
+        >
+          <Text style={styles.parameterText}>Parameter 3</Text>
+          <Text style={styles.parameterSubText}> another thing</Text>
+        </TouchableOpacity>      
       </ScrollView>      
       <Button
         label={"New Parameter"}
