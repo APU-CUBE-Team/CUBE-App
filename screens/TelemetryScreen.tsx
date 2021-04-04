@@ -8,6 +8,9 @@ import { useFocusEffect } from "@react-navigation/native";
 import CompTelScreen from "./CompTel_Screen3";
 import ExpTelScreen from "./ExpandedTel_Screen4";
 import { getTelemetryDBDoc } from "../util/query-DB";
+import { telemetryDBDoc }  from '../util/firebase-util'
+
+const currTelemetry = getTelemetryDBDoc();
 
 export default function ExpandedTelScreen({ navigation, route }) {
   const [path, setPath] = React.useState("ExpandedTelPage");
@@ -16,7 +19,7 @@ export default function ExpandedTelScreen({ navigation, route }) {
   const [render, setRender] = React.useState(0); // Not entirely sure if this is necessary at this point, but I'm too scared to remove
   const [current, setCurrent] = React.useState("data1"); // Stores what graph to display on the top of screen
 
-  const currTelemetry = getTelemetryDBDoc();
+  //const currTelemetry = getTelemetryDBDoc();
 
   // Hook that functions like componentDidMount. Ever screen will need this to ensure correct rotation
   useFocusEffect(
