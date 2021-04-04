@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
   },
 });
 export const RowItem = ({
-  onPress = () => {},
+  onPress = () => { },
   first,
   last,
   email,
