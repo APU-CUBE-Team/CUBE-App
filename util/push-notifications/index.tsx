@@ -1,4 +1,4 @@
-import { organizations } from "../firebase-util";
+import { organizations } from "../query-DB";
 
 export const alertsChanges = organizations
   .doc("AdminOrganization")

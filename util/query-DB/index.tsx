@@ -1,4 +1,6 @@
-import { db, auth } from "../firebase-util";
+import { db } from "../firebase-util";
+
+export const organizations = db.collection("Organizations");
 
 export const teamMembersDBColl = db
   .collection("Organizations")
