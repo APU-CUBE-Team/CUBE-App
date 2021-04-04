@@ -1,4 +1,5 @@
-import { organizations } from "../firebase-util";
+import { parameterType } from "../../components/AlertPrompt";
+import { organizations } from "../query-DB";
 
 export const alertsChanges = organizations
   .doc("AdminOrganization")
@@ -7,7 +8,7 @@ export const alertsChanges = organizations
     console.log("Current data: ", doc.docChanges());
   });
 
-export async function pushNewAlertParameter(newParam: any) {
+export async function pushNewAlertParameter(newParam: parameterType) {
   // doc Example
   {
     /**
@@ -19,16 +20,10 @@ export async function pushNewAlertParameter(newParam: any) {
      *  }
      */
   }
-  organizations
+  await organizations
     .doc("AdminOrganization")
     .collection("alerts")
-    .add(newParam)
-    .then((stuff) => {
-      console.log("stuff: ", stuff);
-    })
-    .catch((e) => {
-      console.log("An error occured: ", e);
-    });
+    .add(newParam);
 }
 
 export async function getPushNotifications() {

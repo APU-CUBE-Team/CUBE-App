@@ -32,7 +32,7 @@ import { MyTheme } from "../navigation/index";
 import { SignUp } from "../util/create-user/index";
 import { updateUser } from "../util/edit-roles";
 
-import OverlayPrompt from "../components/Prompt";
+import {OverlayPrompt} from "../components/Prompt";
 
 import FloatingLabelInput from "../components/floatingLabelInput";
 import AppButton from "../components/Button";

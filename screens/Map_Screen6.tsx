@@ -3,7 +3,7 @@ import { StyleSheet, Image, Dimensions, ImageBackground, TouchableOpacity, Layou
 import * as ScreenOrientation from 'expo-screen-orientation';
 import { useNavigation, useFocusEffect, NavigationAction } from '@react-navigation/native';
 import Svg, { Path } from 'react-native-svg';
-import OverlayPrompt from '../components/Prompt';
+import {OverlayPrompt} from '../components/Prompt';
 import { Text, View } from '../components/Themed';
 import Screen from '../constants/Layout'
 
