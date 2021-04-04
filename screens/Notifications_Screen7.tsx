@@ -160,8 +160,8 @@ export default function NotificationScreen({ navigation }) {
                     },
                     { key: "  Cancel  ", action: () => { setOverlay(false) } },
                   ]}
-                >
-                </OverlayPrompt>
+                />
+
 
                 :
                 null
