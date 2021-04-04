@@ -23,6 +23,8 @@ import { Text, View } from "../components/Themed";
 import NotificationRow from "../components/NotificationRow";
 import Screen from "../constants/Layout";
 
+import { getPushNotifications } from "../util/push-notifications";
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -96,20 +98,21 @@ export default function NotificationScreen({ navigation }) {
   const [render, rerender] = React.useState(0);
   const [overlay, setOverlay] = React.useState(false);
 
+  const [title, setTitle] = React.useState("");
+  const [message, setMessage] = React.useState("");
+  const [date, setDate] = React.useState("");
 
-  // useFocusEffect(
-  //   React.useCallback(() => {
-  //     resetOrientation();
-  //     getAdminsOfTeam().then((response) => {
-  //       setAdmins(response);
-  //       rerender(render + 1);
-  //     });
-  //     getUsersOfTeam().then((response) => {
-  //       setUsers(response);
-  //       rerender(render + 1);
-  //     });
-  //   }, [])
-  // );
+
+  useFocusEffect(
+    React.useCallback(() => {
+      resetOrientation();
+      getPushNotifications().then((response) => {
+        setNotificationList(response);
+        rerender(render + 1);
+      });
+      console.log(notificationList)
+    }, [])
+  );
 
   return (
     <KeyboardAvoidingView
@@ -119,28 +122,35 @@ export default function NotificationScreen({ navigation }) {
       <ScrollView>
         <SafeAreaView style={styles.container}>
 
-
           <StatusBar barStyle="light-content" />
 
           <Text style={styles.text}>NOTIFICATIONS</Text>
 
 
           <View style={styles.view}>
-            <NotificationRow
-              onPressAction={() => {
-                setOverlay(true)
-              }
-              }
-              title={"Temperature Warning!"}
-              timeStamp={"03/01/21 - 3:05 PM"}
-              bodyMessage={"Temperature exceeded 1000°. Please Review"}
-            />
+
+            {notificationList.map((e) => {
+              return (
+
+                <NotificationRow
+                  onPressAction={() => {
+                    setOverlay(true)
+                    setDate(e.timeOfNotification.seconds)
+                    setMessage(e.message)
+                    setTitle(e.title)
+                  }}
+                  title={e.title}
+                  timeStamp={e.timeOfNotification.seconds}
+                  bodyMessage={e.message}
+                />
+
+              );
+            })}
             <View style={styles.overlay}>
               {overlay ?
                 <OverlayPrompt
-                  promptText={"Would you like to view this CUBE's Telemetry or Controls"}
+                  promptText={title}
                   closeOverlay={() => setOverlay(false)}
-                  //disableTap
                   btns={[
                     {
                       key: "  Telemetry  ", action: () => {
@@ -150,28 +160,13 @@ export default function NotificationScreen({ navigation }) {
                     },
                     { key: "  Cancel  ", action: () => { setOverlay(false) } },
                   ]}
-                />
+                >
+                </OverlayPrompt>
+
                 :
                 null
               }
             </View>
-
-            {/* {notificationList.map((e) => {
-            return (
-              USE THIS ONCE CONNECTED TO BACKEND
-              
-              <NotificationRow
-                onPressAction={() => {
-                  navigation.navigate("ExpandedNotification", { e })
-                }
-                }
-                title={e.title}
-                timeStamp={e.timeStamp}
-                bodyMessage={e.bodyMessage}
-              />
-             
-            );
-          })} */}
 
           </View>
 

@@ -32,16 +32,19 @@ export async function pushNewAlertParameter(newParam: any) {
 }
 
 export async function getPushNotifications() {
-  return organizations
+  let organizationsArray: any[] = [];
+  await organizations
     .doc("AdminOrganization")
     .collection("pushNotifications")
     .get()
-    .then(function (querySnapshot) {
-      querySnapshot.forEach(function (doc) {
-        console.log(doc.id, " => ", doc.data());
+    .then((querySnapshot) => {
+      const o = querySnapshot.docs;
+      o.forEach((doc) => {
+        organizationsArray.push(doc.data());
       });
     })
     .catch(function (error) {
       console.log("Error getting documents: ", error);
     });
+  return organizationsArray;
 }
