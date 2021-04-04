@@ -7,7 +7,7 @@ export const teamMembersDBColl = db
   .doc("AdminOrganization")
   .collection("teamMembers");
 
-export async function gettelemetryDBDoc() {
+export async function getTelemetryDBDoc() {
   return await db
     .collection("Organizations")
     .doc("UserOrganization")
