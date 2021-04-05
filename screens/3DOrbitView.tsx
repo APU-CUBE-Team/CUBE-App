@@ -1,6 +1,6 @@
 import { ExpoWebGLRenderingContext, GLView } from 'expo-gl';
 import { Renderer, TextureLoader, loadAsync } from 'expo-three';
-import GLTFLoader from "three-gltf-loader";
+import {GLTFLoader} from "three/examples/jsm/loaders/GLTFLoader";
 import OrbitControlsView from 'expo-three-orbit-controls';
 import * as React from 'react';
 import { Asset, useAssets } from 'expo-asset';
@@ -62,7 +62,7 @@ export default function Orbit() {
     renderer.setClearColor(sceneColor);
 
     const camera = new PerspectiveCamera(70, width / height, 0.01, 1000);
-    camera.position.set(2, 5, 50);
+    camera.position.set(2, 5, 20);
     
     setCamera(camera);
 
@@ -81,8 +81,8 @@ export default function Orbit() {
     let orbitPosition = new Object3D();
     let orbitTracker = new Object3D();
     orbitTracker.add( orbitPosition )
-    scene.add(globe)
-    scene.add(orbitTracker)
+    //scene.add(globe)
+    //scene.add(orbitTracker)
 
     const globeAsset = Asset.fromModule(require('../assets/images/globe.png'));
     const skyleftAsset = Asset.fromModule(require('../assets/images/skybox/sky_left.png'));
@@ -137,7 +137,7 @@ export default function Orbit() {
 
     let skyMesh = new Mesh(skyBox, [skyBoxFrontMesh, skyBoxBackMesh, skyBoxUpMesh, skyBoxDownMesh, skyBoxLeftMesh, skyBoxRightMesh,])
 
-    scene.add(skyMesh)
+    //scene.add(skyMesh)
 
     const globeGeometry = new SphereGeometry(15, 100, 80);
 
