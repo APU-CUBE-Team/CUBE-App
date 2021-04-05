@@ -44,9 +44,12 @@ const styles = StyleSheet.create({
     width: screen.width - 20,
   },
   separator: {
-    marginVertical: 30,
+    marginTop: 20,
+    marginBottom: 20,
     height: 1,
-    width: "80%",
+    width: "100%",
+    backgroundColor: "white",
+    alignItems: "center"
   },
   buttonSafeArea: {
     flex: 1,
@@ -158,7 +161,7 @@ export default function TeamRolesScreen({ navigation }) {
                 />
               );
             })}
-
+            <View style={styles.separator}></View>
             <Text style={styles.text}>USERS</Text>
 
             {users.map((e) => {

@@ -20,14 +20,19 @@ const styles = StyleSheet.create({
     text: {
         fontSize: 16,
         color: Colors.newColors.text,
+        fontFamily: "GillSans-Light",
         textAlign: "left",
+        fontStyle: "italic",
+
     },
     title: {
-        fontSize: 18,
+        fontSize: 20,
         color: Colors.newColors.text,
-        fontWeight: "600",
+        fontWeight: "500",
         textAlign: "left",
-        flex: 4
+        flex: 4,
+        fontFamily: "GillSans-Light",
+
     },
     date: {
         fontSize: 14,
@@ -51,7 +56,14 @@ export default function NotificationRow({
     navigation: any
 },) {
 
-    const [overlay, setOverlay] = React.useState(false);
+    //const [overlay, setOverlay] = React.useState(false);
+    let day = new Date(timeStamp * 1000).toLocaleDateString("en-US");
+    let time = new Date(timeStamp).toLocaleTimeString("en-US");
+    let formattedDate = day + "\n" + time
+    let shortMessage = ""
+    if (bodyMessage.length > 95) {
+        shortMessage = (bodyMessage).substring(0, 95) + "..."
+    } else { shortMessage = bodyMessage }
 
 
     return (
@@ -60,9 +72,9 @@ export default function NotificationRow({
             <View style={styles.box} >
                 <View style={styles.row}>
                     <Text style={styles.title}>{title} </Text>
-                    <Text style={styles.date}>{timeStamp}</Text>
+                    <Text style={styles.date}>{formattedDate}</Text>
                 </View>
-                <Text style={styles.text}>{bodyMessage}</Text>
+                <Text style={styles.text}>{shortMessage}</Text>
             </View>
         </TouchableOpacity>
 

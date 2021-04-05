@@ -16,7 +16,6 @@ import { resetOrientation } from "../hooks/resetOrientation";
 import Colors from "../constants/Colors";
 import { OverlayPrompt } from "../components/Prompt";
 
-
 import EditScreenInfo from "../components/EditScreenInfo";
 import { Text, View } from "../components/Themed";
 
@@ -74,14 +73,17 @@ const styles = StyleSheet.create({
   text3: {
     color: Colors.newColors.text,
     fontSize: 16,
+    fontStyle: "italic",
     textAlign: "left",
     justifyContent: "flex-end",
-    marginBottom: 20
+    margin: 20,
+    marginTop: 1
+
   },
   date: {
     fontSize: 14,
     color: Colors.newColors.text,
-    textAlign: "right",
+    textAlign: "center",
   },
   saveButton: {
     backgroundColor: Colors.newColors.primary,
@@ -140,7 +142,11 @@ export default function NotificationScreen({ navigation }) {
                 <NotificationRow
                   onPressAction={() => {
                     setOverlay(true)
-                    setDate(e.timeOfNotification.seconds)
+                    setDate(
+                      new Date(e.timeOfNotification.seconds * 1000).toLocaleDateString("en-US") +
+                      "\n" +
+                      new Date(e.timeOfNotification.seconds * 1000).toLocaleTimeString("en-US")
+                    )
                     setMessage(e.message)
                     setTitle(e.title)
                   }}

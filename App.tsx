@@ -8,12 +8,24 @@ import useCachedResources from './hooks/useCachedResources';
 import * as Notifications from 'expo-notifications';
 import Navigation from './navigation';
 
+//FONT IMPORTS
+import * as Font from 'expo-font';
+import AppLoading from 'expo-app-loading';
+const fetchFonts = () => {
+  return Font.loadAsync({
+    'GillSans-Light': require('./assets/fonts/GillSans-Light.ttf'),
+  });
+  de
+};
+
+
 export default function App() {
   const isLoadingComplete = useCachedResources();
   const [expoPushToken, setExpoPushToken] = React.useState('');
   const [notification, setNotification] = React.useState<any>(false);
   const notificationListener = React.useRef<Subscription>();
   const responseListener = React.useRef<Subscription>();
+
 
   React.useEffect(() => {
     registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
@@ -30,6 +42,8 @@ export default function App() {
       Notifications.removeNotificationSubscription(notificationListener);
       Notifications.removeNotificationSubscription(responseListener);
     };
+
+
   }, []);
 
   if (!isLoadingComplete) {
@@ -42,6 +56,8 @@ export default function App() {
       </SafeAreaProvider>
     );
   }
+
+
 }
 
 async function registerForPushNotificationsAsync() {
