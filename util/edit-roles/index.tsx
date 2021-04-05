@@ -1,4 +1,4 @@
-import { teamMembersDBColl } from "../firebase-util";
+import { teamMembersDBColl } from "../query-DB";
 
 // TODO: return from db
 
@@ -78,18 +78,3 @@ export function updateUser(email: any, role: any, lName: any, fName: any) {
       console.log("Error getting document:", error);
     });
 }
-
-// telemetryDBDoc.then(ret => {
-//   const data = ret.data();
-//   data.names.forEach((item: {item: string}) => {
-//       dataPoints.push({
-//           key: item,
-//           vals: data[item+"_Vals"],
-//           dates: data[item+"_Times"]
-//       })
-//   });
-//   setDataPoints(dataPoints);
-//   console.log("DataPoints: ", dataPoints)
-
-//   setFetched(true);
-// })
