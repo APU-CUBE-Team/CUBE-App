@@ -44,9 +44,12 @@ const styles = StyleSheet.create({
     width: screen.width - 20,
   },
   separator: {
-    marginVertical: 30,
+    marginTop: 20,
+    marginBottom: 20,
     height: 1,
-    width: "80%",
+    width: "100%",
+    backgroundColor: "white",
+    alignItems: "center"
   },
   buttonSafeArea: {
     flex: 1,
@@ -63,6 +66,8 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginTop: 10,
     marginBottom: 10,
+    fontFamily: "GillSans-Reg",
+
   },
   text2: {
     color: Colors.newColors.text,
@@ -70,11 +75,15 @@ const styles = StyleSheet.create({
     textAlign: "left",
     marginLeft: 15,
     marginTop: 10,
+    fontFamily: "GillSans-Reg",
+
   },
   text3: {
     color: Colors.newColors.text,
     fontSize: 20,
     textAlign: "center",
+    fontFamily: "GillSans-Reg",
+
   },
   saveButton: {
     backgroundColor: Colors.newColors.primary,
@@ -158,7 +167,7 @@ export default function TeamRolesScreen({ navigation }) {
                 />
               );
             })}
-
+            <View style={styles.separator}></View>
             <Text style={styles.text}>USERS</Text>
 
             {users.map((e) => {
