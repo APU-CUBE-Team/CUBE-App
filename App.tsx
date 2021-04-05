@@ -11,14 +11,31 @@ import Navigation from './navigation';
 //FONT IMPORTS
 import * as Font from 'expo-font';
 import AppLoading from 'expo-app-loading';
+import {
+  setCustomText
+} from 'react-native-global-props';
+
 const fetchFonts = () => {
+
   return Font.loadAsync({
-    'GillSans-Light': require('./assets/fonts/GillSans-Light.ttf'),
-  });
-  de
+    'GillSans-Reg': require('./assets/fonts/GillSans-Reg.ttf'),
+  })
+    .then(() => {
+      defaultFonts();
+
+    })
 };
 
+const defaultFonts = () => {
+  console.log("reached");
 
+  const customTextProps = {
+    style: {
+      fontFamily: 'GillSans-Reg'
+    }
+  }
+  setCustomText(customTextProps);
+};
 export default function App() {
   const isLoadingComplete = useCachedResources();
   const [expoPushToken, setExpoPushToken] = React.useState('');
@@ -26,6 +43,8 @@ export default function App() {
   const notificationListener = React.useRef<Subscription>();
   const responseListener = React.useRef<Subscription>();
 
+  //THIS IS NOT A SECURE WAY TO DO THIS. FIX LATER
+  fetchFonts();
 
   React.useEffect(() => {
     registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
@@ -56,9 +75,8 @@ export default function App() {
       </SafeAreaProvider>
     );
   }
-
-
 }
+
 
 async function registerForPushNotificationsAsync() {
   let token;

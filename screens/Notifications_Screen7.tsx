@@ -77,13 +77,16 @@ const styles = StyleSheet.create({
     textAlign: "left",
     justifyContent: "flex-end",
     margin: 20,
-    marginTop: 1
+    marginTop: 1,
+    fontFamily: "GillSans-Reg",
 
   },
   date: {
     fontSize: 14,
     color: Colors.newColors.text,
     textAlign: "center",
+    fontFamily: "GillSans-Reg",
+
   },
   saveButton: {
     backgroundColor: Colors.newColors.primary,

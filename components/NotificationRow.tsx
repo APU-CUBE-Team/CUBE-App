@@ -20,9 +20,8 @@ const styles = StyleSheet.create({
     text: {
         fontSize: 16,
         color: Colors.newColors.text,
-        fontFamily: "GillSans-Light",
+        fontFamily: "GillSans-Reg",
         textAlign: "left",
-        fontStyle: "italic",
 
     },
     title: {
@@ -38,6 +37,7 @@ const styles = StyleSheet.create({
         fontSize: 14,
         color: Colors.newColors.text,
         textAlign: "right",
+        fontFamily: "GillSans-Reg",
         flex: 1
     },
 });

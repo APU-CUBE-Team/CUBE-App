@@ -57,6 +57,7 @@ export const OverlayPrompt: React.FunctionComponent<PromptProps> = (props) => {
       textShadowColor: Colors.newColors.background2,
       textShadowRadius: 1,
       margin: 15,
+      fontFamily: "GillSans-Reg",
     },
     promptBtn: {
       // width: Screen.window.width / 3.5,
@@ -84,7 +85,7 @@ export const OverlayPrompt: React.FunctionComponent<PromptProps> = (props) => {
       setHeight(event.nativeEvent.layout.height)
     }
   }
- 
+
 
   return (
     <View style={[styles.overlay, { flex: 1 }]}>
@@ -96,14 +97,14 @@ export const OverlayPrompt: React.FunctionComponent<PromptProps> = (props) => {
           }}
         />
       </View>
-      <View style={[styles.overlayPrompt, {height: childHeight + long }]} onLayout={(event) => {measureView(event)}}>
+      <View style={[styles.overlayPrompt, { height: childHeight + long }]} onLayout={(event) => { measureView(event) }}>
         <Text style={styles.promptText}>{props.promptText}</Text>
         {props.children}
         <View style={{ flexDirection: "row" }}>
           {props.btns.map((e) => {
             return (
               <TouchableOpacity
-                style={[styles.promptBtn, {marginHorizontal: 30 / props.btns.length}]}
+                style={[styles.promptBtn, { marginHorizontal: 30 / props.btns.length }]}
                 onPress={() => {
                   e.action();
                 }}

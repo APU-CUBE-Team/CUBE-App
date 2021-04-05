@@ -66,6 +66,8 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginTop: 10,
     marginBottom: 10,
+    fontFamily: "GillSans-Reg",
+
   },
   text2: {
     color: Colors.newColors.text,
@@ -73,11 +75,15 @@ const styles = StyleSheet.create({
     textAlign: "left",
     marginLeft: 15,
     marginTop: 10,
+    fontFamily: "GillSans-Reg",
+
   },
   text3: {
     color: Colors.newColors.text,
     fontSize: 20,
     textAlign: "center",
+    fontFamily: "GillSans-Reg",
+
   },
   saveButton: {
     backgroundColor: Colors.newColors.primary,

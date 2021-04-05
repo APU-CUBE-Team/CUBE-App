@@ -19,11 +19,13 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   text: {
-    fontSize: 18,
+    fontSize: 20,
     color: Colors.newColors.text,
     fontWeight: "600",
     textAlign: "left",
     flex: 10,
+    fontFamily: "GillSans-Reg",
+
   },
 });
 export const RowItem = ({

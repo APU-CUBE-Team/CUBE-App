@@ -14,6 +14,8 @@ const styles = StyleSheet.create({
         color: Colors.newColors.text,
         fontSize: 20,
         textAlign: "center",
+        fontFamily: "GillSans-Reg",
+
     },
     signInButton: {
         backgroundColor: Colors.newColors.primary,
