@@ -8,7 +8,7 @@ import Colors from "../constants/Colors";
 import Screen from "../constants/Layout";
 
 import { db } from '../util/firebase-util';
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { FlatList, TouchableOpacity } from "react-native-gesture-handler";
 
 const styles = StyleSheet.create({
   container: {
@@ -126,12 +126,28 @@ export default function AlertConditionsScreen() {
             }
           }
         })
+        
       })
+
+      const Parameter = () => {
+        for(let i = 0; i <= alerts.length; i++) {
+          return (
+          <TouchableOpacity 
+            style={styles.parameter}
+            onPress={alert("todo")}
+          >
+            <Text style={styles.parameterText}>Parameter {alerts[i]}</Text>
+            <Text style={styles.parameterSubText}>{alerts[i].telem}</Text>
+          </TouchableOpacity>
+          )
+        }
+      }
+
 
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
-        <TouchableOpacity
+      <TouchableOpacity
         style={styles.parameter}
         >
           <Text style={styles.parameterText}>Parameter 1</Text>
@@ -149,7 +165,7 @@ export default function AlertConditionsScreen() {
           <Text style={styles.parameterText}>Parameter 3</Text>
           <Text style={styles.parameterSubText}> another thing</Text>
         </TouchableOpacity>      
-      </ScrollView>      
+      </ScrollView>     
       <Button
         label={"New Parameter"}
         onPressAction={() => setOverlay(true)}
