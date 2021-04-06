@@ -1,12 +1,10 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 import {
-    Button,
+    Text,
     TouchableOpacity,
     StyleSheet,
 } from "react-native";
-
-import { Text, View } from "../components/Themed";
 
 import Colors from "../constants/Colors";
 import Screen from "../constants/Layout";
@@ -16,6 +14,8 @@ const styles = StyleSheet.create({
         color: Colors.newColors.text,
         fontSize: 20,
         textAlign: "center",
+        fontFamily: "GillSans-Reg",
+
     },
     signInButton: {
         backgroundColor: Colors.newColors.primary,
@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
         elevation: 2, // Android
     },
 })
-export default function AppButton({ label, onPressAction }: { label: any, onPressAction: any },) {
+export default function AppButton({ label, onPressAction }: { label: string, onPressAction: Function },) {
 
     return (
         <TouchableOpacity

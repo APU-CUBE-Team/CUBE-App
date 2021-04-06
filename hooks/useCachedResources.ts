@@ -1,5 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-community/async-storage';
+import { setCustomText } from 'react-native-global-props';
 import * as Font from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import * as React from 'react';
@@ -18,8 +19,16 @@ export default function useCachedResources() {
         await Font.loadAsync({
           ...Ionicons.font,
           'space-mono': require('../assets/fonts/SpaceMono-Regular.ttf'),
+          'GillSans-Reg': require('../assets/fonts/GillSans-Reg.ttf'),
+          'GillSans-Light': require('../assets/fonts/GillSans-Light.ttf'),
         });
-        preference = await AsyncStorage.getItem('@Telemetry')
+
+        const customTextProps = {
+          style: {
+            fontFamily: 'GillSans-Reg'
+          }
+        }
+        setCustomText(customTextProps);
       } catch (e) {
         // We might want to provide this error information to an error reporting service
         console.warn(e);
@@ -30,7 +39,7 @@ export default function useCachedResources() {
     }
 
     loadResourcesAndDataAsync();
-  }, [preference]);
+  }, []);
 
-  return [isLoadingComplete, preference];
+  return isLoadingComplete;
 }

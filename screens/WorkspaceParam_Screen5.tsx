@@ -12,7 +12,7 @@ import {
   getSettings,
   setSettings,
 } from "../hooks/Storage";
-import OverlayPrompt from "../components/Prompt";
+import {OverlayPrompt} from "../components/Prompt";
 
 export default function WorkspaceScreen({ route }) {
   const [isEnabled, switchSelected] = React.useState(false);

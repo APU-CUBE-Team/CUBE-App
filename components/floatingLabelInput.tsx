@@ -21,6 +21,8 @@ const defaultStyles = {
     // backgroundColor: Colors.newColors.background2,
     padding: 10,
     margin: 5,
+    fontFamily: "GillSans-Reg",
+
   },
   inputView: {
     height: 40,
@@ -28,7 +30,7 @@ const defaultStyles = {
   },
   focusedTextInput: {
     borderBottomWidth: 2,
-    borderBottomColor: "",
+    //borderBottomColor: "",
   },
   selectionColor: "#fff",
 };
@@ -57,7 +59,7 @@ export default function FloatingLabelInput({
   value: any;
   label: any;
   onChange: any;
-  customStyle: any;
+  customStyle?: any;
   editVal?: boolean;
 }) {
   const [isFocused, setIsFocused] = React.useState(false);

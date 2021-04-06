@@ -1,10 +1,8 @@
 import { ExpoWebGLRenderingContext, GLView } from 'expo-gl';
-import { Renderer, TextureLoader, loadAsync, THREE } from 'expo-three';
+import { Renderer, TextureLoader, loadAsync } from 'expo-three';
 import OrbitControlsView from 'expo-three-orbit-controls';
 import * as React from 'react';
-import { Image } from 'react-native';
 import { Asset } from 'expo-asset';
-import * as FileSystem from 'expo-file-system';
 import {
   AmbientLight,
   BoxBufferGeometry,
@@ -166,6 +164,23 @@ export default function Orbit() {
 
     scene.add(new AmbientLight("#909090"));
     /////////////////////////////
+
+    // Crappy Meme
+    ////////////////////////////////
+
+
+
+
+
+
+
+
+
+    /////////////////////////////////
+
+
+
+
 
     camera.lookAt(globe.position);
 

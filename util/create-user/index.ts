@@ -1,5 +1,5 @@
 import { auth } from "../firebase-util";
-import { teamMembersDBColl } from "../firebase-util";
+import { teamMembersDBColl } from "../query-DB";
 // https://stackoverflow.com/questions/58547671/firebase-user-profile-add-custom-fields
 // https://firebase.google.com/docs/auth/web/manage-users
 
