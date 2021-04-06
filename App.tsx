@@ -8,43 +8,12 @@ import useCachedResources from './hooks/useCachedResources';
 import * as Notifications from 'expo-notifications';
 import Navigation from './navigation';
 
-//FONT IMPORTS
-import * as Font from 'expo-font';
-import AppLoading from 'expo-app-loading';
-import {
-  setCustomText
-} from 'react-native-global-props';
-
-const fetchFonts = () => {
-
-  return Font.loadAsync({
-    'GillSans-Reg': require('./assets/fonts/GillSans-Reg.ttf'),
-  })
-    .then(() => {
-      defaultFonts();
-
-    })
-};
-
-const defaultFonts = () => {
-  console.log("reached");
-
-  const customTextProps = {
-    style: {
-      fontFamily: 'GillSans-Reg'
-    }
-  }
-  setCustomText(customTextProps);
-};
 export default function App() {
   const isLoadingComplete = useCachedResources();
   const [expoPushToken, setExpoPushToken] = React.useState('');
   const [notification, setNotification] = React.useState<any>(false);
   const notificationListener = React.useRef<Subscription>();
   const responseListener = React.useRef<Subscription>();
-
-  //THIS IS NOT A SECURE WAY TO DO THIS. FIX LATER
-  fetchFonts();
 
   React.useEffect(() => {
     registerForPushNotificationsAsync().then(token => setExpoPushToken(token));

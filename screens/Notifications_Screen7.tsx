@@ -160,34 +160,33 @@ export default function NotificationScreen({ navigation }) {
 
               );
             })}
-            <View style={styles.overlay}>
-              {overlay ?
-                <OverlayPrompt
-                  promptText={title}
-                  closeOverlay={() => setOverlay(false)}
-                  btns={[
-                    {
-                      key: "  Telemetry  ", action: () => {
-                        setOverlay(false);
-                        navigation.navigate("Telemetry")
-                      }
-                    },
-                    { key: "  Cancel  ", action: () => { setOverlay(false) } },
-                  ]}
-                >
-                  <Text style={styles.date}>{date}</Text>
-                  <View style={styles.separator} />
-                  <Text style={styles.text3}>{message}</Text>
-                </OverlayPrompt>
-                :
-                null
-              }
-            </View>
+
 
           </View>
 
         </SafeAreaView>
       </ScrollView>
+      {overlay ?
+        <OverlayPrompt
+          promptText={title}
+          closeOverlay={() => setOverlay(false)}
+          btns={[
+            {
+              key: "  Telemetry  ", action: () => {
+                setOverlay(false);
+                navigation.navigate("Telemetry")
+              }
+            },
+            { key: "  Cancel  ", action: () => { setOverlay(false) } },
+          ]}
+        >
+          <Text style={styles.date}>{date}</Text>
+          <View style={styles.separator} />
+          <Text style={styles.text3}>{message}</Text>
+        </OverlayPrompt>
+        :
+        null
+      }
     </KeyboardAvoidingView>
   );
 }

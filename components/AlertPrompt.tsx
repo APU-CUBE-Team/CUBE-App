@@ -19,6 +19,9 @@ import { pushNewAlertParameter } from "../util/push-notifications";
 type PromptProps = {
   closeOverlay: Function;
   promptText: string;
+  telem?: string;
+  op?: string;
+  message?: string;
 };
 
 type g = {
@@ -52,7 +55,13 @@ export const AlertPrompt: React.FunctionComponent<PromptProps> = (props) => {
   const [msg, setMsg] = React.useState("");
   const [namesLength, setLeng] = React.useState(0);
 
-  let count = 0;
+ 
+  if (props.op && OPs.toString(operation) !== props.op) {
+    setOp(OPs.fromString(props.op))
+  }
+  if (props.message && msg !== props.message) {
+    setMsg(props.message)
+  }
 
   useFocusEffect(
     React.useCallback(() => {
@@ -67,6 +76,9 @@ export const AlertPrompt: React.FunctionComponent<PromptProps> = (props) => {
             });
             setNames(d);
             console.log("Names:", d);
+            if (props.telem) {
+              setTel(d.indexOf({key: props.telem}))
+            }
           })
           .catch((e) => {
             console.log("Error Occured:", e);
