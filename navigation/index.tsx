@@ -34,10 +34,12 @@ export const MyTheme = {
 
 // If you are not familiar with React Navigation, we recommend going through the
 // "Fundamentals" guide: https://reactnavigation.org/docs/getting-started
-export default function Navigation() {
+export default function Navigation({token}: {token: string}) {
   return (
     <NavigationContainer linking={LinkingConfiguration} theme={MyTheme}>
-      <TestMode />
+      <TestMode 
+        token={token}
+      />
     </NavigationContainer>
   );
 }
@@ -47,7 +49,7 @@ export default function Navigation() {
 const Stack = createStackNavigator<RootStackParamList>();
 const Login = createStackNavigator<SignInParamList>();
 
-function TestMode() {
+function TestMode({token}: {token: string}) {
   const [overlay, setOverlay] = React.useState(false);
   const [prompt, setPrompt] = React.useState("");
   const [state, dispatch] = React.useReducer(
@@ -204,7 +206,7 @@ function TestMode() {
               <Stack.Screen
                 name="Root"
                 component={DrawerNavigator}
-                initialParams={{ SignOut: AuthContext }}
+                initialParams={{ SignOut: AuthContext, token: token }}
               />
             )}
           </Stack.Navigator>

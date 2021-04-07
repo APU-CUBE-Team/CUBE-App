@@ -1,16 +1,17 @@
 import { Context } from "react";
 
 export type RootStackParamList = {
-  Root: { SignOut: any, pref: any };
+  Root: { SignOut: any, pref: any, token: any };
   NotFound: undefined;
   SignIn: Element;
+  
 };
 
 export type DrawerParamList = {
   Landing: { SignOut: any };
   "3D Orbit View": undefined;
   "Cartesian Map": { InitialPath: string };
-  "Telemetry": { InitialPath: string };
+  "Telemetry": { InitialPath: string, token: any };
   "Bug Report": undefined;
   "User Permissions": undefined;
   "Notification History": undefined;
@@ -38,9 +39,9 @@ export type WorkspaceParamList = {
 }
 
 export type TelParamList = {
-  initialPath: undefined;
+  initialPath: {token: any};
   TelemetryScreens: { path: string };
-  WorkspacePage: undefined;
+  WorkspacePage: {token: any};
 }
 
 export type MapParamList = {

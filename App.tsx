@@ -7,6 +7,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import useCachedResources from './hooks/useCachedResources';
 import * as Notifications from 'expo-notifications';
 import Navigation from './navigation';
+import { db} from './util/firebase-util'
 
 export default function App() {
   const isLoadingComplete = useCachedResources();
@@ -39,7 +40,9 @@ export default function App() {
   } else {
     return (
       <SafeAreaProvider>
-        <Navigation />
+        <Navigation 
+          token={expoPushToken}
+        />
         <StatusBar />
       </SafeAreaProvider>
     );
@@ -49,6 +52,7 @@ export default function App() {
 
 async function registerForPushNotificationsAsync() {
   let token;
+  try {
   if (Constants.isDevice) {
     const { status: existingStatus } = await Notifications.getPermissionsAsync();
     let finalStatus = existingStatus;
@@ -75,13 +79,18 @@ async function registerForPushNotificationsAsync() {
     });
   }
 
+  alert(token)
+  
   Notifications.setNotificationHandler({
     handleNotification: async () => ({
       shouldShowAlert: true,
       shouldPlaySound: false,
       shouldSetBadge: false,
     }),
-  });
+  }); 
+  }catch (e) {
+    alert(e)
+  }
 
   return token;
 }

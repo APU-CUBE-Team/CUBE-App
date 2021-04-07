@@ -9,7 +9,8 @@ import {
   MapParamList,
   NotificationsParamList,
   UserPermParamList,
-  BugReportParamList
+  BugReportParamList,
+  TelParamList
 } from '../types';
 //How we will be importing our screens. I would prefer if we separate Screen imports from component imports so that it is easier to tell what 
 // is what.
@@ -53,7 +54,8 @@ export default function DrawerNavigator({ route }) {
         name="Telemetry"
         component={TelemetryMap}
         initialParams={{
-          InitialPath: "Telemetry"
+          InitialPath: "Telemetry",
+          token: route.params?.token
         }}
       />
       <Drawer.Screen
@@ -104,7 +106,7 @@ function DrawerToggle(props: { onPress }) {
 //    NotificationStack
 //    BugReportStack
 //////////////////////////////////////////////////////////////////////////////////////////////////////
-const TelemetryMapStack = createStackNavigator<MapParamList>();
+const TelemetryMapStack = createStackNavigator<TelParamList>();
 const ThreeOrbitStack = createStackNavigator<ThreeOrbitParamList>();
 const NotificationStack = createStackNavigator<NotificationsParamList>();
 const BugReportStack = createStackNavigator<BugReportParamList>();
@@ -136,6 +138,9 @@ function TelemetryMap({ navigation, route }) {
         options={{
           headerTitle: 'Workspace Settings',
           headerRight: () => <DrawerToggle onPress={() => { navigation.toggleDrawer() }} />
+        }}
+        initialParams={{
+          token: route.params?.token
         }}
       />
     </TelemetryMapStack.Navigator>
