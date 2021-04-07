@@ -8,11 +8,9 @@ npm-debug.*
 *.mobileprovision
 *.orig.*
 web-build/
-<<<<<<< HEAD
-firebase-util.*
-=======
 util/firebase-util/**
->>>>>>> origin/dev
+google-services.json
+servicekey.json
 
 # macOS
 .DS_Store
