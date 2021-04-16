@@ -14,8 +14,9 @@ export function emailSignIn(username: any, password: any) {
   );
 }
 
-export function signOut() {
-  auth
+export async function signOut() {
+  // MARK! I added an await here. i don't know if it's necessary but did it in case.
+  await auth
     .signOut()
     .then(() => {
       // Sign-out successful.
@@ -28,4 +29,24 @@ export function signOut() {
 
       console.log(errorMessage);
     });
+}
+
+// So, after X time, signOut and navigate to signIn
+// gotta navigate to sign-in
+
+// currently watching this haha
+// https://www.youtube.com/watch?v=bZMSoxcrIN8
+async function authSessionTimeout() {
+  // classic timeout function
+  setTimeout(function () {
+    auth.onAuthStateChanged((user) => {
+      if (user != null) {
+        signOut();
+        // navigate to sign-in
+      } else {
+        // navigate to 'home page'
+        // the telemetry screen
+      }
+    });
+  }, 1000);
 }
