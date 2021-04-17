@@ -20,6 +20,7 @@ import EditScreenInfo from "../components/EditScreenInfo";
 import { Text, View } from "../components/Themed";
 
 import NotificationRow from "../components/NotificationRow";
+import Search from "../components/Search";
 import Screen from "../constants/Layout";
 
 import { getPushNotifications } from "../util/push-notifications";
@@ -116,16 +117,36 @@ export default function NotificationScreen({ navigation }) {
   const [message, setMessage] = React.useState("");
   const [date, setDate] = React.useState("");
 
+  const [filter, setFilter] = React.useState("");
+  const [filteredList, setFilteredList] = React.useState([]);
 
   useFocusEffect(
     React.useCallback(() => {
       resetOrientation();
       getPushNotifications().then((response) => {
         setNotificationList(response);
+
+        setFilteredList(response)
+        console.log("Loaded")
         rerender(render + 1);
       });
     }, [])
   );
+
+
+  function updateFilter(value) {
+    setFilter(value)
+    if (value === '' || !value) {
+      setFilteredList(notificationList);
+    } else {
+      setFilteredList(notificationList.filter(
+        existingItem => (
+          existingItem.title.toUpperCase().includes(value.toUpperCase()) ||
+          existingItem.message.toUpperCase().includes(value.toUpperCase())
+        )
+      ))
+    }
+  }
 
   return (
     <KeyboardAvoidingView
@@ -139,7 +160,11 @@ export default function NotificationScreen({ navigation }) {
 
           <View style={styles.view}>
 
-            {notificationList.map((e) => {
+            <Search
+              onChangeText={(value) => updateFilter(value)}
+              value={filter}
+            />
+            {filteredList.map((e) => {
               return (
 
                 <NotificationRow
