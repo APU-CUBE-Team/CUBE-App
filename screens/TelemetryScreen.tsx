@@ -11,6 +11,7 @@ import { getTelemetryDBDoc } from "../util/query-DB";
 import { telemetryDBDoc }  from '../util/firebase-util'
 
 const currTelemetry = getTelemetryDBDoc();
+const order = AsyncStorage.getItem("@Order");
 
 export default function ExpandedTelScreen({ navigation, route }) {
   const [path, setPath] = React.useState("ExpandedTelPage");
@@ -21,7 +22,7 @@ export default function ExpandedTelScreen({ navigation, route }) {
 
   //const currTelemetry = getTelemetryDBDoc();
 
-  // Hook that functions like componentDidMount. Ever screen will need this to ensure correct rotation
+  // Hook that functions like componentDidMount. Every screen will need this to ensure correct rotation
   useFocusEffect(
     React.useCallback(() => {
       resetOrientation();
@@ -32,13 +33,23 @@ export default function ExpandedTelScreen({ navigation, route }) {
       if (dataPoints.length == 0) {
         currTelemetry.then((ret) => {
           const data = ret.data();
-          data.names.forEach((item: { item: string }) => {
-            dataPoints.push({
-              key: item,
-              vals: data[item + "_Vals"],
-              dates: data[item + "_Times"],
+          if (order === null)
+            data.names.forEach((item: { item: string }) => {
+              dataPoints.push({
+                key: item,
+                vals: data[item + "_Vals"],
+                dates: data[item + "_Times"],
+              });
             });
-          });
+          else {
+            order.forEach(element => {
+              dataPoints.push({
+                key: element,
+                vals: data[element + "_Vals"],
+                dates: data[element + "_Times"],
+              })
+            });
+          }
           setDataPoints(dataPoints);
           setCurrent(dataPoints[dataPoints.length - 1].key);
         });
