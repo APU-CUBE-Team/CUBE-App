@@ -1,5 +1,5 @@
 import * as React from "react";
-import { StyleSheet, View, Text, TextInput, SafeAreaView, ScrollView } from "react-native";
+import { StyleSheet, View, Text, TextInput, SafeAreaView, ScrollView, FlatList, TouchableOpacity } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import { resetOrientation } from "../hooks/resetOrientation";
 import { AlertPrompt } from '../components/AlertPrompt';
@@ -8,7 +8,7 @@ import Colors from "../constants/Colors";
 import Screen from "../constants/Layout";
 
 import { db } from '../util/firebase-util';
-import { FlatList, TouchableOpacity } from "react-native-gesture-handler";
+
 
 const styles = StyleSheet.create({
   container: {
