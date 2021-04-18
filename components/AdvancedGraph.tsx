@@ -24,7 +24,12 @@ const CustomLayoutAnimation = {
 if (Platform.OS === "android" && UIManager.setLayoutAnimationEnabledExperimental) 
     { UIManager.setLayoutAnimationEnabledExperimental(true); }
 
-export default function AdvGraph({ data }: {data: any}) {
+type GraphProps = {
+    data: any;
+    longPress?: Function;
+};
+
+export default function AdvGraph({ data, longPress }: GraphProps) {
     
     const [expanded, setExpanded] = React.useState(false);
     return (
@@ -37,11 +42,13 @@ export default function AdvGraph({ data }: {data: any}) {
                 shadowOpacity: 1, // IOS
                 shadowRadius: 1.5, //IOS
                 elevation: 10, // Android
-        }}
+            }}
             onPress={() => {
                 LayoutAnimation.configureNext(CustomLayoutAnimation);
                 setExpanded(!expanded);
-        }}>
+            }}
+            onLongPress={longPress? longPress: () => {}}
+        >
             <View style={{
                 width: Screen.window.width-30, 
                 height: expanded ? Screen.window.height / 3 : 50, 
