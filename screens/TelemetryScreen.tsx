@@ -18,7 +18,7 @@ export default function ExpandedTelScreen({ navigation, route }) {
   const [render, setRender] = React.useState(0); // Not entirely sure if this is necessary at this point, but I'm too scared to remove
   const [current, setCurrent] = React.useState("data1"); // Stores what graph to display on the top of screen
 
-  //const currTelemetry = getTelemetryDBDoc();
+  const currTelemetry = getTelemetryDBDoc();
 
   // Hook that functions like componentDidMount. Ever screen will need this to ensure correct rotation
   useFocusEffect(
