@@ -7,21 +7,40 @@ import {
   TouchableOpacity,
   Platform,
 } from "react-native";
+import { useFocusEffect } from "@react-navigation/native";
+import AsyncStorage from "@react-native-community/async-storage";
+import { Ionicons } from '@expo/vector-icons';
 
 import Graph from "../components/dataGraph"; // Sadly do not make this tsx unless you want a ton of work
 import Colors from "../constants/Colors";
 import Screen from "../constants/Layout";
+import { Group, TelemGroup } from '../components/TelemGroup';
 
 export default function ExpandedTelScreen({
   dataSet,
   selected,
   setCurrent,
+  names
 }: {
   dataSet: any;
   selected: string;
   setCurrent: Function;
+  names: string[]
 }) {
   const [loaded, setLoaded] = React.useState(false);
+  const [groups, setGroups] = React.useState<Group[]>([{groupTitle: "Test Title", telems: ["RSSI"]}]);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      AsyncStorage.getItem("@Groups").then((ret: any) => {
+        let n = JSON.parse(ret)
+        console.log(n)
+        if (n !== null)
+          setGroups(n);
+      });
+
+    }, [])
+  );
 
   return (
     <View style={styles.container}>
@@ -56,6 +75,21 @@ export default function ExpandedTelScreen({
       <ScrollView
         style={{ flex: 1, marginTop: Platform.OS !== "android" ? 11 : 0 }}
       >
+        {groups.map((e: any) => {
+          return(
+            <TelemGroup 
+              group={e}
+              setVal={setCurrent}
+              telem={dataSet}
+            />
+          )
+        })}
+        <TouchableOpacity 
+          style={styles.groupAdd}
+        >
+          <Text style={styles.text}>Add Grouping</Text>
+          <Ionicons size={30} style={{ marginBottom: -3, color: '#fff' }} name="add-circle-sharp" />
+        </TouchableOpacity>
         {dataSet.map((e: any) => {
           return (
             <TouchableOpacity
@@ -105,16 +139,16 @@ const styles = StyleSheet.create({
     shadowRadius: 1, //IOS
     elevation: 2, // Android
   },
-  Group: {
-    // height: 40,
-    width: Screen.window.width / 1.1,
+  groupAdd: {
+    width: Screen.window.width / 1.2,
+    height: 50,
     borderColor: "#808080",
-    backgroundColor: "#bebec2",
     borderWidth: 1,
     borderRadius: 15,
     marginVertical: 10,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
-
   GraphArea: {
     position: "absolute",
     top: 10,
