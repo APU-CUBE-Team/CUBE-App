@@ -130,7 +130,7 @@ export default function WorkspaceScreen({ route }) {
   );
 
   function exportTelemetry() {
-    sendEmail('jroland16@apu.edu', 'csv');
+    sendEmail();
     //TODO: I guess this is where we call the cloud function and then inform the user when it is complete.
     alert("Functions yeet");
   }

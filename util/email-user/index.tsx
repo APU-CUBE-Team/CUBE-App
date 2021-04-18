@@ -3,7 +3,7 @@ import { getTelDBDoc } from '../query-DB';
 import { parse } from 'json2csv';
 //auth.user.email
 
-export function sendEmail(csv: any) {
+export function sendEmail() {
 
   const dataPoints:any = [];
   const CSVFields:any = [];
