@@ -16,7 +16,9 @@ export default function App() {
   const responseListener = React.useRef<Subscription>();
 
   React.useEffect(() => {
-    registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
+    registerForPushNotificationsAsync().then(
+      // token => setExpoPushToken(token)
+    );
 
     notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
       //setNotification(notification);

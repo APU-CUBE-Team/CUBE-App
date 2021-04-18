@@ -7,14 +7,13 @@ import Screen from "../constants/Layout";
 import { useFocusEffect } from "@react-navigation/native";
 import CompTelScreen from "./CompTel_Screen3";
 import ExpTelScreen from "./ExpandedTel_Screen4";
-import { getTelemetryDBDoc } from "../util/query-DB";
-import { telemetryDBDoc }  from '../util/firebase-util'
+import { getTelemetryDBDoc, getTelDBDoc } from "../util/query-DB";
 
-const currTelemetry = getTelemetryDBDoc();
+// const currTelemetry = getTelemetryDBDoc();
 
 export default function ExpandedTelScreen({ navigation, route }) {
   const [path, setPath] = React.useState("ExpandedTelPage");
-  const [dataPoints, setDataPoints] = React.useState([]);
+  const [dataPoints, setDataPoints] = React.useState([]); //{key: "Test", vals: [1,2,3,4,5,6,7,8,9,10], dates: [1,2,3,4,5,6,7,8,9,10]}
 
   const [render, setRender] = React.useState(0); // Not entirely sure if this is necessary at this point, but I'm too scared to remove
   const [current, setCurrent] = React.useState("data1"); // Stores what graph to display on the top of screen
@@ -28,9 +27,10 @@ export default function ExpandedTelScreen({ navigation, route }) {
       AsyncStorage.getItem("@Telemetry").then((ret: any) => {
         setPath(ret);
       });
+      
 
       if (dataPoints.length == 0) {
-        currTelemetry.then((ret) => {
+        getTelDBDoc.then((ret) => {
           const data = ret.data();
           data.names.forEach((item: { item: string }) => {
             dataPoints.push({

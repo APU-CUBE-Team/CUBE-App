@@ -8,10 +8,18 @@ export const teamMembersDBColl = db
   .collection("teamMembers");
 
 export async function getTelemetryDBDoc() {
-  return await db
+  return db
     .collection("Organizations")
     .doc("UserOrganization")
     .collection("cubesats")
     .doc("Fox1_Cliff")
     .get();
 }
+
+export const getTelDBDoc = db
+  .collection("Organizations")
+  .doc("UserOrganization")
+  .collection("cubesats")
+  .doc("Fox1_Cliff")
+  .get();
+
