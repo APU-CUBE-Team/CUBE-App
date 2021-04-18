@@ -22,4 +22,3 @@ export const getTelDBDoc = db
   .collection("cubesats")
   .doc("Fox1_Cliff")
   .get();
-
