@@ -74,19 +74,9 @@ export default function ExpandedTelScreen({ navigation, route }) {
             dataSet={dataPoints} 
             setData={setDataPoints}
             updateOrder={(from: number, to: number) => {
-              let temp = order[from];
-              if (to < from) {
-                let tArr = order.splice(to, from)
-                //console.log(order)
-                //order[to] = temp;
-                order.splice(to+1,0,...tArr);
-              } else {
-                let tArr = order.splice(from, to)
-                //console.log(order)
-                //order[to] = temp;
-                order.splice(from+1,0,...tArr);
-              }
-  
+              let t = order.splice(from, 1)
+              order.splice(to, 0, ...t)
+              console.log(order)
               setOrder(order)
               console.log(order.length)
 

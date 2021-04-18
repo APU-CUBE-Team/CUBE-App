@@ -8,6 +8,9 @@ import useCachedResources from './hooks/useCachedResources';
 import * as Notifications from 'expo-notifications';
 import Navigation from './navigation';
 
+import { LogBox } from 'react-native';
+LogBox.ignoreLogs(['Setting a timer for a long period of time, i.e. multiple minutes'])
+
 export default function App() {
   const isLoadingComplete = useCachedResources();
   const [expoPushToken, setExpoPushToken] = React.useState('');

@@ -28,17 +28,31 @@ export default function ExpandedTelScreen({
   names: string[]
 }) {
   const [loaded, setLoaded] = React.useState(false);
-  const [groups, setGroups] = React.useState<Group[]>([{groupTitle: "Test Title", telems: ["RSSI"]}]);
+  const [groups, setGroups] = React.useState<any>([]);
+  const [hidden, setHidden] = React.useState({})
+
+  const updateGroupList = () => {
+    AsyncStorage.getItem("@Groups").then((ret: any) => {
+      let n = JSON.parse(ret)
+      console.log("n",n)
+      console.log("groups", groups)
+      if (n !== null) {
+        setGroups([...n]);
+        let temp = {}
+        n.forEach(e => {
+          Object.keys(e.telems).forEach(l => {
+            temp[e.telems[l]] = ""
+          })
+        });
+        setHidden(temp)
+      }
+    });
+  }
 
   useFocusEffect(
     React.useCallback(() => {
-      AsyncStorage.getItem("@Groups").then((ret: any) => {
-        let n = JSON.parse(ret)
-        console.log(n)
-        if (n !== null)
-          setGroups(n);
-      });
-
+      updateGroupList()
+      // AsyncStorage.setItem("@Groups", JSON.stringify([{groupTitle: "Test Title", telems: ["RSSI"]}]))
     }, [])
   );
 
@@ -81,11 +95,18 @@ export default function ExpandedTelScreen({
               group={e}
               setVal={setCurrent}
               telem={dataSet}
+              updateGroups={updateGroupList}
+              groups={groups}
             />
           )
         })}
         <TouchableOpacity 
           style={styles.groupAdd}
+          onPress={() => {
+            let temp = groups
+            temp.push({groupTitle: "Edit Me!", telems: ["Edit Me!"]})
+            setGroups([...temp])
+          }}
         >
           <Text style={styles.text}>Add Grouping</Text>
           <Ionicons size={30} style={{ marginBottom: -3, color: '#fff' }} name="add-circle-sharp" />
@@ -93,12 +114,12 @@ export default function ExpandedTelScreen({
         {dataSet.map((e: any) => {
           return (
             <TouchableOpacity
-              style={styles.button}
+              style={ e.key in hidden ? {height: 0} : styles.button}
               onPress={() => {
                 setCurrent(e.key);
               }}
             >
-              <Text style={styles.text}>
+              <Text style={e.key in hidden ? {fontSize: 0} : styles.text}>
                 {`${e.key}`} (RT):{" "}
                 {`${Math.round(e.vals[e.vals.length - 1] * 100) / 100}`}
               </Text>
