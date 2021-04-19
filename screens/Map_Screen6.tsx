@@ -3,7 +3,7 @@ import { StyleSheet, Image, Dimensions, ImageBackground, TouchableOpacity, Layou
 import * as ScreenOrientation from 'expo-screen-orientation';
 import { useNavigation, useFocusEffect, NavigationAction } from '@react-navigation/native';
 import Svg, { Path } from 'react-native-svg';
-import {OverlayPrompt} from '../components/Prompt';
+import { OverlayPrompt } from '../components/Prompt';
 import { Text, View } from '../components/Themed';
 import Screen from '../constants/Layout'
 
@@ -59,8 +59,7 @@ const CustomLayoutAnimation = {
     },
 }
 
-if (Platform.OS === "android" && UIManager.setLayoutAnimationEnabledExperimental) 
-    { UIManager.setLayoutAnimationEnabledExperimental(true); }
+if (Platform.OS === "android" && UIManager.setLayoutAnimationEnabledExperimental) { UIManager.setLayoutAnimationEnabledExperimental(true); }
 
 export default function MapScreen({ navigation }) {
     const [loaded, setLoaded] = React.useState(false);
@@ -73,45 +72,45 @@ export default function MapScreen({ navigation }) {
     const [y, setY] = React.useState(0.0);
     const [overlay, setOverlay] = React.useState(false);
     const [pathing, setPathing] = React.useState<Pather[]>([]);
-    
+
     let index = 0;
     useFocusEffect(
         React.useCallback(() => {
             ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE_LEFT)
-            .then(() => {
-                const windowHeight = Screen.window.width;
-                const windowWidth = Screen.window.height;
-                let pathing: Pather[] = [];
-                let d: string = "";
-                let rarity = 14
-                let freq = .1;
-                let phase = 100;
-                let amplitude = windowWidth / 5;
-                let origin = {
-                    x: 0,
-                    y: windowHeight / 2
-                }
-                for(var i = 0; i < windowWidth; i++) {
-                    var operator = ' M ';
-                
-                    d += operator + ((i - 1) * rarity + origin.x) + ', ';
-                    d += (Math.sin(freq * (i - 1 + phase)) * amplitude + origin.y);
-                
-                    if(operator !== ' L ') { operator = ' L '; }
-                    
-                    let xT = (i * rarity + origin.x)
-                    let yT = (Math.sin(freq * (i + phase)) * amplitude + origin.y)
+                .then(() => {
+                    const windowHeight = Screen.window.width;
+                    const windowWidth = Screen.window.height;
+                    let pathing: Pather[] = [];
+                    let d: string = "";
+                    let rarity = 14
+                    let freq = .1;
+                    let phase = 100;
+                    let amplitude = windowWidth / 5;
+                    let origin = {
+                        x: 0,
+                        y: windowHeight / 2
+                    }
+                    for (var i = 0; i < windowWidth; i++) {
+                        var operator = ' M ';
 
-                    d += ' L ' + xT + ', ';
-                    d += yT;
+                        d += operator + ((i - 1) * rarity + origin.x) + ', ';
+                        d += (Math.sin(freq * (i - 1 + phase)) * amplitude + origin.y);
 
-                    pathing.push({x: xT, y: yT})
-                    
-                }
-                setPathing(pathing)
-                setD(d)
-                setLoaded(true)
-            })
+                        if (operator !== ' L ') { operator = ' L '; }
+
+                        let xT = (i * rarity + origin.x)
+                        let yT = (Math.sin(freq * (i + phase)) * amplitude + origin.y)
+
+                        d += ' L ' + xT + ', ';
+                        d += yT;
+
+                        pathing.push({ x: xT, y: yT })
+
+                    }
+                    setPathing(pathing)
+                    setD(d)
+                    setLoaded(true)
+                })
         }, [])
     )
 
@@ -122,63 +121,70 @@ export default function MapScreen({ navigation }) {
                 setY(pathing[index].y)
                 index++;
                 if (index > 55)
-                    index=0;
+                    index = 0;
                 if (index !== 1)
                     LayoutAnimation.configureNext(CustomLayoutAnimation);
             }, 1000);
-            return () => {clearInterval(interval)};
+            return () => { clearInterval(interval) };
         }
     }, [loaded]);
-    
+
     return (
-    <View style={[styles.container]}>
-        {loaded ? 
-        <View style={styles.container}>
-            <ImageBackground
-                source={require('../assets/images/globe.png')} style={styles.map}
-            >
-                    <Svg height={`${windowHeight}`} width={`${windowWidth}`}>
-                        <Path
-                            d={d}
-                            fill={"none"}
-                            stroke={"red"}
-                            strokeWidth={5}
-                        />
-                    </Svg>
-                    <TouchableOpacity 
-                        style={[styles.CUBE, {top: y - (styles.CUBE.height / 2), left: x - (styles.CUBE.width / 2)}]}
-                        onPress={() => setOverlay(true)}
+        <View style={[styles.container]}>
+            {loaded ?
+                <View style={styles.container}>
+                    <ImageBackground
+                        source={require('../assets/images/globe.png')} style={styles.map}
                     >
-                        <Image 
-                            source={require('../assets/images/telemSat_icon.png')}
-                            style={[styles.CUBE]}
+                        <Svg height={`${windowHeight}`} width={`${windowWidth}`}>
+                            <Path
+                                d={d}
+                                fill={"none"}
+                                stroke={"red"}
+                                strokeWidth={5}
+                            />
+                        </Svg>
+                        <TouchableOpacity
+                            style={[styles.CUBE, { top: y - (styles.CUBE.height / 2), left: x - (styles.CUBE.width / 2) }]}
+                            onPress={() => setOverlay(true)}
+                        >
+                            <Image
+                                source={require('../assets/images/telemSat_icon.png')}
+                                style={[styles.CUBE]}
+                            />
+
+                        </TouchableOpacity>
+
+
+                    </ImageBackground>
+                    {overlay ?
+                        <OverlayPrompt
+                            promptText={"Would you like to view this CUBE's Telemetry or Controls"}
+                            closeOverlay={() => setOverlay(false)}
+                            yAxis
+                            btns={[
+                                {
+                                    key: "  Telemetry  ", action: () => {
+                                        setOverlay(false);
+                                        navigation.navigate("Telemetry")
+                                    }
+                                },
+                                {
+                                    key: "  Control  ", action: () => {
+                                        setOverlay(false);
+                                        navigation.navigate("Control")
+                                    }
+                                },
+                                { key: "  Cancel  ", action: () => { setOverlay(false) } },
+                            ]}
                         />
-                
-                    </TouchableOpacity> 
-                 
-                
-            </ImageBackground>
-            {overlay ? 
-                <OverlayPrompt
-                    promptText={"Would you like to view this CUBE's Telemetry or Controls"}
-                    closeOverlay={() => setOverlay(false)}
-                    yAxis
-                    btns={[
-                        {key: "  Telemetry  ", action: () => {
-                            setOverlay(false);
-                            navigation.navigate("Telemetry")
-                        }},
-                        {key: "  Control  ", action: () => {alert("TODO")}},
-                        {key: "  Cancel  ", action: () => {setOverlay(false)}},
-                    ]}
-                />
-                : 
-                null
-            }
-        </View>
-        : null}
+                        :
+                        null
+                    }
+                </View>
+                : null}
         </View>
     );
-    
+
 }
 

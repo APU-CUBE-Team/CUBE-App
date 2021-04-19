@@ -9,6 +9,7 @@ import {
   KeyboardAvoidingView,
   Platform,
   ScrollView,
+  Animated,
 } from "react-native";
 import { useNavigation, useFocusEffect, NavigationAction } from '@react-navigation/native';
 import { resetOrientation } from "../hooks/resetOrientation";
@@ -24,6 +25,11 @@ import Search from "../components/Search";
 import Screen from "../constants/Layout";
 
 import { getPushNotifications } from "../util/push-notifications";
+import { Extrapolate } from "react-native-reanimated";
+
+const NAVBAR_HEIGHT = 64;
+const STATUS_BAR_HEIGHT = Platform.select({ ios: 20, android: 24 });
+const HEIGHT = 44;
 
 const styles = StyleSheet.create({
   container: {
@@ -36,7 +42,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.newColors.background,
     width: Screen.window.width - 20,
-    marginTop: 10
+
   },
   overlay: {
     marginTop: Screen.window.width / 2,
@@ -106,6 +112,19 @@ const styles = StyleSheet.create({
     shadowRadius: 1.5, //IOS
     elevation: 2, // Android
   },
+  searchBar: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    alignItems: 'center',
+    backgroundColor: 'white',
+    borderBottomColor: '#dedede',
+    borderBottomWidth: 1,
+    height: NAVBAR_HEIGHT,
+    justifyContent: 'center',
+    paddingTop: STATUS_BAR_HEIGHT,
+  },
 });
 
 export default function NotificationScreen({ navigation }) {
@@ -113,12 +132,32 @@ export default function NotificationScreen({ navigation }) {
   const [render, rerender] = React.useState(0);
   const [overlay, setOverlay] = React.useState(false);
 
+  // component property variables
   const [title, setTitle] = React.useState("");
   const [message, setMessage] = React.useState("");
   const [date, setDate] = React.useState("");
 
+  // filter state variables
   const [filter, setFilter] = React.useState("");
   const [filteredList, setFilteredList] = React.useState([]);
+
+  // animation state variables
+  const [scrollAnim, setScrollAnim] = React.useState(new Animated.Value(0));
+  const [offsetAnim, setOffsetAnim] = React.useState(new Animated.Value(0));
+  const [clampedScroll, setClampedScroll] = React.useState(
+    Animated.diffClamp(
+      Animated.add(
+        scrollAnim.interpolate({
+          inputRange: [0, 1],
+          outputRange: [0, 1],
+          extrapolate: 'clamp',
+        }), offsetAnim),
+      0,
+      HEIGHT
+    )
+  );
+
+
 
   useFocusEffect(
     React.useCallback(() => {
@@ -148,13 +187,45 @@ export default function NotificationScreen({ navigation }) {
     }
   }
 
+
+
+  const navbarTranslate = clampedScroll.interpolate({
+    inputRange: [0, 100],
+    outputRange: [0, -100],
+    extrapolate: 'clamp'
+  });
+  // const navbarOpacity = clampedScroll.interpolate({
+  //   inputRange: [0, HEIGHT],
+  //   outputRange: [1, 0],
+  //   extrapolate: 'clamp',
+  // });
+
   return (
     <KeyboardAvoidingView
       style={styles.container}
       behavior={Platform.OS === "ios" ? "padding" : null}
     >
-      <ScrollView>
-        <SafeAreaView style={styles.container}>
+      <SafeAreaView style={styles.container}>
+
+        {/* <View style={styles.view}>
+          <Animated.View style={[styles.searchBar, { transform: [{ translateY: navbarTranslate }] }]}>
+
+            <Animated.Text style={[styles.title, { opacity: navbarOpacity }]}>
+
+            </Animated.Text>
+          </Animated.View>
+        </View> */}
+
+
+        <ScrollView
+          scrollEventThrottle={1}
+          onScroll={Animated.event(
+            [{ nativeEvent: { contentOffset: { y: scrollAnim } } }],
+            { useNativeDriver: false },
+          )
+          }
+        >
+
 
           <StatusBar barStyle="light-content" />
 
@@ -187,31 +258,35 @@ export default function NotificationScreen({ navigation }) {
             })}
 
 
+
           </View>
 
-        </SafeAreaView>
-      </ScrollView>
-      {overlay ?
-        <OverlayPrompt
-          promptText={title}
-          closeOverlay={() => setOverlay(false)}
-          btns={[
-            {
-              key: "  Telemetry  ", action: () => {
-                setOverlay(false);
-                navigation.navigate("Telemetry")
-              }
-            },
-            { key: "  Cancel  ", action: () => { setOverlay(false) } },
-          ]}
-        >
-          <Text style={styles.date}>{date}</Text>
-          <View style={styles.separator} />
-          <Text style={styles.text3}>{message}</Text>
-        </OverlayPrompt>
-        :
-        null
+
+        </ScrollView>
+      </SafeAreaView>
+
+      {
+        overlay ?
+          <OverlayPrompt
+            promptText={title}
+            closeOverlay={() => setOverlay(false)}
+            btns={[
+              {
+                key: "  Telemetry  ", action: () => {
+                  setOverlay(false);
+                  navigation.navigate("Telemetry")
+                }
+              },
+              { key: "  Cancel  ", action: () => { setOverlay(false) } },
+            ]}
+          >
+            <Text style={styles.date}>{date}</Text>
+            <View style={styles.separator} />
+            <Text style={styles.text3}>{message}</Text>
+          </OverlayPrompt>
+          :
+          null
       }
-    </KeyboardAvoidingView>
+    </KeyboardAvoidingView >
   );
 }
