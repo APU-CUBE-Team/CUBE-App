@@ -84,7 +84,7 @@ async function registerForPushNotificationsAsync() {
     });
   }
 
-  alert(token)
+  // alert(token)
   
   Notifications.setNotificationHandler({
     handleNotification: async () => ({
