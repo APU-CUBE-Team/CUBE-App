@@ -15,6 +15,7 @@ export type DrawerParamList = {
   "Bug Report": undefined;
   "User Permissions": undefined;
   "Notification History": undefined;
+  "Control": undefined;
 };
 
 export type ThreeOrbitParamList = {
@@ -64,4 +65,8 @@ export type UserPermParamList = {
   EditRolePage: undefined;
   TeamRolePage: undefined;
   EditUserPage: undefined;
+}
+
+export type ControlParamList = {
+  ControlPage: undefined;
 }

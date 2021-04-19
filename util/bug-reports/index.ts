@@ -8,14 +8,12 @@ let currTime = firebase.firestore.Timestamp.fromDate(new Date());
 
 // get username from current logged in user
 
-let user = auth.currentUser;
-let userEmail = `${user?.email}`;
 // if collection exists, add to that collection. else, return error
 export async function reportBug(message: string) {
+  let user = auth.currentUser;
+  let userEmail = `${user?.email}`;
   await db
-    .collection("TestOrganization") // TODO: designate collection to logged in organization
-    .doc("team")
-    .collection("bugReports")
+    .collection("BugReports") // TODO: designate collection to logged in organization
     .add({
       [userEmail]: {
         bugReports: {

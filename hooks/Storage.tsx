@@ -9,7 +9,7 @@ export const storeToken = async (value: String) => {
 export const getToken = async () => {
     try {
         const jsonValue = await AsyncStorage.getItem('@Token')
-        console.log(jsonValue)
+        // console.log(jsonValue)
         return jsonValue != null ? JSON.parse(jsonValue) : null;
     } catch(e) {
         // error reading value
@@ -24,6 +24,11 @@ export async function deleteToken() {
 export const storeTelemetryPreference = async (value: string) => {
     const jsonValue = JSON.stringify(value)
     return AsyncStorage.setItem('@Telemetry', jsonValue)
+}
+
+export const storeTelOrder = async (value: string[]) => {
+    const jsonValue = JSON.stringify(value)
+    return AsyncStorage.setItem('@Order', jsonValue)
 }
 
 export const getSettings = async () => {

@@ -82,18 +82,15 @@ export default function FloatingLabelInput({
 
   const handleFocus = () => {
     setIsFocused(true);
-    // console.log("HANDLE FOCUS")
-    // console.log({ isFocused, tempVal })
+
   };
   const handleBlur = () => {
     setIsFocused(false);
-    // console.log("HANDLE BLUR")
-    // console.log({ isFocused, tempVal })
+
   };
 
   //ISFOCUSSED SHOULD BE TRUE WHEN CLICKED
   React.useEffect(() => {
-    // console.log("REACT.USEEFFECT")
     Animated.timing(_animatedIsFocused, {
       toValue: isFocused || tempVal !== "" ? 1 : 0,
       duration: 200,

@@ -1,5 +1,6 @@
 import * as React from "react";
-import { StyleSheet, View, Text, TextInput, SafeAreaView, ScrollView, TouchableOpacity } from "react-native";
+import { StyleSheet, View, Text, TextInput, SafeAreaView, ScrollView, FlatList, TouchableOpacity } from "react-native";
+
 import { useFocusEffect } from "@react-navigation/native";
 import { resetOrientation } from "../hooks/resetOrientation";
 import { AlertPrompt } from '../components/AlertPrompt';
@@ -9,6 +10,7 @@ import Colors from "../constants/Colors";
 import Screen from "../constants/Layout";
 
 import { db } from '../util/firebase-util';
+
 
 const styles = StyleSheet.create({
   container: {
@@ -39,13 +41,13 @@ const styles = StyleSheet.create({
     margin: 15,
   },
   parameter: {
-     backgroundColor: Colors.c.gray,
-     margin: 10,
-     borderRadius: 25,
-     width: Screen.window.width - 50,
-     height: 50,
-     alignItems: "center",
-     justifyContent: "center",
+    backgroundColor: Colors.c.gray,
+    margin: 10,
+    borderRadius: 25,
+    width: Screen.window.width - 50,
+    height: 50,
+    alignItems: "center",
+    justifyContent: "center",
   },
   parameterText: {
     color: Colors.newColors.text,
@@ -81,40 +83,52 @@ export default function AlertConditionsScreen() {
       <ScrollView>
         {alerts.map(e => {
           return (
-          <TouchableOpacity
-            style={styles.parameter}
-            onPress={() => {
-              setPrompt("Edit Parameter")
-              setMessage(e.msg)
-              setOp(e.op)
-              setTelem(e.telem)
-              setOverlay(true)
-            }}
-          >
-            <Text style={styles.parameterText}>{`${e.telem} Parameter`}</Text>
-            <Text style={styles.parameterSubText}>{e.msg}</Text>
-          </TouchableOpacity>
-        )})}
-        
+            <TouchableOpacity
+              style={styles.parameter}
+              onPress={() => {
+                setPrompt("Edit Parameter")
+                setMessage(e.msg)
+                setOp(e.op)
+                setTelem(e.telem)
+                setOverlay(true)
+              }}
+            >
+              <Text style={styles.parameterText}>{`${e.telem} Parameter`}</Text>
+              <Text style={styles.parameterSubText}>{e.msg}</Text>
+            </TouchableOpacity>
+          )
+        })}
+
         <TouchableOpacity
-        style={styles.parameter}
+          style={styles.parameter}
         >
           <Text style={styles.parameterText}>Parameter 2</Text>
           <Text style={styles.parameterSubText}> propulsion conditions</Text>
         </TouchableOpacity>
         <TouchableOpacity
-        style={styles.parameter}
+          style={styles.parameter}
         >
           <Text style={styles.parameterText}>Parameter 3</Text>
           <Text style={styles.parameterSubText}> another thing</Text>
-        </TouchableOpacity>      
-      </ScrollView>     
+        </TouchableOpacity>
+      </ScrollView>
+      <FlatList
+        data={alerts}
+        renderItem={({ item }) => {
+          <TouchableOpacity style={styles.parameter}>
+            <Text style={styles.parameterText}>{`${item.telem} Parameter`}</Text>
+            <Text style={styles.parameterSubText}>{item.msg}</Text>
+          </TouchableOpacity>
+        }}
+
+      />
+
       <Button
         label={"New Parameter"}
         onPressAction={() => setOverlay(true)}
       />
       {overlay &&
-        <AlertPrompt 
+        <AlertPrompt
           closeOverlay={() => setOverlay(false)}
           promptText={prompt}
           telem={telem}

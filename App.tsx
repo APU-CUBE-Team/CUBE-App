@@ -9,6 +9,9 @@ import * as Notifications from 'expo-notifications';
 import Navigation from './navigation';
 import { db} from './util/firebase-util'
 
+import { LogBox } from 'react-native';
+LogBox.ignoreLogs(['Setting a timer for a long period of time, i.e. multiple minutes'])
+
 export default function App() {
   const isLoadingComplete = useCachedResources();
   const [expoPushToken, setExpoPushToken] = React.useState('');
@@ -17,7 +20,9 @@ export default function App() {
   const responseListener = React.useRef<Subscription>();
 
   React.useEffect(() => {
-    registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
+    registerForPushNotificationsAsync().then(
+      // token => setExpoPushToken(token)
+    );
 
     notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
       //setNotification(notification);
@@ -67,7 +72,7 @@ async function registerForPushNotificationsAsync() {
     token = (await Notifications.getExpoPushTokenAsync()).data;
     console.log("Push token", token);
   } else {
-    alert('Must use physical device for Push Notifications');
+    //alert('Must use physical device for Push Notifications');
   }
 
   if (Platform.OS === 'android') {

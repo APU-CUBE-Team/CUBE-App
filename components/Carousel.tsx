@@ -20,7 +20,7 @@ export function Carousel({data, onChange}: {data: any[], onChange: Function}) {
       const isNoMansLand = 0.4 < distance;
   
       if (roundIndex !== indexRef.current && !isNoMansLand) {
-        console.log("Changed index ", roundIndex)
+        // console.log("Changed index ", roundIndex)
         setIndex(roundIndex);
         onChange(roundIndex)
       }
@@ -28,8 +28,8 @@ export function Carousel({data, onChange}: {data: any[], onChange: Function}) {
   
     function measureView(event: any) {
         if (renderWidth === -1) {
-          console.log(`*** event: ${JSON.stringify(event.nativeEvent)}`);
-          console.log(`Render Width  ${event.nativeEvent.layout.width}`)
+          // console.log(`*** event: ${JSON.stringify(event.nativeEvent)}`);
+          // console.log(`Render Width  ${event.nativeEvent.layout.width}`)
           setWidth(event.nativeEvent.layout.width)
         }
       }

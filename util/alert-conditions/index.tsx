@@ -11,7 +11,7 @@ export async function getAlertsCollection() {
       const o = querySnapshot.docs;
 
       o.forEach(function (doc) {
-        console.log(doc.id, " => ", doc.data());
+        // console.log(doc.id, " => ", doc.data());
         alertsArray.push(doc.data());
       });
     })

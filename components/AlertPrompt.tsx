@@ -75,7 +75,7 @@ export const AlertPrompt: React.FunctionComponent<PromptProps> = (props) => {
               d.push({ key: e });
             });
             setNames(d);
-            console.log("Names:", d);
+            // console.log("Names:", d);
             if (props.telem) {
               setTel(d.indexOf({key: props.telem}))
             }
@@ -134,10 +134,10 @@ export const AlertPrompt: React.FunctionComponent<PromptProps> = (props) => {
   };
 
   const addParameter = ({ telem, msg, op, val }: parameterType) => {
-    console.log("Adding new Parameter");
+    // console.log("Adding new Parameter");
     pushNewAlertParameter({ telem, msg, op, val })
       .then((stuff) => {
-        console.log("stuff: ", stuff);
+        // console.log("stuff: ", stuff);
         props.closeOverlay();
       })
       .catch((e) => {

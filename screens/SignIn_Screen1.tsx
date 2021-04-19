@@ -9,6 +9,7 @@ import {
   Dimensions,
   Image,
   KeyboardAvoidingView,
+  Keyboard,
 } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import { resetOrientation } from "../hooks/resetOrientation";
@@ -21,7 +22,7 @@ import Screen from "../constants/Layout";
 
 import FloatingLabelInput from "../components/floatingLabelInput";
 import AppButton from "../components/Button";
-
+import iconSet from "@expo/vector-icons/build/Fontisto";
 
 const styles = StyleSheet.create({
   container: {
@@ -107,6 +108,8 @@ const styles = StyleSheet.create({
 export default function SignInScreen({ route, navigation }) {
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const [iconWidth, setIconWidth] = React.useState(300);
+  const [iconHeight, setIconHeight] = React.useState(300);
 
   const { signIn } = React.useContext(route.params.props);
 
@@ -115,6 +118,12 @@ export default function SignInScreen({ route, navigation }) {
       resetOrientation();
     }, [])
   );
+  
+  const keyboardDidShow = () => {setIconWidth(200), setIconHeight(200)};
+  const keyboardDidHide = () => {setIconHeight(300), setIconWidth(300)};
+
+  Keyboard.addListener("keyboardDidShow", keyboardDidShow);
+  Keyboard.addListener("keyboardDidHide", keyboardDidHide);
 
   // checks for empty string, or if there is nothing in general. either signs in,
   // or you get bonked.
@@ -125,6 +134,16 @@ export default function SignInScreen({ route, navigation }) {
       signIn({ username, password });
     } else {
       alert("what are you doing.");
+    }
+  }
+
+  function icon() {
+    return {
+      width: iconWidth,
+      height: iconHeight,
+      marginLeft: 20,
+      marginTop: 10,
+      tintColor: "#fff"
     }
   }
 
@@ -142,7 +161,7 @@ export default function SignInScreen({ route, navigation }) {
             source={require("../assets/images/trans-title.png")}
           />
           <Image
-            style={styles.icon}
+            style={icon()}
             source={require("../assets/images/trans-icon.png")}
           />
         </View>
@@ -161,7 +180,6 @@ export default function SignInScreen({ route, navigation }) {
             value={username}
             onChange={setUsername}
             customStyle={false}
-
           ></FloatingLabelInput>
           {/* <TextInput
             placeholder="Password"

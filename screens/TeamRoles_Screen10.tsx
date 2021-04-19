@@ -24,6 +24,8 @@ import EditScreenInfo from "../components/EditScreenInfo";
 import { Text, View } from "../components/Themed";
 
 import { RowItem } from "../components/UserRowItem";
+import Search from "../components/Search";
+
 import {
   listAllTeamMembers,
   getAdminsOfTeam,
@@ -127,19 +129,50 @@ export default function TeamRolesScreen({ navigation }) {
   const [users, setUsers] = React.useState([]);
   const [render, rerender] = React.useState(0);
 
+  const [filter, setFilter] = React.useState("");
+  const [filteredAdmins, setFilteredAdmins] = React.useState([]);
+  const [filteredUsers, setFilteredUsers] = React.useState([]);
+
   useFocusEffect(
     React.useCallback(() => {
       resetOrientation();
       getAdminsOfTeam().then((response) => {
         setAdmins(response);
         rerender(render + 1);
+        setFilteredAdmins(response)
+        // console.log("LoadedAdmins")
       });
       getUsersOfTeam().then((response) => {
         setUsers(response);
         rerender(render + 1);
+        setFilteredUsers(response)
+        // console.log("LoadedUsers")
       });
     }, [])
   );
+
+  function updateFilter(value) {
+    setFilter(value)
+    if (value === '' || !value) {
+      setFilteredAdmins(admins);
+      setFilteredUsers(users)
+    } else {
+      setFilteredAdmins(admins.filter(
+        existingItem => (
+          existingItem.firstName.toUpperCase().includes(value.toUpperCase()) ||
+          existingItem.lastName.toUpperCase().includes(value.toUpperCase()) ||
+          existingItem.email.toUpperCase().includes(value.toUpperCase())
+        )
+      ))
+      setFilteredUsers(users.filter(
+        existingItem => (
+          existingItem.firstName.toUpperCase().includes(value.toUpperCase()) ||
+          existingItem.lastName.toUpperCase().includes(value.toUpperCase()) ||
+          existingItem.email.toUpperCase().includes(value.toUpperCase())
+        )
+      ))
+    }
+  }
 
   return (
     <KeyboardAvoidingView
@@ -147,13 +180,19 @@ export default function TeamRolesScreen({ navigation }) {
       behavior={Platform.OS === "ios" ? "padding" : null}
     >
       <ScrollView>
+        <Search
+          onChangeText={(value) => updateFilter(value)}
+          value={filter}
+        />
         <SafeAreaView style={styles.container}>
           <StatusBar barStyle="light-content" />
 
           <View style={styles.inputSafeArea}>
+
             <Text style={styles.text}>ADMIN</Text>
 
-            {admins.map((e) => {
+            {filteredAdmins.map((e) => {
+
               return (
                 <RowItem
                   first={e.firstName}
@@ -170,7 +209,7 @@ export default function TeamRolesScreen({ navigation }) {
             <View style={styles.separator}></View>
             <Text style={styles.text}>USERS</Text>
 
-            {users.map((e) => {
+            {filteredUsers.map((e) => {
               return (
                 <RowItem
                   first={e.firstName}

@@ -1,21 +1,50 @@
-import { db } from '../firebase-util';
+import { auth, db} from '../firebase-util';
+import { getTelDBDoc } from '../query-DB';
 import { parse } from 'json2csv';
+//auth.user.email
+
+export function sendEmail() {
+
+  const dataPoints:any = [];
+  const CSVFields:any = [];
+  let currentFieldVals;
+  let currentFieldTimes;
+
+  getTelDBDoc.then(ret => {
 
 
-export function sendEmail(email: any, csv: any) {
+    const data = ret.data();
 
-  const csvData = [
-    {id: 1, value: 1}, {id: 2, value: 2}, {id: 3, value: 3}
-  ];
+    for(let k = 1; k < data[data.names[0] + "_Times"].length + 1; k++){
+      dataPoints.push({ID: k});
+    }
+    CSVFields.push("ID");
 
-  const csvfile = parse(csvData, ["id", "value"]);
 
-  //for testing purposes change email manually below
-  return db.collection('mail').add({
-    to: 'jroland16@apu.edu',
-    message: {
-      subject: 'Hello from Firebase!',
-      attachments: [{filename: 'test.csv', content: csvfile }],
-    },
-  }).then(() => console.log('Queued email for delivery!'));
+    for(let j = 0; j < data.names.length; j++){
+      currentFieldVals = data.names[j] + "_Vals";
+      currentFieldTimes = data.names[j] + "_Times";
+      CSVFields.push(currentFieldVals);
+      CSVFields.push(currentFieldTimes);
+
+      for(let i = 0; i < data[currentFieldVals].length; i++){
+        dataPoints[i][currentFieldVals] = data[currentFieldVals][i];
+        dataPoints[i][currentFieldTimes] = data[currentFieldTimes][i];
+      }
+    }
+    console.log(dataPoints);
+    console.log(CSVFields);
+
+    const csvfile = parse(dataPoints, CSVFields);
+
+    return db.collection('mail').add({
+        to: auth.currentUser?.email,
+        message: {
+          subject: 'Hello from Firebase!',
+          text: "Please enjoy your telemetry courtesy of CUBE.",
+          attachments: [{filename: 'fox.csv', content: csvfile }],
+        },
+      }).then(() => console.log('Queued email for delivery!'));
+  })
+
 }

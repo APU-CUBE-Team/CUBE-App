@@ -84,6 +84,9 @@ export default function WorkspaceScreen({ route }) {
             style={styles.workspaceSwitch}
           />
         </View>
+        <TouchableOpacity style={{width: 250, height: 250, backgroundColor: "#0ff"}} 
+        onPress={() => AsyncStorage.removeItem("@Order")}/>
+
         {/* <Text style={[styles.title]}>Visable Data</Text>
         {settings.map((e) => {
           return (
@@ -136,7 +139,7 @@ export default function WorkspaceScreen({ route }) {
   );
 
   function exportTelemetry() {
-    sendEmail('jroland16@apu.edu', 'csv');
+    sendEmail();
     //TODO: I guess this is where we call the cloud function and then inform the user when it is complete.
     alert("Functions yeet");
   }

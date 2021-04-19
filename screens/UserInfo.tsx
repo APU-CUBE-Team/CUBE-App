@@ -168,13 +168,10 @@ export default function UserScreen({
   );
 
   function checkPW() {
-    console.log("Passed");
-    console.log(password === confirmPassword);
     if (password.length < 6) {
       setPrompt("Password must be more than 6 chars.");
       setOverlay(true);
     } else if (password === confirmPassword) {
-      console.log("Success");
       SignUp(firstName, lastName, email, password, role);
       setPrompt("New User Created");
       setOverlay(true);

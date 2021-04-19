@@ -1,12 +1,14 @@
 import { parameterType } from "../../components/AlertPrompt";
 import { organizations } from "../query-DB";
 
-export const alertsChanges = organizations
-  .doc("AdminOrganization")
-  .collection("alerts")
-  .onSnapshot((doc) => {
-    console.log("Current data: ", doc.docChanges());
-  });
+export async function getAlertsChanges() {
+  return organizations
+    .doc("AdminOrganization")
+    .collection("alerts")
+    .onSnapshot((doc) => {
+      console.log("Current data: ", doc.docChanges());
+    });
+}
 
 export async function pushNewAlertParameter(newParam: parameterType) {
   // doc Example
