@@ -26,6 +26,11 @@ export const storeTelemetryPreference = async (value: string) => {
     return AsyncStorage.setItem('@Telemetry', jsonValue)
 }
 
+export const storeTelOrder = async (value: string[]) => {
+    const jsonValue = JSON.stringify(value)
+    return AsyncStorage.setItem('@Order', jsonValue)
+}
+
 export const getSettings = async () => {
     try {
         const jsonValue = await AsyncStorage.getItem('@VisibleData')

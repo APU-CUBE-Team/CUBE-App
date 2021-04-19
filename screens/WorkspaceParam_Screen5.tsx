@@ -84,6 +84,9 @@ export default function WorkspaceScreen({ route }) {
             style={styles.workspaceSwitch}
           />
         </View>
+        <TouchableOpacity style={{width: 250, height: 250, backgroundColor: "#0ff"}} 
+        onPress={() => AsyncStorage.removeItem("@Order")}/>
+
         {/* <Text style={[styles.title]}>Visable Data</Text>
         {settings.map((e) => {
           return (
