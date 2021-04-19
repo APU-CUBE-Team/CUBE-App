@@ -1,8 +1,10 @@
 import * as React from "react";
 import { StyleSheet, View, Text, TextInput, SafeAreaView, ScrollView, FlatList, TouchableOpacity } from "react-native";
+
 import { useFocusEffect } from "@react-navigation/native";
 import { resetOrientation } from "../hooks/resetOrientation";
 import { AlertPrompt } from '../components/AlertPrompt';
+import { getAlertsCollection } from '../util/alert-conditions';
 import Button from '../components/Button';
 import Colors from "../constants/Colors";
 import Screen from "../constants/Layout";
@@ -39,13 +41,13 @@ const styles = StyleSheet.create({
     margin: 15,
   },
   parameter: {
-     backgroundColor: Colors.c.gray,
-     margin: 10,
-     borderRadius: 25,
-     width: Screen.window.width - 50,
-     height: 50,
-     alignItems: "center",
-     justifyContent: "center",
+    backgroundColor: Colors.c.gray,
+    margin: 10,
+    borderRadius: 25,
+    width: Screen.window.width - 50,
+    height: 50,
+    alignItems: "center",
+    justifyContent: "center",
   },
   parameterText: {
     color: Colors.newColors.text,
@@ -61,119 +63,77 @@ const styles = StyleSheet.create({
 
 export default function AlertConditionsScreen() {
   const [overlay, setOverlay] = React.useState(false);
+  const [alerts, setAlerts] = React.useState<any[]>([]);
+  const [prompt, setPrompt] = React.useState("New Parameter");
+  const [message, setMessage] = React.useState("");
+  const [op, setOp] = React.useState("");
+  const [telem, setTelem] = React.useState("");
 
   useFocusEffect(
     React.useCallback(() => {
       resetOrientation();
+      getAlertsCollection().then(ret => {
+        setAlerts(ret)
+      })
     }, [])
   );
-
-  let alerts: any[] = []
-  db.collection("Organizations")
-    .doc("AdminOrganization")
-    .collection("alerts")
-    .get()
-    .then(querySnapshot => {
-      
-      querySnapshot.forEach(doc => {
-        alerts.push(doc.data())
-      })
-      console.log(`Alerts found: `, alerts)
-      db.collection("Organizations")
-        .doc("UserOrganization")
-        .collection("cubesats")
-        .doc("Fox1_Cliff")
-        .get()
-        .then(ret => {
-          let data = ret.data()
-          for (let i = 0; alerts.length; i++) {
-            console.log(alerts[i].telem + "_Vals")
-            let k = data[alerts[i].telem + "_Vals"]
-            console.log("K ", k)
-            let warnLevel = alerts[i].val
-            console.log("warning level ", warnLevel)
-            let warn = false
-            switch (alerts[i].op) {
-              case "=":
-                if (k[k.length - 1] === warnLevel)
-                  warn = true
-                break;
-              case "!=":
-                if (k[k.length - 1] !== warnLevel)
-                  warn = true
-                break;
-              case ">":
-                if (k[k.length - 1] > warnLevel)
-                  warn = true
-                break;
-              case ">=":
-                if (k[k.length - 1] >= warnLevel)
-                  warn = true
-                break;
-              case "<":
-                if (k[k.length - 1] < warnLevel)
-                  warn = true
-                break;
-              case "<=":
-                if (k[k.length - 1] <= warnLevel)
-                  warn = true
-                break;
-            }
-            if (warn) {
-              // TODO 
-              //pushNotification("ExponentPushToken[Ye21XeFmpryWWKEu23OqSP]", alerts[i].msg)
-              console.log(`Successfully triggered on ${alerts[i].telem}`)
-            }
-          }
-        })
-        
-      })
-
-      const Parameter = () => {
-        for(let i = 0; i <= alerts.length; i++) {
-          return (
-          <TouchableOpacity 
-            style={styles.parameter}
-            onPress={alert("todo")}
-          >
-            <Text style={styles.parameterText}>Parameter {alerts[i]}</Text>
-            <Text style={styles.parameterSubText}>{alerts[i].telem}</Text>
-          </TouchableOpacity>
-          )
-        }
-      }
-
 
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
-      <TouchableOpacity
-        style={styles.parameter}
-        >
-          <Text style={styles.parameterText}>Parameter 1</Text>
-          <Text style={styles.parameterSubText}> thermal conditions</Text>
-        </TouchableOpacity>
+        {alerts.map(e => {
+          return (
+            <TouchableOpacity
+              style={styles.parameter}
+              onPress={() => {
+                setPrompt("Edit Parameter")
+                setMessage(e.msg)
+                setOp(e.op)
+                setTelem(e.telem)
+                setOverlay(true)
+              }}
+            >
+              <Text style={styles.parameterText}>{`${e.telem} Parameter`}</Text>
+              <Text style={styles.parameterSubText}>{e.msg}</Text>
+            </TouchableOpacity>
+          )
+        })}
+
         <TouchableOpacity
-        style={styles.parameter}
+          style={styles.parameter}
         >
           <Text style={styles.parameterText}>Parameter 2</Text>
           <Text style={styles.parameterSubText}> propulsion conditions</Text>
         </TouchableOpacity>
         <TouchableOpacity
-        style={styles.parameter}
+          style={styles.parameter}
         >
           <Text style={styles.parameterText}>Parameter 3</Text>
           <Text style={styles.parameterSubText}> another thing</Text>
-        </TouchableOpacity>      
-      </ScrollView>     
+        </TouchableOpacity>
+      </ScrollView>
+      <FlatList
+        data={alerts}
+        renderItem={({ item }) => {
+          <TouchableOpacity style={styles.parameter}>
+            <Text style={styles.parameterText}>{`${item.telem} Parameter`}</Text>
+            <Text style={styles.parameterSubText}>{item.msg}</Text>
+          </TouchableOpacity>
+        }}
+
+      />
+
       <Button
         label={"New Parameter"}
         onPressAction={() => setOverlay(true)}
       />
       {overlay &&
-        <AlertPrompt 
+        <AlertPrompt
           closeOverlay={() => setOverlay(false)}
-          promptText={"New Parameter"}
+          promptText={prompt}
+          telem={telem}
+          op={op}
+          message={message}
         />
       }
     </SafeAreaView>

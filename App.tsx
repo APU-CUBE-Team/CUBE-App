@@ -9,14 +9,16 @@ import * as Notifications from 'expo-notifications';
 import Navigation from './navigation';
 
 export default function App() {
-  const isLoadingComplete = useCachedResources(); 
+  const isLoadingComplete = useCachedResources();
   const [expoPushToken, setExpoPushToken] = React.useState('');
   const [notification, setNotification] = React.useState<any>(false);
   const notificationListener = React.useRef<Subscription>();
   const responseListener = React.useRef<Subscription>();
-  
+
   React.useEffect(() => {
-    registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
+    registerForPushNotificationsAsync().then(
+      // token => setExpoPushToken(token)
+    );
 
     notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
       //setNotification(notification);
@@ -30,6 +32,8 @@ export default function App() {
       Notifications.removeNotificationSubscription(notificationListener);
       Notifications.removeNotificationSubscription(responseListener);
     };
+
+
   }, []);
 
   if (!isLoadingComplete) {
@@ -43,6 +47,7 @@ export default function App() {
     );
   }
 }
+
 
 async function registerForPushNotificationsAsync() {
   let token;
