@@ -34,8 +34,8 @@ export default function ExpandedTelScreen({
   const updateGroupList = () => {
     AsyncStorage.getItem("@Groups").then((ret: any) => {
       let n = JSON.parse(ret)
-      console.log("n",n)
-      console.log("groups", groups)
+      // console.log("n",n)
+      // console.log("groups", groups)
       if (n !== null) {
         setGroups([...n]);
         let temp = {}

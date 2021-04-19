@@ -73,30 +73,18 @@ export class TelemGroup extends React.Component {
         fields: {},
         updated: false
     }
-    // function updateFilter({value}: {value: string}) {
-    //     setFilter(value)
-    //     if (value === '' || !value) {
-    //     setFilteredList(props.telem);
-    //     } else {
-    //     setFilteredList(props.telem.filter(
-    //         existingItem => (
-    //             existingItem.title.toUpperCase().includes(value.toUpperCase()) ||
-    //             existingItem.message.toUpperCase().includes(value.toUpperCase())
-    //         )
-    //     ))
-    //     }
-    // }
 
     updateVals = () => { 
         let t: any[] = []
         Object.keys(this.state.fields).forEach(e => {
-           
-            let p = this.props.telem.filter(
-                existingItem => (
-                    existingItem.key.toUpperCase().includes(this.state.fields[e].toUpperCase()) 
+            if (this.state.fields[e].replace(/ /g, '') !== "") {
+                let p = this.props.telem.filter(
+                    existingItem => (
+                        existingItem.key.toUpperCase().includes(this.state.fields[e].toUpperCase()) 
+                    )
                 )
-            )
-            t.splice(0,0, ...p)
+                t.splice(0,0, ...p)
+            }
         })
         this.setState({thisTel: t})
     }

@@ -56,7 +56,7 @@ export default function CompTelScreen({ dataSet, setData, updateOrder }: { dataS
                 keyExtractor={(item, index) => `draggable-item-${item.key}`}
                 onDragEnd={({ data, from, to }) => {
                     setData(data)
-                    console.log(`From: ${from}\nTo: ${to}`)
+                    // console.log(`From: ${from}\nTo: ${to}`)
                     updateOrder(from, to)
                 }}
             />

@@ -166,7 +166,7 @@ export default function NotificationScreen({ navigation }) {
         setNotificationList(response);
 
         setFilteredList(response)
-        console.log("Loaded")
+        // console.log("Loaded")
         rerender(render + 1);
       });
     }, [])

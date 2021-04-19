@@ -139,7 +139,7 @@ function TestMode() {
           });
       },
       signOut: () => {
-        console.log("Auth Call");
+        // console.log("Auth Call");
         deleteToken().then(() => {
           signOut();
           dispatch({ type: "SIGN_OUT" });

@@ -37,7 +37,7 @@ export default function ExpandedTelScreen({ navigation, route }) {
           AsyncStorage.getItem("@Order").then((ret: any) => {
             let temp = JSON.parse(ret)
             
-            console.log(temp)
+            // console.log(temp)
             if (temp === null || temp.length === 0) {
               data.names.forEach((item: { item: string }) => {
                 dataPoints.push({
@@ -76,9 +76,9 @@ export default function ExpandedTelScreen({ navigation, route }) {
             updateOrder={(from: number, to: number) => {
               let t = order.splice(from, 1)
               order.splice(to, 0, ...t)
-              console.log(order)
+              // console.log(order)
               setOrder(order)
-              console.log(order.length)
+              // console.log(order.length)
 
               storeTelOrder(order)
             }}
