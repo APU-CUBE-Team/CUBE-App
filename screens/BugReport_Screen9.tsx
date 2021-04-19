@@ -24,6 +24,8 @@ import { TextField } from "../components/Form";
 import Colors from "../constants/Colors";
 import Screen from "../constants/Layout";
 
+import { reportBug } from "../util/bug-reports";
+
 //const screen = Dimensions.get("window");
 const styles = StyleSheet.create({
   container: {
@@ -102,38 +104,15 @@ export default function BugReportScreen() {
           onChange={setReport}
           customStyle={false}
         ></FloatingLabelInput>
-        {/* <TextInput
-          style={styles.input}
-          autoCapitalize="none"
-          placeholderTextColor={Colors.c.lightGray}
-          label="Description"
-          placeholder="Tell us what happened..."
-          value={report}
-          onChangeText={(report) => setReport(report)}
-          multiline={true}
-        />
-        <TouchableOpacity
-          style={styles.reportButton}
-          onPress={() => console.log({})}
-        >
-          <Text style={styles.text}>Submit report</Text>
-        </TouchableOpacity> */}
 
         <AppButton
           label="Submit Report"
-
-          ///////////////////////////////////////////////////////////////
-          // TODO: CONNECT REPORT TO BACKEND
-          // ──────▄▀▄─────▄▀▄
-          // ─────▄█░░▀▀▀▀▀░░█▄
-          // ─▄▄──█░░░░░░░░░░░█──▄▄
-          // █▄▄█─█░░▀░░┬░░▀░░█─█▄▄█
-          ///////////////////////////////////////////////////////////////
-          onPressAction={() => console.log(report)}
-
+          onPressAction={() => {
+            console.log(report);
+            reportBug(report);
+          }}
         ></AppButton>
       </SafeAreaView>
-
     </KeyboardAvoidingView>
   );
 }
