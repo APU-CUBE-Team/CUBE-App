@@ -58,7 +58,7 @@ export default function NotificationRow({
 
     //const [overlay, setOverlay] = React.useState(false);
     let day = new Date(timeStamp * 1000).toLocaleDateString("en-US");
-    let time = new Date(timeStamp*1000).toLocaleTimeString("en-US");
+    let time = new Date(timeStamp * 1000).toLocaleTimeString("en-US");
     let formattedDate = day + "\n" + time
     let shortMessage = ""
     if (bodyMessage.length > 95) {

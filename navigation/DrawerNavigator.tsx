@@ -9,7 +9,8 @@ import {
   MapParamList,
   NotificationsParamList,
   UserPermParamList,
-  BugReportParamList
+  BugReportParamList,
+  ControlParamList
 } from '../types';
 //How we will be importing our screens. I would prefer if we separate Screen imports from component imports so that it is easier to tell what 
 // is what.
@@ -24,6 +25,8 @@ import EditRoleScreen from '../screens/EditRole_Screen12';
 import CreateUserScreen from '../screens/CreateUser_Screen11';
 import TeamRolesScreen from '../screens/TeamRoles_Screen10';
 import EditUserScreen from '../screens/EditUser_Screen';
+import ControlScreen from '../screens/Control_Screen';
+
 
 const Drawer = createDrawerNavigator<DrawerParamList>();
 
@@ -76,6 +79,10 @@ export default function DrawerNavigator({ route }) {
         name="User Permissions"
         component={UserPermissions}
       />
+      <Drawer.Screen
+        name="Control"
+        component={Control}
+      />
     </Drawer.Navigator>
   );
 }
@@ -108,7 +115,7 @@ const TelemetryMapStack = createStackNavigator<MapParamList>();
 const ThreeOrbitStack = createStackNavigator<ThreeOrbitParamList>();
 const NotificationStack = createStackNavigator<NotificationsParamList>();
 const BugReportStack = createStackNavigator<BugReportParamList>();
-
+const ControlStack = createStackNavigator<ControlParamList>();
 
 function TelemetryMap({ navigation, route }) {
   let path = route.params?.InitialPath;
@@ -272,5 +279,21 @@ function UserPermissions({ navigation }) {
         }}
       />
     </TeamStack.Navigator>
+  )
+}
+
+function Control({ navigation }) {
+  return (
+    <ControlStack.Navigator>
+      <ControlStack.Screen
+        name="ControlPage"
+        component={ControlScreen}
+        options={{
+          headerShown: false,
+          headerTitle: 'Control',
+          headerRight: () => <DrawerToggle onPress={() => { navigation.toggleDrawer() }} />
+        }}
+      />
+    </ControlStack.Navigator>
   )
 }
