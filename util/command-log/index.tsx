@@ -1,16 +1,21 @@
-import { db } from "../firebase-util";
 import { organizations } from "../query-DB";
+import firebase from "firebase";
+import { auth } from "../firebase-util";
 
 export async function setCommandLog(data: any) {
   //TODO: parse data into clean info for db. this might work?
-  let commandInfo = JSON.parse(data);
-
+  let currTime = firebase.firestore.Timestamp.fromDate(new Date());
+  let commandData = {
+    command: data,
+    time: currTime,
+    user: { email: auth.currentUser?.email, uid: auth.currentUser?.uid },
+  };
   return await organizations
     .doc("AdminOrganization")
     .collection("cubesats")
     .doc("cubesat_001")
     .collection("commands")
-    .add(commandInfo);
+    .add(commandData);
 }
 
 export async function getCommandLog() {
