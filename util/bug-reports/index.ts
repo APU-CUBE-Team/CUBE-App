@@ -12,6 +12,11 @@ let user = auth.currentUser;
 let userEmail = `${user?.email}`;
 // if collection exists, add to that collection. else, return error
 export async function reportBug(message: string) {
+<<<<<<< Updated upstream
+=======
+  let userEmail = `${auth.currentUser?.email}`;
+  let userID = `${auth.currentUser?.uid}`;
+>>>>>>> Stashed changes
   await db
     .collection("TestOrganization") // TODO: designate collection to logged in organization
     .doc("team")
@@ -22,9 +27,8 @@ export async function reportBug(message: string) {
           message,
           currTime,
           userEmail,
+          userID,
         },
       },
     });
-
-  console.log(userEmail); // TODO: implement user data
 }

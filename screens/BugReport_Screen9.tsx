@@ -24,6 +24,8 @@ import { TextField } from "../components/Form";
 import Colors from "../constants/Colors";
 import Screen from "../constants/Layout";
 
+import { reportBug } from "../util/bug-reports";
+
 //const screen = Dimensions.get("window");
 const styles = StyleSheet.create({
   container: {
@@ -121,19 +123,12 @@ export default function BugReportScreen() {
 
         <AppButton
           label="Submit Report"
-
-          ///////////////////////////////////////////////////////////////
-          // TODO: CONNECT REPORT TO BACKEND
-          // ──────▄▀▄─────▄▀▄
-          // ─────▄█░░▀▀▀▀▀░░█▄
-          // ─▄▄──█░░░░░░░░░░░█──▄▄
-          // █▄▄█─█░░▀░░┬░░▀░░█─█▄▄█
-          ///////////////////////////////////////////////////////////////
-          onPressAction={() => console.log(report)}
-
+          onPressAction={() => {
+            reportBug(report);
+            console.log(report);
+          }}
         ></AppButton>
       </SafeAreaView>
-
     </KeyboardAvoidingView>
   );
 }
