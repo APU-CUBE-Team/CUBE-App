@@ -32,8 +32,8 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.newColors.background,
   },
   iconSafeArea: {
-    top: 10,
-    flex: 2,
+    flex: 1.5,
+    paddingTop: 20,
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: Colors.newColors.background,
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
   },
   text3: {
     color: Colors.newColors.text,
-    paddingTop: 20,
+    paddingTop: 10,
     fontSize: 70,
     textAlign: "center",
   },
@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
   signInButton: {
     backgroundColor: Colors.newColors.primary,
     width: Screen.window.width - 30,
-    height: 40,
+    height: 30,
     alignItems: "center",
     justifyContent: "center",
     marginTop: 30,
@@ -118,9 +118,13 @@ export default function SignInScreen({ route, navigation }) {
       resetOrientation();
     }, [])
   );
-  
-  const keyboardDidShow = () => {setIconWidth(200), setIconHeight(200)};
-  const keyboardDidHide = () => {setIconHeight(300), setIconWidth(300)};
+
+  const keyboardDidShow = () => {
+    setIconWidth(200), setIconHeight(200);
+  };
+  const keyboardDidHide = () => {
+    setIconHeight(300), setIconWidth(300);
+  };
 
   Keyboard.addListener("keyboardDidShow", keyboardDidShow);
   Keyboard.addListener("keyboardDidHide", keyboardDidHide);
@@ -141,10 +145,9 @@ export default function SignInScreen({ route, navigation }) {
     return {
       width: iconWidth,
       height: iconHeight,
-      marginLeft: 20,
-      marginTop: 10,
-      tintColor: "#fff"
-    }
+      marginLeft: 15,
+      tintColor: "#fff",
+    };
   }
 
   return (
@@ -206,7 +209,9 @@ export default function SignInScreen({ route, navigation }) {
           </TouchableOpacity> */}
           <AppButton
             label="Sign In"
-            onPressAction={() => { signInAuth(username, password) }}
+            onPressAction={() => {
+              signInAuth(username, password);
+            }}
           ></AppButton>
           <TouchableOpacity
             onPress={() => navigation.navigate("CredRecovPage")}
@@ -215,6 +220,6 @@ export default function SignInScreen({ route, navigation }) {
           </TouchableOpacity>
         </View>
       </SafeAreaView>
-    </KeyboardAvoidingView >
+    </KeyboardAvoidingView>
   );
 }
