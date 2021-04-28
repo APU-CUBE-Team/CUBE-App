@@ -9,7 +9,7 @@ import Screen from "../constants/Layout";
 const defaultStyles = {
   labelStyle: {
     position: "absolute",
-    left: 15,
+    left: 10,
   },
   textInput: {
     height: 40,
@@ -19,9 +19,10 @@ const defaultStyles = {
     borderBottomColor: "#aaa",
     width: Screen.window.width - 30,
     // backgroundColor: Colors.newColors.background2,
-    padding: 10,
-    margin: 5,
+    padding: 5,
+    margin: 7,
     fontFamily: "GillSans-Reg",
+
 
   },
   inputView: {

@@ -31,6 +31,7 @@ import {
   getAdminsOfTeam,
   getUsersOfTeam,
 } from "../util/edit-roles";
+import { Value } from "react-native-reanimated";
 
 const screen = Dimensions.get("window");
 const styles = StyleSheet.create({
@@ -140,14 +141,14 @@ export default function TeamRolesScreen({ navigation }) {
         setAdmins(response);
         rerender(render + 1);
         setFilteredAdmins(response)
-        console.log("LoadedAdmins")
       });
       getUsersOfTeam().then((response) => {
         setUsers(response);
         rerender(render + 1);
         setFilteredUsers(response)
-        console.log("LoadedUsers")
       });
+      updateFilter(filter);
+      console.log("RAN")
     }, [])
   );
 
@@ -179,7 +180,9 @@ export default function TeamRolesScreen({ navigation }) {
       style={styles.container}
       behavior={Platform.OS === "ios" ? "padding" : null}
     >
-      <ScrollView>
+      <ScrollView
+      // content offset = y height 
+      >
         <Search
           onChangeText={(value) => updateFilter(value)}
           value={filter}

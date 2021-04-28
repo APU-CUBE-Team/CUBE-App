@@ -27,7 +27,7 @@ import { Text, View } from "../components/Themed";
 
 import Colors from "../constants/Colors";
 import Screen from "../constants/Layout";
-import { MyTheme } from "../navigation/index";
+import Navigation, { MyTheme } from "../navigation/index";
 
 import { SignUp } from "../util/create-user/index";
 import { updateUser } from "../util/edit-roles";
@@ -155,6 +155,7 @@ export default function UserScreen({
   const [role, setRole] = React.useState("1");
   const [prompt, setPrompt] = React.useState(""); // for prompt component
   const [overlay, setOverlay] = React.useState(false); // for prompt component
+  const [success, setSuccess] = React.useState(false);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -169,12 +170,13 @@ export default function UserScreen({
 
   function checkPW() {
     if (password.length < 6) {
-      setPrompt("Password must be more than 6 chars.");
+      setPrompt("Password must be more than 6 characters");
       setOverlay(true);
     } else if (password === confirmPassword) {
       SignUp(firstName, lastName, email, password, role);
       setPrompt("New User Created");
       setOverlay(true);
+      setSuccess(true);
     } else {
       setPrompt("Please double check that your passwords match");
       setOverlay(true);
@@ -185,6 +187,7 @@ export default function UserScreen({
     // is this create user or edit user screen?
     if (create) {
       checkPW(); // check pw and create user
+
     } else {
       // navigate to edit user page and update user stuff
       updateUser(email, role, lastName, firstName);
@@ -225,35 +228,7 @@ export default function UserScreen({
               editVal={!create}
             ></FloatingLabelInput>
 
-            {/* <Text style={styles.text2}>First Name</Text>
-            <TextInput
-              placeholder="John"
-              placeholderTextColor={Colors.c.gray2}
-              value={firstName}
-              onChangeText={(firstName) => setFirstName(firstName)}
-              style={styles.input}
-              autoCapitalize="none"
-            /> */}
-            {/* 
-            <Text style={styles.text2}>Last Name</Text>
-            <TextInput
-              placeholder="Doe"
-              value={lastName}
-              onChangeText={(lastName) => setLastName(lastName)}
-              style={styles.input}
-              autoCapitalize="none"
-              placeholderTextColor={Colors.c.gray2}
-            />
 
-            <Text style={styles.text2}>Email Address</Text>
-            <TextInput
-              placeholder="Email Address"
-              value={email}
-              onChangeText={(email) => setEmail(email)}
-              style={styles.input}
-              autoCapitalize="none"
-              placeholderTextColor={Colors.c.gray2}
-            /> */}
             {create && (
               <View style={styles.inputSafeArea2}>
                 <FloatingLabelInput
@@ -268,30 +243,7 @@ export default function UserScreen({
                   onChange={setConfirmPassword}
                   customStyle={true}
                 ></FloatingLabelInput>
-                {/* 
-                <Text style={styles.text2}>Password</Text>
-                <TextInput
-                  placeholder="******"
-                  value={password}
-                  onChangeText={(password) => setPassword(password)}
-                  secureTextEntry={true}
-                  style={styles.input}
-                  autoCapitalize="none"
-                  placeholderTextColor={Colors.c.gray2}
-                />
 
-                <Text style={styles.text2}>Confirm Password</Text>
-                <TextInput
-                  placeholder="******"
-                  value={confirmPassword}
-                  onChangeText={(confirmPassword) =>
-                    setConfirmPassword(confirmPassword)
-                  }
-                  secureTextEntry={true}
-                  style={styles.input}
-                  autoCapitalize="none"
-                  placeholderTextColor={Colors.c.gray2}
-                /> */}
               </View>
             )}
             <Text style={styles.text2}>Permissions</Text>
@@ -322,16 +274,7 @@ export default function UserScreen({
                 }}
               ></AppButton>
             )}
-            {/* <TouchableOpacity
-              style={styles.signInButton}
-              onPress={() => checkVersion()}
-            >
-              {create ? (
-                <Text style={styles.text}>Add User</Text>
-              ) : (
-                <Text style={styles.text}>Save Changes</Text>
-              )}
-            </TouchableOpacity> */}
+
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
@@ -344,6 +287,10 @@ export default function UserScreen({
               key: "Okay",
               action: () => {
                 setOverlay(false);
+                if (success) {
+                  goBack();
+                }
+
               },
             },
           ]}

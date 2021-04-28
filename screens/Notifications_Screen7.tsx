@@ -217,14 +217,7 @@ export default function NotificationScreen({ navigation }) {
         </View> */}
 
 
-        <ScrollView
-          scrollEventThrottle={1}
-          onScroll={Animated.event(
-            [{ nativeEvent: { contentOffset: { y: scrollAnim } } }],
-            { useNativeDriver: false },
-          )
-          }
-        >
+        <ScrollView>
 
 
           <StatusBar barStyle="light-content" />
