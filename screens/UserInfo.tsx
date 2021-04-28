@@ -151,6 +151,7 @@ export default function UserScreen({
   const [lastName, setLastName] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const [uid, setUid] = React.useState("");
   const [confirmPassword, setConfirmPassword] = React.useState("");
   const [role, setRole] = React.useState("1");
   const [prompt, setPrompt] = React.useState(""); // for prompt component
@@ -164,6 +165,7 @@ export default function UserScreen({
         setLastName(user.lastName);
         setEmail(user.email);
         setRole(user.role);
+        setUid(user.uid);
       }
     }, [])
   );
@@ -190,7 +192,7 @@ export default function UserScreen({
 
     } else {
       // navigate to edit user page and update user stuff
-      updateUser(email, role, lastName, firstName);
+      updateUser(email, role, lastName, firstName, uid);
       goBack(); // don't mind this error if linter picks it up
     }
   }
