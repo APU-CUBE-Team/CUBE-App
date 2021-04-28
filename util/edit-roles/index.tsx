@@ -1,4 +1,5 @@
 import { teamMembersDBColl } from "../query-DB";
+import { auth } from "../firebase-util";
 
 // TODO: return from db
 
@@ -59,7 +60,7 @@ export function updateUser(email: any, role: any, lName: any, fName: any) {
   console.log(email, role);
 
   return teamMembersDBColl
-    .where("email", "==", email)
+    .where("uid", "==", auth.currentUser?.uid)
     .get()
     .then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
