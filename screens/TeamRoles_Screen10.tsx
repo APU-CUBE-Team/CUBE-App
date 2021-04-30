@@ -130,7 +130,7 @@ export default function TeamRolesScreen({ navigation }) {
   const [users, setUsers] = React.useState([]);
   const [render, rerender] = React.useState(0);
 
-  const [filter, setFilter] = React.useState("");
+  const [filter, setFilter] = React.useState('');
   const [filteredAdmins, setFilteredAdmins] = React.useState([]);
   const [filteredUsers, setFilteredUsers] = React.useState([]);
 
@@ -138,16 +138,23 @@ export default function TeamRolesScreen({ navigation }) {
     React.useCallback(() => {
       resetOrientation();
       getAdminsOfTeam().then((response) => {
+
         setAdmins(response);
         rerender(render + 1);
+
         setFilteredAdmins(response)
+
       });
       getUsersOfTeam().then((response) => {
         setUsers(response);
         rerender(render + 1);
+
         setFilteredUsers(response)
+
       });
+
       updateFilter(filter);
+
       console.log("RAN")
     }, [])
   );

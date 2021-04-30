@@ -192,8 +192,11 @@ export default function UserScreen({
 
     } else {
       // navigate to edit user page and update user stuff
-      updateUser(email, role, lastName, firstName, uid);
-      goBack(); // don't mind this error if linter picks it up
+      updateUser(email, role, lastName, firstName, uid).then(
+        () => { goBack() } // don't mind this error if linter picks it up
+      ).catch((error) => console.log(error));
+
+
     }
   }
 

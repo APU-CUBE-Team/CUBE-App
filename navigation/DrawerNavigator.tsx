@@ -27,6 +27,7 @@ import TeamRolesScreen from '../screens/TeamRoles_Screen10';
 import EditUserScreen from '../screens/EditUser_Screen';
 import ControlScreen from '../screens/Control_Screen';
 
+import { auth } from '../util/firebase-util';
 
 const Drawer = createDrawerNavigator<DrawerParamList>();
 
