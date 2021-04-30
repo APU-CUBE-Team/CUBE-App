@@ -56,10 +56,16 @@ export async function getUsersOfTeam() {
 /////////////////////////////////////////////////////////////////
 // TODO
 /////////////////////////////////////////////////////////////////
-export function updateUser(email: any, role: any, lName: any, fName: any, uid: any) {
+export async function updateUser(
+  email: any,
+  role: any,
+  lName: any,
+  fName: any,
+  uid: any
+) {
   console.log(email, role);
 
-  return teamMembersDBColl
+  return await teamMembersDBColl
     .where("uid", "==", uid)
     .get()
     .then((querySnapshot) => {
