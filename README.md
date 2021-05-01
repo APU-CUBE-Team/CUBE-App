@@ -2,17 +2,17 @@
 
 CUBE is a cross-platform mobile application with a polymorphic UI that expedites the analyzation of satellite telemetry by improving the legibility of data that [CubeSats](https://www.cubesat.org/) return.
 
-Team-Oriented Accounts
-![img](https://imgur.com/bkKSNxy)
+Team-Oriented Accounts  
+![img](https://imgur.com/bkKSNxy.jpg)
 
-Telemetry Visuals
-![img](https://imgur.com/ATSBzV4)
+Telemetry Visuals  
+![img](https://i.imgur.com/ATSBzV4.jpg)
 
-User-Oriented Team Management
-![img](https://imgur.com/X9qwb0s)
+User-Oriented Team Management  
+![img](https://imgur.com/X9qwb0s.jpg)
 
-Adjustable User Attributes
-![img](https://imgur.com/WQUo3IV)
+Adjustable User Attributes  
+![img](https://imgur.com/WQUo3IV.jpg)
 
 ## Prerequisites
 
