@@ -9,19 +9,19 @@
 
 <!-- Sign-In Screen -->
 <div style="display: inline-block;">
-<h2 >Sign-In Screen</h2>
+<p><strong>Sign-In Screen</strong></p>
 <img src="https://imgur.com/bkKSNxy.jpg" width="275" hspace="5"/>
 </div>
 
 <!-- Navigation -->
 <div style="display: inline-block;">
-<h2>Navigation</h2>
+<p><strong>Navigation Screen</strong></p>
 <img src=https://imgur.com/qeo66n0.jpg width="275" hspace="5" float="center"/>
 </div>
 
 <div style="display: inline-block;">
 <!-- Telemetry -->
-<h2 >Telemetry Screen</h2>
+<p><strong>Telemetry Screen</strong></p>
 <img src=https://i.imgur.com/ATSBzV4.jpg width="275" hspace="5"/>
 </div>
 
@@ -34,13 +34,13 @@
 
 <div style="display: inline-block;">
 <!-- Team Management   -->
-<h2 >Team Management Screen</h2>
+<p><strong>Team Management Screen</strong></p>
 <img src=https://imgur.com/X9qwb0s.jpg width="275" hspace="5"/>
 </div>
 
 <div style="display: inline-block;">
 <!-- User Customization Attributes   -->
-<h2>User Customization Screen</h2>
+<p><strong>User Customization Screen</strong></p>
 <img src=https://imgur.com/WQUo3IV.jpg width="275" hspace="5"/>
 </div>
 </div>
