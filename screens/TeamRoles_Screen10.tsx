@@ -140,7 +140,7 @@ export default function TeamRolesScreen({ navigation }) {
       resetOrientation();
       getUsers();
 
-      console.log("RAN")
+      setTimeout(()=> {this.scroller.scrollTo({ x: 0, y: 50, animated: false })}, 500);
     }, [])
   );
 
@@ -187,12 +187,16 @@ export default function TeamRolesScreen({ navigation }) {
   }
 
   const onScroll = (event: any) => {
-    console.log(event.nativeEvent.contentOffset.y);
+    //console.log(event.nativeEvent.contentOffset.y);
     let offset = event.nativeEvent.contentOffset.y
-    if (offset <= 0) {
+    if (offset < 37)
+      setAnimation(true)
+    else
+      setAnimation(false)
+    if (offset <= 15 && !isUpdating) {
       setPause(true);
       getUsers();
-      scrollToTop()
+      setTimeout(() => {scrollToTop()}, 1000)
     }
       
   }
@@ -209,8 +213,14 @@ export default function TeamRolesScreen({ navigation }) {
       <ScrollView
         onScroll={onScroll}
         ref={(scroller) => {this.scroller = scroller}}
+        contentOffset={{x:0, y: 50}}
       >
-        <ActivityIndicator size="large" color={Colors.newColors.primary} animating={animating}/>
+        <ActivityIndicator 
+          size="large" 
+          color={Colors.newColors.primary} 
+          animating={animating}
+          style={{marginTop: 20}}
+        />
         <Search
           onChangeText={(value) => updateFilter(value)}
           value={filter}

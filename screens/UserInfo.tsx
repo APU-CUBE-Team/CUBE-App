@@ -271,12 +271,20 @@ export default function UserScreen({
                 }}
               ></AppButton>
             ) : (
-              <AppButton
-                label="Save Changes"
-                onPressAction={() => {
-                  checkVersion();
-                }}
-              ></AppButton>
+              <View style={{flexDirection: 'row'}}>
+                <AppButton
+                  label="Save Changes"
+                  onPressAction={() => {
+                    checkVersion();
+                  }}
+                ></AppButton>
+                <AppButton
+                  label="Delete User"
+                  onPressAction={() => {
+                    //Your delete function
+                  }}
+                ></AppButton>
+              </View>
             )}
           </View>
         </ScrollView>
