@@ -80,7 +80,7 @@ export function updateUser(email: any, role: any, lName: any, fName: any) {
     });
 }
 
-export async function deleteUserAndAccount(
+export async function deleteUser(
   email: any,
   role: any,
   lName: any,
@@ -110,14 +110,4 @@ export async function deleteUserAndAccount(
     .catch((error) => {
       console.log("Error getting documents: ", error);
     });
-
-  // DELETE USER IN AUTH
-  // user
-  //   .delete()
-  //   .then(function () {
-  //     // User deleted.
-  //   })
-  //   .catch(function (error) {
-  //     // An error happened.
-  //   });
 }
