@@ -86,26 +86,6 @@ export default function WorkspaceScreen({ route }) {
         </View>
         <TouchableOpacity style={{width: 250, height: 250, backgroundColor: "#0ff"}} 
         onPress={() => AsyncStorage.removeItem("@Order")}/>
-
-        {/* <Text style={[styles.title]}>Visable Data</Text>
-        {settings.map((e) => {
-          return (
-            <View style={styles.switchRow}>
-              <Text style={[styles.title]}>{e.key}</Text>
-              <Switch
-                trackColor={{
-                  false: Colors.newColors.secondary,
-                  true: Colors.newColors.primary,
-                }}
-                thumbColor={isEnabled ? "#f4f3f4" : "#f4f3f4"}
-                ios_backgroundColor="#3e3e3e"
-                onValueChange={(b) => toggleSwitch(e)}
-                value={e.visible}
-                style={styles.workspaceSwitch}
-              />
-            </View>
-          );
-        })} */}
         <TouchableOpacity 
           onPress={()=>{
             alert(route.params?.token)

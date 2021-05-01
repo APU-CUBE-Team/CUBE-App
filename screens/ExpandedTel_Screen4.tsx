@@ -52,7 +52,6 @@ export default function ExpandedTelScreen({
   useFocusEffect(
     React.useCallback(() => {
       updateGroupList()
-      // AsyncStorage.setItem("@Groups", JSON.stringify([{groupTitle: "Test Title", telems: ["RSSI"]}]))
     }, [])
   );
 

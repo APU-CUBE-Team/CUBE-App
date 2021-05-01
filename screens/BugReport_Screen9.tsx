@@ -102,22 +102,6 @@ export default function BugReportScreen() {
           onChange={setReport}
           customStyle={false}
         ></FloatingLabelInput>
-        {/* <TextInput
-          style={styles.input}
-          autoCapitalize="none"
-          placeholderTextColor={Colors.c.lightGray}
-          label="Description"
-          placeholder="Tell us what happened..."
-          value={report}
-          onChangeText={(report) => setReport(report)}
-          multiline={true}
-        />
-        <TouchableOpacity
-          style={styles.reportButton}
-          onPress={() => console.log({})}
-        >
-          <Text style={styles.text}>Submit report</Text>
-        </TouchableOpacity> */}
 
         <AppButton
           label="Submit Report"

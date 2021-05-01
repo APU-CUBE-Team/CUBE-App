@@ -170,43 +170,18 @@ export default function SignInScreen({ route, navigation }) {
         </View>
 
         <View style={styles.inputSafeArea}>
-          {/* <TextInput
-            placeholder="Email"
-            value={username}
-            onChangeText={(username) => setUsername(username)}
-            style={styles.input}
-            autoCapitalize="none"
-            placeholderTextColor={Colors.newColors.grayText}
-          /> */}
           <FloatingLabelInput
             label="Email"
             value={username}
             onChange={setUsername}
             customStyle={false}
           ></FloatingLabelInput>
-          {/* <TextInput
-            placeholder="Password"
-            value={password}
-            onChangeText={(password) => setPassword(password)}
-            secureTextEntry={true}
-            style={styles.input}
-            autoCapitalize="none"
-            placeholderTextColor={Colors.newColors.grayText}
-          /> */}
           <FloatingLabelInput
             label="Password"
             value={password}
             onChange={setPassword}
             customStyle={true}
           ></FloatingLabelInput>
-          {/* <TouchableOpacity
-            style={styles.signInButton}
-            onPress={() => {
-              signInAuth(username, password);
-            }}
-          >
-            <Text style={styles.text}>Sign In</Text>
-          </TouchableOpacity> */}
           <AppButton
             label="Sign In"
             onPressAction={() => {

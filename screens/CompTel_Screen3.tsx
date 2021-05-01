@@ -13,22 +13,7 @@ import DraggableFlatList, {
 export default function CompTelScreen({ dataSet, setData, updateOrder }: { dataSet: any, setData: Function, updateOrder: Function }) {
     const [r, rerender] = React.useState(0);
     const [settings, setSet] = React.useState(telemetryList)
-    // useFocusEffect(
-    //     React.useCallback(() => {
-    //         let res: any[]
-    //         getSettings().then(ret => {
-    //             res = ret
-    //             if (ret == null)
-    //                 getSettings().then(ret2 => {
-    //                     res = ret2;
-    //                 })
-    //         }).finally(() => {
-    //             res.forEach((e) => {
-    //                 settings[settings.findIndex(p => p.key === e.key)].visible = e.visible
-    //             });
-    //             rerender(r+1);
-    //         })
-    //     }, []))
+
 
     type Item = {
         key: string;
