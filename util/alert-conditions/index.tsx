@@ -23,12 +23,11 @@ export async function getAlertsCollection() {
 }
 
 // Query documents with collection, delete subcollection
-export async function deleteAlertDoc(docField: string) {
-  // FIND the document via QUERY
+export async function deleteAlertParameter(telem: string) {
   await organizations
     .doc("AdminOrganization")
     .collection("alerts")
-    .where("msg", "==", docField)
+    .where("telem", "==", telem)
     .get()
     .then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
