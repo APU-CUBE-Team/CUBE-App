@@ -1,18 +1,26 @@
 # CUBE
 
-CUBE is a cross-platform mobile application with a polymorphic UI that expedites the analyzation of satellite telemetry by improving the legibility of data that [CubeSats](https://www.cubesat.org/) return.
+<b>CUBE is a cross-platform mobile application with a polymorphic UI that expedites the analyzation of satellite telemetry by improving the legibility of data that [CubeSats](https://www.cubesat.org/) return.</b>
+<br />
+<br />
 
-Team-Oriented Accounts  
-![img](https://imgur.com/bkKSNxy.jpg)
+<p align="center">
+<!-- Team-Oriented Accounts -->
+<img src="https://imgur.com/bkKSNxy.jpg" width="275" hspace="25"/>
+</p>
 
-Telemetry Visuals  
-![img](https://i.imgur.com/ATSBzV4.jpg)
+<p align="center">
+<!-- Telemetry Visuals -->
+<img src=https://i.imgur.com/ATSBzV4.jpg width="275" hspace="5"/>
 
-User-Oriented Team Management  
-![img](https://imgur.com/X9qwb0s.jpg)
+<!-- User-Oriented Team Management   -->
+<img src=https://imgur.com/X9qwb0s.jpg width="275" hspace="5"/>
 
-Adjustable User Attributes  
-![img](https://imgur.com/WQUo3IV.jpg)
+<!-- Adjustable User Attributes   -->
+<img src=https://imgur.com/WQUo3IV.jpg width="275" hspace="5"/>
+</p>
+
+<br />
 
 ## Prerequisites
 
@@ -24,7 +32,8 @@ The dependencies for this project are:
 - [Firebase](https://firebase.google.com/)
 - [Google Cloud Platform](https://cloud.google.com/)
 
-Ensure you have all of these installed before you deploy this repo.
+<i>Ensure you have all of these installed before you deploy this repo.</i>
+<br />
 
 ## Installation
 
@@ -45,6 +54,8 @@ or
 ```
 npm install
 ```
+
+<br />
 
 ## Usage
 
@@ -77,7 +88,7 @@ expo start
 
 ## Contributing
 
-This project is no longer in production and all dependencies are subject to deprecation.
+<i>This project is no longer in production and all dependencies are subject to deprecation.</i>
 
 ## License
 
