@@ -80,12 +80,7 @@ export function updateUser(email: any, role: any, lName: any, fName: any) {
     });
 }
 
-export async function deleteUser(
-  email: any,
-  role: any,
-  lName: any,
-  fName: any
-) {
+export async function deleteUser(email: any) {
   // FIND the document via QUERY
   await teamMembersDBColl
     .where("email", "==", email)
