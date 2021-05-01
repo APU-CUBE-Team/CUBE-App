@@ -224,36 +224,6 @@ export default function UserScreen({
               customStyle={false}
               editVal={!create}
             ></FloatingLabelInput>
-
-            {/* <Text style={styles.text2}>First Name</Text>
-            <TextInput
-              placeholder="John"
-              placeholderTextColor={Colors.c.gray2}
-              value={firstName}
-              onChangeText={(firstName) => setFirstName(firstName)}
-              style={styles.input}
-              autoCapitalize="none"
-            /> */}
-            {/* 
-            <Text style={styles.text2}>Last Name</Text>
-            <TextInput
-              placeholder="Doe"
-              value={lastName}
-              onChangeText={(lastName) => setLastName(lastName)}
-              style={styles.input}
-              autoCapitalize="none"
-              placeholderTextColor={Colors.c.gray2}
-            />
-
-            <Text style={styles.text2}>Email Address</Text>
-            <TextInput
-              placeholder="Email Address"
-              value={email}
-              onChangeText={(email) => setEmail(email)}
-              style={styles.input}
-              autoCapitalize="none"
-              placeholderTextColor={Colors.c.gray2}
-            /> */}
             {create && (
               <View style={styles.inputSafeArea2}>
                 <FloatingLabelInput
@@ -268,30 +238,6 @@ export default function UserScreen({
                   onChange={setConfirmPassword}
                   customStyle={true}
                 ></FloatingLabelInput>
-                {/* 
-                <Text style={styles.text2}>Password</Text>
-                <TextInput
-                  placeholder="******"
-                  value={password}
-                  onChangeText={(password) => setPassword(password)}
-                  secureTextEntry={true}
-                  style={styles.input}
-                  autoCapitalize="none"
-                  placeholderTextColor={Colors.c.gray2}
-                />
-
-                <Text style={styles.text2}>Confirm Password</Text>
-                <TextInput
-                  placeholder="******"
-                  value={confirmPassword}
-                  onChangeText={(confirmPassword) =>
-                    setConfirmPassword(confirmPassword)
-                  }
-                  secureTextEntry={true}
-                  style={styles.input}
-                  autoCapitalize="none"
-                  placeholderTextColor={Colors.c.gray2}
-                /> */}
               </View>
             )}
             <Text style={styles.text2}>Permissions</Text>
@@ -322,16 +268,6 @@ export default function UserScreen({
                 }}
               ></AppButton>
             )}
-            {/* <TouchableOpacity
-              style={styles.signInButton}
-              onPress={() => checkVersion()}
-            >
-              {create ? (
-                <Text style={styles.text}>Add User</Text>
-              ) : (
-                <Text style={styles.text}>Save Changes</Text>
-              )}
-            </TouchableOpacity> */}
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
