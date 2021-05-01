@@ -1,4 +1,5 @@
 import { teamMembersDBColl } from "../query-DB";
+import { auth } from "../firebase-util";
 
 // TODO: return from db
 
@@ -77,4 +78,46 @@ export function updateUser(email: any, role: any, lName: any, fName: any) {
     .catch((error) => {
       console.log("Error getting document:", error);
     });
+}
+
+export async function deleteUserAndAccount(
+  email: any,
+  role: any,
+  lName: any,
+  fName: any
+) {
+  // FIND the document via QUERY
+  await teamMembersDBColl
+    .where("email", "==", email)
+    .get()
+    .then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        // doc.data() is never undefined for query doc snapshots
+        console.log(doc.id, " => ", doc.data());
+        let docID = doc.id;
+        // DELETE QUERIED DOCUMENT
+        teamMembersDBColl
+          .doc(docID)
+          .delete()
+          .then(() => {
+            console.log("Document successfully deleted!");
+          })
+          .catch((error) => {
+            console.error("Error removing document: ", error);
+          });
+      });
+    })
+    .catch((error) => {
+      console.log("Error getting documents: ", error);
+    });
+
+  // DELETE USER IN AUTH
+  // user
+  //   .delete()
+  //   .then(function () {
+  //     // User deleted.
+  //   })
+  //   .catch(function (error) {
+  //     // An error happened.
+  //   });
 }

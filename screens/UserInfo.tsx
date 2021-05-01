@@ -66,7 +66,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
     fontFamily: "GillSans-Reg",
-
   },
   separator: {
     marginVertical: 30,
@@ -78,7 +77,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     textAlign: "center",
     fontFamily: "GillSans-Reg",
-
   },
   text2: {
     color: Colors.newColors.text,
@@ -87,7 +85,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     marginTop: 20,
     fontFamily: "GillSans-Reg",
-
   },
   input: {
     backgroundColor: Colors.newColors.background2,
@@ -98,7 +95,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     color: Colors.c.white,
     fontFamily: "GillSans-Reg",
-
   },
   signInButton: {
     backgroundColor: Colors.newColors.primary,
@@ -129,7 +125,6 @@ const styles = StyleSheet.create({
     color: Colors.c.white,
     fontSize: 20,
     height: 150,
-
   },
   pickerContainer: {
     flexDirection: "row",
@@ -315,12 +310,20 @@ export default function UserScreen({
                 }}
               ></AppButton>
             ) : (
-              <AppButton
-                label="Save Changes"
-                onPressAction={() => {
-                  checkVersion();
-                }}
-              ></AppButton>
+              <View style={{ flexDirection: "row" }}>
+                <AppButton
+                  label="Save Changes"
+                  onPressAction={() => {
+                    checkVersion();
+                  }}
+                ></AppButton>
+                <AppButton
+                  label="Delete User"
+                  onPressAction={() => {
+                    //Your delete function
+                  }}
+                ></AppButton>
+              </View>
             )}
             {/* <TouchableOpacity
               style={styles.signInButton}
