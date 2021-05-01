@@ -23,5 +23,3 @@ export function SignUp(
       });
     });
 }
-
-export function updateUser(email: any, role: any, fName: any, lName: any) {}

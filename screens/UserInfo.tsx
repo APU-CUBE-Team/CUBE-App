@@ -27,7 +27,7 @@ import { Text, View } from "../components/Themed";
 
 import Colors from "../constants/Colors";
 import Screen from "../constants/Layout";
-import { MyTheme } from "../navigation/index";
+import Navigation, { MyTheme } from "../navigation/index";
 
 import { SignUp } from "../util/create-user/index";
 import { updateUser } from "../util/edit-roles";
@@ -151,10 +151,12 @@ export default function UserScreen({
   const [lastName, setLastName] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const [uid, setUid] = React.useState("");
   const [confirmPassword, setConfirmPassword] = React.useState("");
   const [role, setRole] = React.useState("1");
   const [prompt, setPrompt] = React.useState(""); // for prompt component
   const [overlay, setOverlay] = React.useState(false); // for prompt component
+  const [success, setSuccess] = React.useState(false);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -163,18 +165,20 @@ export default function UserScreen({
         setLastName(user.lastName);
         setEmail(user.email);
         setRole(user.role);
+        setUid(user.uid);
       }
     }, [])
   );
 
   function checkPW() {
     if (password.length < 6) {
-      setPrompt("Password must be more than 6 chars.");
+      setPrompt("Password must be more than 6 characters");
       setOverlay(true);
     } else if (password === confirmPassword) {
       SignUp(firstName, lastName, email, password, role);
       setPrompt("New User Created");
       setOverlay(true);
+      setSuccess(true);
     } else {
       setPrompt("Please double check that your passwords match");
       setOverlay(true);
@@ -185,10 +189,14 @@ export default function UserScreen({
     // is this create user or edit user screen?
     if (create) {
       checkPW(); // check pw and create user
+
     } else {
       // navigate to edit user page and update user stuff
-      updateUser(email, role, lastName, firstName);
-      goBack(); // don't mind this error if linter picks it up
+      updateUser(email, role, lastName, firstName, uid).then(
+        () => { goBack() } // don't mind this error if linter picks it up
+      ).catch((error) => console.log(error));
+
+
     }
   }
 
@@ -224,6 +232,8 @@ export default function UserScreen({
               customStyle={false}
               editVal={!create}
             ></FloatingLabelInput>
+
+
             {create && (
               <View style={styles.inputSafeArea2}>
                 <FloatingLabelInput
@@ -280,6 +290,10 @@ export default function UserScreen({
               key: "Okay",
               action: () => {
                 setOverlay(false);
+                if (success) {
+                  goBack();
+                }
+
               },
             },
           ]}

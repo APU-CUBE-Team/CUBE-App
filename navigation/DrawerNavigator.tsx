@@ -21,12 +21,12 @@ import TelemetryScreen from '../screens/TelemetryScreen';
 import WorkspaceScreen from '../screens/WorkspaceParam_Screen5';
 import MapScreen from '../screens/Map_Screen6';
 import NotificationsScreen from '../screens/Notifications_Screen7';
-import EditRoleScreen from '../screens/EditRole_Screen12';
 import CreateUserScreen from '../screens/CreateUser_Screen11';
 import TeamRolesScreen from '../screens/TeamRoles_Screen10';
 import EditUserScreen from '../screens/EditUser_Screen';
 import ControlScreen from '../screens/Control_Screen';
 
+import { auth } from '../util/firebase-util';
 
 const Drawer = createDrawerNavigator<DrawerParamList>();
 
@@ -256,22 +256,6 @@ function UserPermissions({ navigation }) {
           //headerRight: () => <DrawerToggle onPress={() => { navigation.toggleDrawer() }} />
         }}
       />
-      <TeamStack.Screen
-        name="EditRolePage"
-        component={EditRoleScreen}
-        options={{
-          headerTitle: 'Edit Role',
-          headerRight: () => <DrawerToggle onPress={() => { navigation.toggleDrawer() }} />
-        }}
-      />
-      {/* <TeamStack.Screen
-        name="UserPermPage"
-        component={UserPerm}
-        options={{
-          headerTitle: 'User Permissions',
-          headerRight: () => <DrawerToggle onPress={() => { navigation.toggleDrawer() }} />
-        }}
-      /> */}
       <TeamStack.Screen
         name="EditUserPage"
         component={EditUserScreen}

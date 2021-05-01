@@ -4,7 +4,7 @@ import {
   Button,
   StyleSheet,
   TouchableOpacity,
-  TextInput,
+  ActivityIndicator,
   SafeAreaView,
   StatusBar,
   Dimensions,
@@ -31,6 +31,7 @@ import {
   getAdminsOfTeam,
   getUsersOfTeam,
 } from "../util/edit-roles";
+import { Value } from "react-native-reanimated";
 
 const screen = Dimensions.get("window");
 const styles = StyleSheet.create({
@@ -128,28 +129,39 @@ export default function TeamRolesScreen({ navigation }) {
   const [admins, setAdmins] = React.useState([]);
   const [users, setUsers] = React.useState([]);
   const [render, rerender] = React.useState(0);
-
-  const [filter, setFilter] = React.useState("");
+  const [isUpdating, setPause] = React.useState(false);
+  const [animating, setAnimation] = React.useState(false);
+  const [filter, setFilter] = React.useState('');
   const [filteredAdmins, setFilteredAdmins] = React.useState([]);
   const [filteredUsers, setFilteredUsers] = React.useState([]);
 
   useFocusEffect(
     React.useCallback(() => {
       resetOrientation();
-      getAdminsOfTeam().then((response) => {
-        setAdmins(response);
-        rerender(render + 1);
-        setFilteredAdmins(response)
-        // console.log("LoadedAdmins")
-      });
-      getUsersOfTeam().then((response) => {
-        setUsers(response);
-        rerender(render + 1);
-        setFilteredUsers(response)
-        // console.log("LoadedUsers")
-      });
+      getUsers();
+
+      console.log("RAN")
     }, [])
   );
+
+  function getUsers() {
+    getAdminsOfTeam().then((response) => {
+
+      setAdmins(response);
+      rerender(render + 1);
+
+      setFilteredAdmins(response)
+    });
+    getUsersOfTeam().then((response) => {
+      setUsers(response);
+      rerender(render + 1);
+
+      setFilteredUsers(response)
+    });
+
+    updateFilter(filter);
+    setPause(false);
+  }
 
   function updateFilter(value) {
     setFilter(value)
@@ -174,12 +186,31 @@ export default function TeamRolesScreen({ navigation }) {
     }
   }
 
+  const onScroll = (event: any) => {
+    console.log(event.nativeEvent.contentOffset.y);
+    let offset = event.nativeEvent.contentOffset.y
+    if (offset <= 0) {
+      setPause(true);
+      getUsers();
+      scrollToTop()
+    }
+      
+  }
+
+  const scrollToTop = () => {
+    this.scroller.scrollTo({x: 0, y: 50});
+  };
+
   return (
     <KeyboardAvoidingView
       style={styles.container}
       behavior={Platform.OS === "ios" ? "padding" : null}
     >
-      <ScrollView>
+      <ScrollView
+        onScroll={onScroll}
+        ref={(scroller) => {this.scroller = scroller}}
+      >
+        <ActivityIndicator size="large" color={Colors.newColors.primary} animating={animating}/>
         <Search
           onChangeText={(value) => updateFilter(value)}
           value={filter}

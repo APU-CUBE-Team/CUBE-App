@@ -1,4 +1,5 @@
 import { teamMembersDBColl } from "../query-DB";
+import { auth } from "../firebase-util";
 
 // TODO: return from db
 
@@ -55,11 +56,17 @@ export async function getUsersOfTeam() {
 /////////////////////////////////////////////////////////////////
 // TODO
 /////////////////////////////////////////////////////////////////
-export function updateUser(email: any, role: any, lName: any, fName: any) {
+export async function updateUser(
+  email: any,
+  role: any,
+  lName: any,
+  fName: any,
+  uid: any
+) {
   console.log(email, role);
 
-  return teamMembersDBColl
-    .where("email", "==", email)
+  return await teamMembersDBColl
+    .where("uid", "==", uid)
     .get()
     .then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
