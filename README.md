@@ -4,23 +4,43 @@
 <br />
 <br />
 
-<p align="center">
-<!-- Team-Oriented Accounts -->
-<img src="https://imgur.com/bkKSNxy.jpg" width="275" hspace="25"/>
-</p>
+<div align="center">
 
-<p align="center">
-<!-- Telemetry Visuals -->
+<!-- Sign-In Screen -->
+<h2>Sign-In Screen</h2>
+<img src="https://imgur.com/bkKSNxy.jpg" width="275" hspace="5"/>
+
+</br>
+</br>
+
+<!-- Navigation -->
+<h2>Navigation</h2>
+<img src=https://imgur.com/qeo66n0.jpg width="275" hspace="5" float="center"/>
+
+</br>
+</br>
+
+<!-- Telemetry -->
+<h2>Telemetry Screen</h2>
 <img src=https://i.imgur.com/ATSBzV4.jpg width="275" hspace="5"/>
 
+</br>
+</br>
+
 <!-- User-Oriented Team Management   -->
+<h2>Team Management Screen</h2>
 <img src=https://imgur.com/X9qwb0s.jpg width="275" hspace="5"/>
 
-<!-- Adjustable User Attributes   -->
-<img src=https://imgur.com/WQUo3IV.jpg width="275" hspace="5"/>
-</p>
+</br>
+</br>
 
-<br />
+<!-- Adjustable User Attributes   -->
+<h2>User Customization Screen</h2>
+<img src=https://imgur.com/WQUo3IV.jpg width="275" hspace="5"/>
+</div>
+
+</br>
+</br>
 
 ## Prerequisites
 
