@@ -25,17 +25,20 @@ export const getTelDBDoc = db
 
 // get current user from DB.
 export async function getCurrentUser() {
-  return await organizations
+  let localCurrentUser;
+  await organizations
     .doc("AdminOrganization")
     .collection("teamMembers")
     .where("uid", "==", auth.currentUser?.uid)
     .get()
     .then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
-        console.log("Current user: ", doc.data());
+        // console.log("Current user: ", doc.data());
+        localCurrentUser.push(doc.data());
       });
     })
     .catch(function (error) {
       console.log("Error getting documents: ", error);
     });
+  return localCurrentUser;
 }
