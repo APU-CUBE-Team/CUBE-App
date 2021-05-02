@@ -160,7 +160,6 @@ export default function TeamRolesScreen({ navigation }) {
     });
 
     updateFilter(filter);
-    setPause(false);
   }
 
   function updateFilter(value) {
@@ -196,7 +195,7 @@ export default function TeamRolesScreen({ navigation }) {
     if (offset <= 15 && !isUpdating) {
       setPause(true);
       getUsers();
-      setTimeout(() => {scrollToTop()}, 1000)
+      setTimeout(() => {scrollToTop(); setPause(false); }, 1000)
     }
       
   }
@@ -233,7 +232,6 @@ export default function TeamRolesScreen({ navigation }) {
             <Text style={styles.text}>ADMIN</Text>
 
             {filteredAdmins.map((e) => {
-
               return (
                 <RowItem
                   first={e.firstName}

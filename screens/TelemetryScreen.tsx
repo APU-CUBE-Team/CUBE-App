@@ -12,10 +12,15 @@ import { storeTelOrder } from '../hooks/Storage';
 
 
 // const currTelemetry = getTelemetryDBDoc();
+type telemetry = {
+  key: string;
+  vals: number[];
+  dates: number[]
+}
 
 export default function ExpandedTelScreen({ navigation, route }) {
   const [path, setPath] = React.useState("ExpandedTelPage");
-  const [dataPoints, setDataPoints] = React.useState([]); //{key: "Test", vals: [1,2,3,4,5,6,7,8,9,10], dates: [1,2,3,4,5,6,7,8,9,10]}
+  const [dataPoints, setDataPoints] = React.useState<telemetry[]>([]); //{key: "Test", vals: [1,2,3,4,5,6,7,8,9,10], dates: [1,2,3,4,5,6,7,8,9,10]}
 
   const [render, setRender] = React.useState(0); // Not entirely sure if this is necessary at this point, but I'm too scared to remove
   const [current, setCurrent] = React.useState("data1"); // Stores what graph to display on the top of screen
@@ -32,15 +37,16 @@ export default function ExpandedTelScreen({ navigation, route }) {
       });
 
       if (dataPoints.length == 0) {
-        getTelDBDoc.then((ret) => {
+        getTelemetryDBDoc().then((ret) => {
           const data = ret.data();
+          let d: any[] = []
           AsyncStorage.getItem("@Order").then((ret: any) => {
             let temp = JSON.parse(ret)
             
             // console.log(temp)
             if (temp === null || temp.length === 0) {
               data.names.forEach((item: { item: string }) => {
-                dataPoints.push({
+                d.push({
                   key: item,
                   vals: data[item + "_Vals"],
                   dates: data[item + "_Times"],
@@ -50,7 +56,7 @@ export default function ExpandedTelScreen({ navigation, route }) {
             }
             else {
               temp.forEach(element => {
-                dataPoints.push({
+                d.push({
                   key: element,
                   vals: data[element + "_Vals"],
                   dates: data[element + "_Times"],
@@ -59,12 +65,31 @@ export default function ExpandedTelScreen({ navigation, route }) {
               setOrder(temp);
             }
           });
-          setDataPoints(dataPoints);
-          setCurrent(dataPoints[dataPoints.length - 1].key);
+          setDataPoints(d);
+          setCurrent(d[d.length - 1].key);
         });
       }
     }, [])
   );
+
+  const updateTelem = () => {
+    getTelemetryDBDoc().then((ret) => {
+      const data = ret.data();
+      let curr = dataPoints
+      for (let i = 0; i < curr.length; i++) {
+        //console.log(curr[i]);
+
+        let key = curr[i].key;
+        if (key === "AutoSafeModeAllowed")
+          console.log(data[key + "_Vals"])
+        console.log(key)
+        curr[i].vals = data[key + "_Vals"];
+        curr[i].dates = data[key + "_Times"];
+      }
+      //console.log(curr[14])
+      setDataPoints(curr);
+    });
+  }
 
   return (
     dataPoints.length != 0 && (
@@ -87,7 +112,9 @@ export default function ExpandedTelScreen({ navigation, route }) {
           <ExpTelScreen
             dataSet={dataPoints}
             selected={current}
+            updateTelem={updateTelem}
             setCurrent={(newData: string) => {
+              console.log(dataPoints[14])
               setCurrent(newData);
             }}
           />

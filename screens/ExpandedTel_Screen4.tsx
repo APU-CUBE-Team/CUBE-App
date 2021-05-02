@@ -6,6 +6,7 @@ import {
   ScrollView,
   TouchableOpacity,
   Platform,
+  ActivityIndicator
 } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import AsyncStorage from "@react-native-community/async-storage";
@@ -20,16 +21,21 @@ export default function ExpandedTelScreen({
   dataSet,
   selected,
   setCurrent,
-  names
+  names,
+  updateTelem
 }: {
   dataSet: any;
   selected: string;
   setCurrent: Function;
   names: string[]
+  updateTelem: Function;
 }) {
   const [loaded, setLoaded] = React.useState(false);
   const [groups, setGroups] = React.useState<any>([]);
   const [hidden, setHidden] = React.useState({})
+  const [isUpdating, setPause] = React.useState(false);
+  const [animating, setAnimation] = React.useState(false);
+
 
   const updateGroupList = () => {
     AsyncStorage.getItem("@Groups").then((ret: any) => {
@@ -52,8 +58,29 @@ export default function ExpandedTelScreen({
   useFocusEffect(
     React.useCallback(() => {
       updateGroupList()
+
+      setTimeout(()=> {this.scroller.scrollTo({ x: 0, y: 50, animated: false })}, 500);
     }, [])
   );
+
+  const onScroll = (event: any) => {
+    //console.log(event.nativeEvent.contentOffset.y);
+    let offset = event.nativeEvent.contentOffset.y
+    if (offset < 37)
+      setAnimation(true)
+    else
+      setAnimation(false)
+    if (offset <= 15 && !isUpdating) {
+      setPause(true);
+      updateTelem();
+      setTimeout(() => {scrollToTop(); setPause(false); }, 1000)
+    }
+      
+  }
+
+  const scrollToTop = () => {
+    this.scroller.scrollTo({x: 0, y: 50});
+  };
 
   return (
     <View style={styles.container}>
@@ -86,8 +113,16 @@ export default function ExpandedTelScreen({
       </View>
       <View style={{ height: Screen.window.height / 3 }} />
       <ScrollView
-        style={{ flex: 1, marginTop: Platform.OS !== "android" ? 11 : 0 }}
+        onScroll={onScroll}
+        ref={(scroller) => {this.scroller = scroller}}
+        contentOffset={{x:0, y: 50}}
       >
+        <ActivityIndicator 
+          size="large" 
+          color={Colors.newColors.primary} 
+          animating={animating}
+          style={{marginTop: 20}}
+        />
         {groups.map((e: any) => {
           return(
             <TelemGroup 

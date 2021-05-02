@@ -17,7 +17,6 @@ import { resetOrientation } from "../hooks/resetOrientation";
 import Colors from "../constants/Colors";
 import { OverlayPrompt } from "../components/Prompt";
 
-import EditScreenInfo from "../components/EditScreenInfo";
 import { Text, View } from "../components/Themed";
 
 import NotificationRow from "../components/NotificationRow";

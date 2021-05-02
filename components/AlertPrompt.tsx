@@ -6,6 +6,7 @@ import {
   Platform,
   TouchableOpacity,
   TextInput,
+  Keyboard
 } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import { Picker } from "@react-native-picker/picker";
@@ -215,6 +216,9 @@ export const AlertPrompt: React.FunctionComponent<PromptProps> = (props) => {
               onChangeText={(val) => {
                 setVal(parseInt(val));
               }}
+              onSubmitEditing={() => {
+                Keyboard.dismiss();
+              }}
             />
           </View>
         </View>
@@ -235,6 +239,9 @@ export const AlertPrompt: React.FunctionComponent<PromptProps> = (props) => {
               value={msg}
               onChangeText={(msg) => {
                 setMsg(msg);
+              }}
+              onSubmitEditing={() => {
+                Keyboard.dismiss();
               }}
             />
           </View>

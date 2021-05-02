@@ -8,12 +8,17 @@ export const teamMembersDBColl = db
   .collection("teamMembers");
 
 export async function getTelemetryDBDoc() {
-  return db
+  let telem;
+  await db
     .collection("Organizations")
     .doc("UserOrganization")
     .collection("cubesats")
     .doc("Fox1_Cliff")
-    .get();
+    .get()
+    .then(ret => {
+      telem = ret
+    })
+  return telem
 }
 
 export const getTelDBDoc = db
