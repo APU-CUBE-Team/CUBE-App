@@ -30,7 +30,7 @@ import Screen from "../constants/Layout";
 import Navigation, { MyTheme } from "../navigation/index";
 
 import { SignUp } from "../util/create-user/index";
-import { updateUser } from "../util/edit-roles";
+import { updateUser, deleteUser } from "../util/edit-roles";
 
 import { OverlayPrompt } from "../components/Prompt";
 
@@ -66,7 +66,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
     fontFamily: "GillSans-Reg",
-
   },
   separator: {
     marginVertical: 30,
@@ -78,7 +77,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     textAlign: "center",
     fontFamily: "GillSans-Reg",
-
   },
   text2: {
     color: Colors.newColors.text,
@@ -87,7 +85,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     marginTop: 20,
     fontFamily: "GillSans-Reg",
-
   },
   input: {
     backgroundColor: Colors.newColors.background2,
@@ -98,7 +95,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     color: Colors.c.white,
     fontFamily: "GillSans-Reg",
-
   },
   signInButton: {
     backgroundColor: Colors.newColors.primary,
@@ -129,7 +125,6 @@ const styles = StyleSheet.create({
     color: Colors.c.white,
     fontSize: 20,
     height: 150,
-
   },
   pickerContainer: {
     flexDirection: "row",
@@ -232,8 +227,6 @@ export default function UserScreen({
               customStyle={false}
               editVal={!create}
             ></FloatingLabelInput>
-
-
             {create && (
               <View style={styles.inputSafeArea2}>
                 <FloatingLabelInput
@@ -248,7 +241,6 @@ export default function UserScreen({
                   onChange={setConfirmPassword}
                   customStyle={true}
                 ></FloatingLabelInput>
-
               </View>
             )}
             <Text style={styles.text2}>Permissions</Text>
@@ -272,35 +264,54 @@ export default function UserScreen({
                 }}
               ></AppButton>
             ) : (
-              <AppButton
-                label="Save Changes"
-                onPressAction={() => {
-                  checkVersion();
+              <View
+                style={{
+                  backgroundColor: Colors.newColors.background,
+                  flexDirection: "column",
+                  margin: -10,
+                  flexShrink: 10,
                 }}
-              ></AppButton>
+              >
+                <AppButton
+                  label="Save Changes"
+                  onPressAction={() => {
+                    checkVersion();
+                  }}
+                ></AppButton>
+                <AppButton
+                  label="Delete User"
+                  onPressAction={() => {
+                    //Your delete function
+                    deleteUser(email);
+                    setPrompt("User successfully deleted!");
+                    setOverlay(true);
+                  }}
+                ></AppButton>
+              </View>
             )}
-
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
-      {overlay ? (
-        <OverlayPrompt
-          promptText={prompt}
-          closeOverlay={() => setOverlay(false)}
-          btns={[
-            {
-              key: "Okay",
-              action: () => {
-                setOverlay(false);
-                if (success) {
-                  goBack();
-                }
+      {
+        overlay ? (
+          <OverlayPrompt
+            promptText={prompt}
+            closeOverlay={() => setOverlay(false)}
+            btns={[
+              {
+                key: "Okay",
+                action: () => {
+                  setOverlay(false);
+                  if (success) {
+                    goBack();
+                  }
 
+                },
               },
-            },
-          ]}
-        />
-      ) : null}
-    </SafeAreaView>
+            ]}
+          />
+        ) : null
+      }
+    </SafeAreaView >
   );
 }

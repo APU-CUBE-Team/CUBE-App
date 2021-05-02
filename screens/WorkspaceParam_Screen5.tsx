@@ -106,6 +106,12 @@ export default function WorkspaceScreen({ route }) {
             </View>
           );
         })} */}
+        <TouchableOpacity 
+          onPress={()=>{
+            alert(route.params?.token)
+          }}
+          style={[styles.area, styles.exportBtn]}
+        />
       </View>
       {overlay ? (
         <OverlayPrompt

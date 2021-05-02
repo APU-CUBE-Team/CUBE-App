@@ -10,6 +10,7 @@ npm-debug.*
 web-build/
 util/firebase-util/**
 google-services.json
+servicekey.json
 
 # macOS
 .DS_Store

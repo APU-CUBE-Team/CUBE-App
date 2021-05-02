@@ -25,7 +25,16 @@ export async function pushNewAlertParameter(newParam: parameterType) {
   await organizations
     .doc("AdminOrganization")
     .collection("alerts")
-    .add(newParam);
+    .add(newParam)
+    .then((docRef) => {
+      organizations
+        .doc("AdminOrganization")
+        .collection("alerts")
+        .doc(docRef.id)
+        .update({
+          docID: docRef.id,
+        });
+    });
 }
 
 export async function getPushNotifications() {

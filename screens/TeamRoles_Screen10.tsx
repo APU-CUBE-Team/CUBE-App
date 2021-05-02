@@ -143,14 +143,12 @@ export default function TeamRolesScreen({ navigation }) {
         rerender(render + 1);
 
         setFilteredAdmins(response)
-
       });
       getUsersOfTeam().then((response) => {
         setUsers(response);
         rerender(render + 1);
 
         setFilteredUsers(response)
-
       });
 
       updateFilter(filter);

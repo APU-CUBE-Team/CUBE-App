@@ -3,7 +3,7 @@
     "name": "CUBE",
     "slug": "CUBE",
     "scheme": "cube",
-    "version": "0.3.0",
+    "version": "0.6.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "userInterfaceStyle": "automatic",
@@ -11,6 +11,10 @@
       "image": "./assets/images/splash.png",
       "resizeMode": "cover",
       "backgroundColor": "#000000"
+    },
+    "notification": {
+      "icon": "./assets/images/alert_icon.png",
+      "color": "#fff"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -23,11 +27,12 @@
       "bundleIdentifier": "com.cube.manager"
     },
     "android": {
+      "icon": "./assets/images/alert_icon.png",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "versionCode": 13,
+      "versionCode": 15,
       "permissions": [
         "CAMERA",
         "RECORD_AUDIO",
@@ -35,10 +40,12 @@
         "READ_CONTACTS"
       ],
       "package": "com.cube.manager",
-      "useNextNotificationsApi": true
+      "useNextNotificationsApi": true,
+      "googleServicesFile": "./google-services.json"
     },
     "web": {
       "favicon": "./assets/images/favicon.png"
-    }
+    },
+    
   }
 }
