@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList, DrawerItem } from '@react-navigation/drawer';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -27,9 +27,11 @@ import TeamRolesScreen from '../screens/TeamRoles_Screen10';
 import EditUserScreen from '../screens/EditUser_Screen';
 import ControlScreen from '../screens/Control_Screen';
 
-import { auth } from '../util/firebase-util';
 
 const Drawer = createDrawerNavigator<DrawerParamList>();
+
+import { auth } from '../util/firebase-util';
+const user = auth.currentUser?.email;
 
 export default function DrawerNavigator({ route }) {
   //We will use this hook eventually. It enables us to more easily establish a consistent colorscheme throughout the app
@@ -40,6 +42,7 @@ export default function DrawerNavigator({ route }) {
     // the 'navigation' object similar to how it worked in v4. The Drawer.Screen is basically a screen object within our Drawer navigator.
     // The best part of this is that we can still point the component of our screen to another navigator instead of a screen, as we do here.
     // The name part of our Drawer.Screen has to correspond to the values within our types.tsx for parameter reasons. Don't really get it yet.
+
     <Drawer.Navigator
       initialRouteName="Telemetry"
       drawerPosition={'right'}
@@ -47,6 +50,7 @@ export default function DrawerNavigator({ route }) {
       drawerContent={props => {
         return (
           <DrawerContentScrollView {...props}>
+            <Text style={{ paddingVertical: 10, paddingHorizontal: 15, color: '#fff', fontSize: 24 }}>{user}</Text>
             <DrawerItemList {...props} />
             <DrawerItem label="Logout" onPress={() => signOut()} />
           </DrawerContentScrollView>
@@ -117,6 +121,7 @@ const ThreeOrbitStack = createStackNavigator<ThreeOrbitParamList>();
 const NotificationStack = createStackNavigator<NotificationsParamList>();
 const BugReportStack = createStackNavigator<BugReportParamList>();
 const ControlStack = createStackNavigator<ControlParamList>();
+
 
 function TelemetryMap({ navigation, route }) {
   let path = route.params?.InitialPath;
