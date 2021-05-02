@@ -1,4 +1,4 @@
-import { db } from "../firebase-util";
+import { db, auth } from "../firebase-util";
 
 export const organizations = db.collection("Organizations");
 
@@ -22,3 +22,20 @@ export const getTelDBDoc = db
   .collection("cubesats")
   .doc("Fox1_Cliff")
   .get();
+
+// get current user from DB.
+export async function getCurrentUser() {
+  return await organizations
+    .doc("AdminOrganization")
+    .collection("teamMembers")
+    .where("uid", "==", auth.currentUser?.uid)
+    .get()
+    .then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        console.log("Current user: ", doc.data());
+      });
+    })
+    .catch(function (error) {
+      console.log("Error getting documents: ", error);
+    });
+}
