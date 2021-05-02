@@ -25,7 +25,7 @@ export const getTelDBDoc = db
 
 // get current user from DB.
 export async function getCurrentUser() {
-  let localCurrentUser;
+  let localCurrentUser: any[] = [];
   await organizations
     .doc("AdminOrganization")
     .collection("teamMembers")

@@ -9,6 +9,7 @@ import {
   Dimensions,
   Image,
   KeyboardAvoidingView,
+  Alert
 } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import { resetOrientation } from "../hooks/resetOrientation";
@@ -24,6 +25,12 @@ import { TextField } from "../components/Form";
 import Colors from "../constants/Colors";
 import Screen from "../constants/Layout";
 
+import { reportBug } from "../util/bug-reports";
+
+//TEMP
+//import CurrentUser from "../constants/CurrentUser"
+import { getCurrentUser } from '../util/query-DB';
+import Navigation from "../navigation";
 
 
 //const screen = Dimensions.get("window");
@@ -81,14 +88,27 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function BugReportScreen() {
+export default function BugReportScreen({ navigation, route }) {
   useFocusEffect(
     React.useCallback(() => {
       resetOrientation();
+      getCurrentUser().then((response) => {
+        setUser(response);
+      })
+      console.log(user)
     }, [])
   );
 
   const [report, setReport] = React.useState("");
+  const [user, setUser] = React.useState([]);
+
+  function submit(message) {
+    reportBug(message).then(
+      () => { alert("Thanks for your report! Our team will look into this") }
+    );
+    navigation.goBack();
+  }
+
 
   return (
     <KeyboardAvoidingView
@@ -104,25 +124,10 @@ export default function BugReportScreen() {
           onChange={setReport}
           customStyle={false}
         ></FloatingLabelInput>
-        {/* <TextInput
-          style={styles.input}
-          autoCapitalize="none"
-          placeholderTextColor={Colors.c.lightGray}
-          label="Description"
-          placeholder="Tell us what happened..."
-          value={report}
-          onChangeText={(report) => setReport(report)}
-          multiline={true}
-        />
-        <TouchableOpacity
-          style={styles.reportButton}
-          onPress={() => console.log({})}
-        >
-          <Text style={styles.text}>Submit report</Text>
-        </TouchableOpacity> */}
 
         <AppButton
           label="Submit Report"
+
 
           ///////////////////////////////////////////////////////////////
           // TODO: CONNECT REPORT TO BACKEND
@@ -131,7 +136,9 @@ export default function BugReportScreen() {
           // ─▄▄──█░░░░░░░░░░░█──▄▄
           // █▄▄█─█░░▀░░┬░░▀░░█─█▄▄█
           ///////////////////////////////////////////////////////////////
-          onPressAction={() => console.log(report)}
+          onPressAction={
+            () => submit(report)
+          }
 
         ></AppButton>
       </SafeAreaView>

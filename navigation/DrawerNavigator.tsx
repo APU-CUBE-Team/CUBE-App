@@ -26,12 +26,11 @@ import CreateUserScreen from '../screens/CreateUser_Screen11';
 import TeamRolesScreen from '../screens/TeamRoles_Screen10';
 import EditUserScreen from '../screens/EditUser_Screen';
 import ControlScreen from '../screens/Control_Screen';
+import { color } from 'react-native-reanimated';
 
 
 const Drawer = createDrawerNavigator<DrawerParamList>();
 
-import { auth } from '../util/firebase-util';
-const user = auth.currentUser?.email;
 
 export default function DrawerNavigator({ route }) {
   //We will use this hook eventually. It enables us to more easily establish a consistent colorscheme throughout the app
@@ -50,7 +49,7 @@ export default function DrawerNavigator({ route }) {
       drawerContent={props => {
         return (
           <DrawerContentScrollView {...props}>
-            <Text style={{ paddingVertical: 10, paddingHorizontal: 15, color: '#fff', fontSize: 24 }}>{user}</Text>
+            <Text style={{ paddingVertical: 10, paddingHorizontal: 15, color: '#fff', fontSize: 24 }}>TEST</Text>
             <DrawerItemList {...props} />
             <DrawerItem label="Logout" onPress={() => signOut()} />
           </DrawerContentScrollView>
