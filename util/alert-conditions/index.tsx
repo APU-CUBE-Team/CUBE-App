@@ -21,3 +21,34 @@ export async function getAlertsCollection() {
 
   return alertsArray;
 }
+
+// Query documents with collection, delete subcollection
+export async function deleteAlertParameter(telem: string) {
+  await organizations
+    .doc("AdminOrganization")
+    .collection("alerts")
+    .where("telem", "==", telem)
+    .get()
+    .then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        // doc.data() is never undefined for query doc snapshots
+        console.log(doc.id, " => ", doc.data());
+        let docID = doc.id;
+        // DELETE QUERIED DOCUMENT
+        organizations
+          .doc("AdminOrganization")
+          .collection("alerts")
+          .doc(docID)
+          .delete()
+          .then(() => {
+            console.log("Document successfully deleted!");
+          })
+          .catch((error) => {
+            console.error("Error removing document: ", error);
+          });
+      });
+    })
+    .catch((error) => {
+      console.log("Error getting documents: ", error);
+    });
+}

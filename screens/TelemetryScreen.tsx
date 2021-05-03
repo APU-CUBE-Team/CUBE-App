@@ -98,6 +98,7 @@ export default function ExpandedTelScreen({ navigation, route }) {
           <CompTelScreen 
             dataSet={dataPoints} 
             setData={setDataPoints}
+            updateTelem={updateTelem}
             updateOrder={(from: number, to: number) => {
               let t = order.splice(from, 1)
               order.splice(to, 0, ...t)

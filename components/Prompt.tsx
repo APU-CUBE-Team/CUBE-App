@@ -14,6 +14,7 @@ type PromptProps = {
   btns: btns[];
   disableTap?: boolean;
   yAxis?: boolean; // true for Y axis
+  longContent?: boolean;
 };
 
 export const OverlayPrompt: React.FunctionComponent<PromptProps> = (props) => {
@@ -97,7 +98,7 @@ export const OverlayPrompt: React.FunctionComponent<PromptProps> = (props) => {
           }}
         />
       </View>
-      <View style={[styles.overlayPrompt, { height: childHeight + long }]} onLayout={(event) => { measureView(event) }}>
+      <View style={[styles.overlayPrompt, { height: props.longContent ? childHeight + long : long }]} onLayout={(event) => { measureView(event) }}>
         <Text style={styles.promptText}>{props.promptText}</Text>
         {props.children}
         <View style={{ flexDirection: "row" }}>

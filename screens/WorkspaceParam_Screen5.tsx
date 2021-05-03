@@ -5,21 +5,18 @@ import { useFocusEffect } from "@react-navigation/native";
 import { resetOrientation } from "../hooks/resetOrientation";
 import Screen from "../constants/Layout";
 import Colors from "../constants/Colors";
-import { telemetryList } from "../constants/FullTelemetrySet";
 import { sendEmail } from "../util/email-user"
-import {
-  storeTelemetryPreference,
-  getSettings,
-  setSettings,
-} from "../hooks/Storage";
+import { storeTelemetryPreference } from "../hooks/Storage";
 import {OverlayPrompt} from "../components/Prompt";
+import * as firebase from "firebase";
+
 
 export default function WorkspaceScreen({ route }) {
   const [isEnabled, switchSelected] = React.useState(false);
   const [preference, setPreference] = React.useState(Telemetry.Expanded);
-  const [r, rerender] = React.useState(0);
-  const [settings, setSet] = React.useState(telemetryList);
   const [overlay, setOverlay] = React.useState(false);
+  const [prompt, setPrompt] = React.useState("");
+  const [action, setAction] = React.useState(0);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -38,23 +35,7 @@ export default function WorkspaceScreen({ route }) {
         }
         setPreference(pref);
       });
-      let res: any[];
-      getSettings()
-        .then((ret) => {
-          res = ret;
-          if (ret == null)
-            getSettings().then((ret2) => {
-              res = ret2;
-            });
-        })
-        .finally(() => {
-          res.forEach((e) => {
-            settings[settings.findIndex((p) => p.key === e.key)].visible =
-              e.visible;
-          });
-          console.log(settings);
-          rerender(r + 1);
-        });
+      
     }, [])
   );
 
@@ -62,7 +43,11 @@ export default function WorkspaceScreen({ route }) {
     <View style={styles.container}>
       <TouchableOpacity
         style={[styles.area, styles.exportBtn]}
-        onPress={() => setOverlay(true)}
+        onPress={() => {
+          setAction(0);
+          setPrompt("Are you sure you want to export to the email attached to this account?")
+          setOverlay(true)
+        }}
       >
         <Text style={styles.title}>Export Data to CSV</Text>
       </TouchableOpacity>
@@ -84,26 +69,36 @@ export default function WorkspaceScreen({ route }) {
             style={styles.workspaceSwitch}
           />
         </View>
-        <TouchableOpacity style={{width: 250, height: 250, backgroundColor: "#0ff"}} 
-        onPress={() => AsyncStorage.removeItem("@Order")}/>
-        <TouchableOpacity 
-          onPress={()=>{
-            alert(route.params?.token)
+        <TouchableOpacity
+          style={[styles.area, styles.exportBtn, { backgroundColor: Colors.newColors.notification }]}
+          onPress={() => {
+            setAction(1)
+            setPrompt("Are you sure you want to reset settings to default?")
+            setOverlay(true)
           }}
-          style={[styles.area, styles.exportBtn]}
-        />
+        >
+          <Text style={styles.title}>Reset Settings</Text>
+        </TouchableOpacity>
+
       </View>
       {overlay ? (
         <OverlayPrompt
-          promptText={
-            "Are you sure you want to export to the email attached to this account?"
-          }
+          promptText={prompt}
           closeOverlay={() => setOverlay(false)}
           btns={[
             {
               key: "Yes",
               action: () => {
-                exportTelemetry();
+                switch(action) {
+                  case 0:
+                    exportTelemetry();
+                    break;
+                  case 1:
+                    resetSettings();
+                    break;
+                  default:
+                    break;
+                }
               },
             },
             {
@@ -121,13 +116,11 @@ export default function WorkspaceScreen({ route }) {
   function exportTelemetry() {
     sendEmail();
     //TODO: I guess this is where we call the cloud function and then inform the user when it is complete.
-    alert("Functions yeet");
   }
 
-  function toggleSwitch(e: any) {
-    e.visible = !e.visible;
-    rerender(r + 1);
-    setSettings(settings);
+  function resetSettings() {
+    AsyncStorage.removeItem("@Order")
+    AsyncStorage.removeItem("@Groups")
   }
 
   function toggleLayout() {

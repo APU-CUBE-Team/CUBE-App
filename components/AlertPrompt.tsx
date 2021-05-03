@@ -150,6 +150,7 @@ export const AlertPrompt: React.FunctionComponent<PromptProps> = (props) => {
     <OverlayPrompt
       closeOverlay={props.closeOverlay}
       promptText={props.promptText}
+      longContent
       btns={[
         {
           key: "Save",

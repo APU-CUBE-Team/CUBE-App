@@ -15,6 +15,7 @@ import SignInScreen from "../screens/SignIn_Screen1";
 import CredRecoveryScreen from "../screens/CredRecov_Screen2";
 import { emailSignIn, signOut } from "../util/authenticating-users";
 import { View } from "../components/Themed";
+import { getCurrentUser } from '../util/query-DB';
 
 const AuthContext = React.createContext({});
 
@@ -60,12 +61,14 @@ function TestMode({token}: {token: string}) {
             ...prevState,
             userToken: action.token,
             isLoading: false,
+            userName: action.userName
           };
         case "SIGN_IN":
           return {
             ...prevState,
             isSignout: false,
             userToken: action.token,
+            userName: action.userName
           };
         case "SIGN_OUT":
           return {
@@ -79,6 +82,7 @@ function TestMode({token}: {token: string}) {
       isLoading: true,
       isSignout: false,
       userToken: null,
+      userName: null
     }
   );
 
@@ -93,12 +97,16 @@ function TestMode({token}: {token: string}) {
         // Restoring token failed
         console.log(e);
       }
-
+      
       // After restoring token, we may need to validate it in production apps
-
+      // let user;
+      // await getCurrentUser().then(ret => {
+      //   user = ret
+      // })
+      // console.log("USER: ", user)
       // This will switch to the App screen or Auth screen and this loading
       // screen will be unmounted and thrown away.
-      dispatch({ type: "RESTORE_TOKEN", token: userToken });
+      dispatch({ type: "RESTORE_TOKEN", token: userToken, userName: null });
     };
 
     bootstrapAsync();
@@ -147,6 +155,9 @@ function TestMode({token}: {token: string}) {
           dispatch({ type: "SIGN_OUT" });
         });
       },
+      getUserName: () => {
+        return state.userName
+      }
     }),
     []
   );

@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, ScrollView, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, RefreshControl } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import Graph from '../components/AdvancedGraph'; // Sadly do not make this tsx unless you want a ton of work
 import Screen from '../constants/Layout';
@@ -10,10 +10,15 @@ import DraggableFlatList, {
     RenderItemParams,
 } from "react-native-draggable-flatlist";
 
-export default function CompTelScreen({ dataSet, setData, updateOrder }: { dataSet: any, setData: Function, updateOrder: Function }) {
-    const [r, rerender] = React.useState(0);
-    const [settings, setSet] = React.useState(telemetryList)
+type compTelProps = {
+    dataSet: any;
+    setData: Function;
+    updateOrder: Function;
+    updateTelem: Function;
+}
 
+export default function CompTelScreen({ dataSet, setData, updateOrder, updateTelem }: compTelProps) {
+    const [refreshing, setRefresh] = React.useState(false)
 
     type Item = {
         key: string;
@@ -36,6 +41,14 @@ export default function CompTelScreen({ dataSet, setData, updateOrder }: { dataS
     return (
         <View style={styles.container}>
             <DraggableFlatList
+                onRefresh={() => {
+                    setRefresh(true);
+                    updateTelem()
+                    setTimeout(() => {
+                        setRefresh(false)
+                    }, 800);
+                }}
+                refreshing={refreshing}
                 data={dataSet}
                 renderItem={renderItem}
                 keyExtractor={(item, index) => `draggable-item-${item.key}`}

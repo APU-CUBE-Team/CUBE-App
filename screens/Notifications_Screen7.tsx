@@ -254,6 +254,7 @@ export default function NotificationScreen({ navigation }) {
         overlay ?
           <OverlayPrompt
             promptText={title}
+            longContent
             closeOverlay={() => setOverlay(false)}
             btns={[
               {

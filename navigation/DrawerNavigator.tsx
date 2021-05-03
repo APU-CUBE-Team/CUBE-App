@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { TouchableOpacity } from 'react-native';
+import { TouchableOpacity, Text } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList, DrawerItem } from '@react-navigation/drawer';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -26,14 +26,24 @@ import TeamRolesScreen from '../screens/TeamRoles_Screen10';
 import EditUserScreen from '../screens/EditUser_Screen';
 import ControlScreen from '../screens/Control_Screen';
 
-import { auth } from '../util/firebase-util';
+import { getCurrentUser } from '../util/query-DB';
 
 const Drawer = createDrawerNavigator<DrawerParamList>();
 
 export default function DrawerNavigator({ route }) {
   //We will use this hook eventually. It enables us to more easily establish a consistent colorscheme throughout the app
-  const { signOut } = React.useContext(route.params?.SignOut);
-
+  const { signOut, getUserName } = React.useContext(route.params?.SignOut);
+  const [name, setName] = React.useState("User");
+  if (name === "User")
+    try {
+      getCurrentUser().then(ret => {
+        let obj = ret[0]
+        setName(`${obj.firstName} ${obj.lastName}`);
+        console.log(`NAME: ${name}\nFIRSTNAME: ${obj.firstName}\nLASTNAME: ${obj.lastName}`)
+      })
+      
+    } catch (e) {console.log(e)}
+  
   return (
     //This is how navigation works in v5. The Drawer.Navigator is what initializes our Drawers navigation. It creates and handles
     // the 'navigation' object similar to how it worked in v4. The Drawer.Screen is basically a screen object within our Drawer navigator.
@@ -46,6 +56,7 @@ export default function DrawerNavigator({ route }) {
       drawerContent={props => {
         return (
           <DrawerContentScrollView {...props}>
+            <Text style={{ paddingVertical: 10, paddingHorizontal: 15, color: '#fff', fontSize: 24 }}>{`${name}`}</Text>
             <DrawerItemList {...props} />
             <DrawerItem label="Logout" onPress={() => signOut()} />
           </DrawerContentScrollView>
