@@ -27,9 +27,6 @@ import Screen from "../constants/Layout";
 
 import { reportBug } from "../util/bug-reports";
 
-//TEMP
-//import CurrentUser from "../constants/CurrentUser"
-import { getCurrentUser } from '../util/query-DB';
 import Navigation from "../navigation";
 
 
@@ -92,19 +89,22 @@ export default function BugReportScreen({ navigation, route }) {
   useFocusEffect(
     React.useCallback(() => {
       resetOrientation();
-      getCurrentUser().then((response) => {
-        setUser(response);
-      })
-      console.log(user)
+      setReport("");
     }, [])
   );
 
   const [report, setReport] = React.useState("");
-  const [user, setUser] = React.useState([]);
+
+  const [user, setUser] = React.useState({});
 
   function submit(message) {
     reportBug(message).then(
-      () => { alert("Thanks for your report! Our team will look into this") }
+      () => {
+        Alert.alert(
+          "Thank you!",
+          "Thanks for your report! Our team will look into this shortly",
+        )
+      }
     );
     navigation.goBack();
   }
@@ -127,15 +127,6 @@ export default function BugReportScreen({ navigation, route }) {
 
         <AppButton
           label="Submit Report"
-
-
-          ///////////////////////////////////////////////////////////////
-          // TODO: CONNECT REPORT TO BACKEND
-          // ──────▄▀▄─────▄▀▄
-          // ─────▄█░░▀▀▀▀▀░░█▄
-          // ─▄▄──█░░░░░░░░░░░█──▄▄
-          // █▄▄█─█░░▀░░┬░░▀░░█─█▄▄█
-          ///////////////////////////////////////////////////////////////
           onPressAction={
             () => submit(report)
           }

@@ -194,11 +194,7 @@ export default function NotificationScreen({ navigation }) {
     outputRange: [0, -100],
     extrapolate: 'clamp'
   });
-  // const navbarOpacity = clampedScroll.interpolate({
-  //   inputRange: [0, HEIGHT],
-  //   outputRange: [1, 0],
-  //   extrapolate: 'clamp',
-  // });
+
 
   return (
     <KeyboardAvoidingView
@@ -207,14 +203,6 @@ export default function NotificationScreen({ navigation }) {
     >
       <SafeAreaView style={styles.container}>
 
-        {/* <View style={styles.view}>
-          <Animated.View style={[styles.searchBar, { transform: [{ translateY: navbarTranslate }] }]}>
-
-            <Animated.Text style={[styles.title, { opacity: navbarOpacity }]}>
-
-            </Animated.Text>
-          </Animated.View>
-        </View> */}
 
 
         <ScrollView>
