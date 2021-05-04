@@ -2,7 +2,10 @@
 
 <b>CUBE is a cross-platform mobile application with a polymorphic UI that expedites the analyzation of satellite telemetry by improving the legibility of data that [CubeSats](https://www.cubesat.org/) return.</b>
 <br />
+<b>A comprehensive demonstration of the CUBE application can be viewed [here] (https://youtu.be/OjAKh25UpT0)</b>
 <br />
+<br />
+
 
 <div align="center">
 <div align="center" style="display: inline-block;">
