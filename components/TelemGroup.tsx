@@ -96,7 +96,8 @@ export class TelemGroup extends React.Component {
             
             try{
                 this.props.group.telems.forEach(e => {
-                    let p = this.props.telem.filter(
+                    if (e.replace(/ /g, '') !== "") {
+                        let p = this.props.telem.filter(
                         existingItem => (
                             existingItem.key.toUpperCase().includes(e.toUpperCase()) 
                         )
@@ -104,6 +105,8 @@ export class TelemGroup extends React.Component {
                     t.splice(0,0, ...p)
                     f["field"+this.i] = p[0].key
                     this.i++
+                    }
+                    
                 })
 
                 this.setState({thisTel: t, fields: f})

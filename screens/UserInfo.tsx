@@ -227,8 +227,6 @@ export default function UserScreen({
               customStyle={false}
               editVal={!create}
             ></FloatingLabelInput>
-
-
             {create && (
               <View style={styles.inputSafeArea2}>
                 <FloatingLabelInput
@@ -294,24 +292,26 @@ export default function UserScreen({
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
-      {overlay ? (
-        <OverlayPrompt
-          promptText={prompt}
-          closeOverlay={() => setOverlay(false)}
-          btns={[
-            {
-              key: "Okay",
-              action: () => {
-                setOverlay(false);
-                if (success) {
-                  goBack();
-                }
+      {
+        overlay ? (
+          <OverlayPrompt
+            promptText={prompt}
+            closeOverlay={() => setOverlay(false)}
+            btns={[
+              {
+                key: "Okay",
+                action: () => {
+                  setOverlay(false);
+                  if (success) {
+                    goBack();
+                  }
 
+                },
               },
-            },
-          ]}
-        />
-      ) : null}
-    </SafeAreaView>
+            ]}
+          />
+        ) : null
+      }
+    </SafeAreaView >
   );
 }

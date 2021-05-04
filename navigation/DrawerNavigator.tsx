@@ -25,10 +25,12 @@ import CreateUserScreen from '../screens/CreateUser_Screen11';
 import TeamRolesScreen from '../screens/TeamRoles_Screen10';
 import EditUserScreen from '../screens/EditUser_Screen';
 import ControlScreen from '../screens/Control_Screen';
+import { color } from 'react-native-reanimated';
 
 import { getCurrentUser } from '../util/query-DB';
 
 const Drawer = createDrawerNavigator<DrawerParamList>();
+
 
 export default function DrawerNavigator({ route }) {
   //We will use this hook eventually. It enables us to more easily establish a consistent colorscheme throughout the app
@@ -49,6 +51,7 @@ export default function DrawerNavigator({ route }) {
     // the 'navigation' object similar to how it worked in v4. The Drawer.Screen is basically a screen object within our Drawer navigator.
     // The best part of this is that we can still point the component of our screen to another navigator instead of a screen, as we do here.
     // The name part of our Drawer.Screen has to correspond to the values within our types.tsx for parameter reasons. Don't really get it yet.
+
     <Drawer.Navigator
       initialRouteName="Telemetry"
       drawerPosition={'right'}
@@ -128,6 +131,7 @@ const ThreeOrbitStack = createStackNavigator<ThreeOrbitParamList>();
 const NotificationStack = createStackNavigator<NotificationsParamList>();
 const BugReportStack = createStackNavigator<BugReportParamList>();
 const ControlStack = createStackNavigator<ControlParamList>();
+
 
 function TelemetryMap({ navigation, route }) {
   let path = route.params?.InitialPath;

@@ -9,6 +9,7 @@ import {
   Dimensions,
   Image,
   KeyboardAvoidingView,
+  Alert
 } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import { resetOrientation } from "../hooks/resetOrientation";
@@ -23,6 +24,11 @@ import { TextField } from "../components/Form";
 
 import Colors from "../constants/Colors";
 import Screen from "../constants/Layout";
+
+import { reportBug } from "../util/bug-reports";
+
+import Navigation from "../navigation";
+
 
 //const screen = Dimensions.get("window");
 const styles = StyleSheet.create({
@@ -79,14 +85,30 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function BugReportScreen() {
+export default function BugReportScreen({ navigation, route }) {
   useFocusEffect(
     React.useCallback(() => {
       resetOrientation();
+      setReport("");
     }, [])
   );
 
   const [report, setReport] = React.useState("");
+
+  const [user, setUser] = React.useState({});
+
+  function submit(message) {
+    reportBug(message).then(
+      () => {
+        Alert.alert(
+          "Thank you!",
+          "Thanks for your report! Our team will look into this shortly",
+        )
+      }
+    );
+    navigation.goBack();
+  }
+
 
   return (
     <KeyboardAvoidingView
@@ -105,15 +127,9 @@ export default function BugReportScreen() {
 
         <AppButton
           label="Submit Report"
-
-          ///////////////////////////////////////////////////////////////
-          // TODO: CONNECT REPORT TO BACKEND
-          // ──────▄▀▄─────▄▀▄
-          // ─────▄█░░▀▀▀▀▀░░█▄
-          // ─▄▄──█░░░░░░░░░░░█──▄▄
-          // █▄▄█─█░░▀░░┬░░▀░░█─█▄▄█
-          ///////////////////////////////////////////////////////////////
-          onPressAction={() => console.log(report)}
+          onPressAction={
+            () => submit(report)
+          }
 
         ></AppButton>
       </SafeAreaView>

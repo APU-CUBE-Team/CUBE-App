@@ -202,14 +202,9 @@ export default function NotificationScreen({ navigation }) {
     >
       <SafeAreaView style={styles.container}>
 
-        <ScrollView
-          scrollEventThrottle={1}
-          onScroll={Animated.event(
-            [{ nativeEvent: { contentOffset: { y: scrollAnim } } }],
-            { useNativeDriver: false },
-          )
-          }
-        >
+
+
+        <ScrollView>
 
 
           <StatusBar barStyle="light-content" />
