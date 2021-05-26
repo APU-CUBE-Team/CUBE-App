@@ -62,6 +62,7 @@ The dependencies for this project are:
 - [Firebase](https://firebase.google.com/)
 - [Google Cloud Platform](https://cloud.google.com/)
 
+
 <i>Ensure you have all of these installed before you deploy this repo.</i>
 <br />
 
@@ -74,6 +75,8 @@ git pull https://github.com/APU-CUBE-Team/CUBE-App.git
 ```
 
 Install npm packages.
+<span style="color: orange;"> ⚠️ This project's dependencies require npm v12.18.4. ⚠</span>
+Make sure to use this version via [NVM](https://github.com/nvm-sh/nvm).
 
 ```bash
 npm i
